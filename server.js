@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 
 /* ############################ GLOBAL #################################
@@ -10,11 +11,12 @@ const express = require('express');
 
 const app = express();
 
-//const pg  = require('pg');
+const pg  = require('pg');
 
 const superagent = require('superagent');
 
 const methodOverrive = require('method-override');
+
 const { render } = require('ejs');
 
 require('dotenv').config();
@@ -25,11 +27,11 @@ app.set('view engine', 'ejs');
 
 const PORT = process.env.PORT || 3001;
 
-//const client = new pg.Client(process.env.DATABASE_URL);
+const client = new pg.Client(process.env.DATABASE_URL);
 
-//client.on('client', error => {
-//  console.log('error', error);
-//});
+client.on('client', error => {
+  console.log('error', error);
+});
 
 /*########################### MIDDLE WARE #############################
 
@@ -113,6 +115,6 @@ function Trip(){
 
 //==============================Errors=================================
 
-//app.listen(PORT, () => {
-console.log(`listening on ${PORT}`);
-//});
+app.listen(PORT, () => {
+  console.log(`listening on ${PORT}`);
+});
