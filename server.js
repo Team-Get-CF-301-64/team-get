@@ -87,7 +87,7 @@ function renderGame(request, response) {
 
   try{
 
-    response.status(200).send('/renderGame');
+    response.status(200).render('../views/game.ejs');
   } catch(error){
     console.log('ERROR', error);
     response.status(500).send('Sorry, something went terribly wrong');
