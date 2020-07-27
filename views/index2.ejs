@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>Testing Weather</h2>
+  <div>
+    
+    <% weatherResults.forEach(day => { %>
+      <p>
+        The forcast for <%= day.time %> is <%= day.forecast %> with a High of <%= day.high_temp %>, Low of <%= day.low_temp %>, and Total Percipitation of <%= day.precip %> inches.<img src= "https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="Weather Icon">
+      </p>
+      <% }) %>
+    </div>
+      
+  
+
+  
+</body>
+</html>

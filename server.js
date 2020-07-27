@@ -37,7 +37,7 @@ client.on('client', error => {
 
 #####################################################################*/
 
-app.use(express.static('./public'));
+app.use(express.static('./public2'));
 
 app.use(express.urlencoded({extended:true}));
 
@@ -61,11 +61,15 @@ app.get('/game', renderGame);
 
 app.get('/aboutUs', renderAboutUs);
 
+app.get('/weather', renderWeather)
+
+//==============================Call Back Funtions=========================
+
 function renderHome(request, response) {
 
   try{
 
-    response.status(200).send('/');
+    response.status(200).render('index2');
   } catch(error){
     console.log('ERROR', error);
     response.status(500).send('Sorry, something went terribly wrong');
@@ -105,6 +109,30 @@ function renderAboutUs(request, response) {
   }
 }
 
+function renderWeather(request,response){
+  let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
+  let queryParamaters = {
+    key: process.env.WEATHER_API_KEY,
+    city: 'seattle',// will probably need to change this line.
+    units: 'i',
+    days:7
+  }
+  superagent.get(url)
+    .query(queryParamaters)
+    .then(dataFromSuperAgent => {
+      let forcast = dataFromSuperAgent.body.data;
+      const forcastArray = forcast.map(day =>{
+        return new Weather(day);
+      });
+      response.render('index2', {weatherResults: forcastArray});//Where are we sending this?
+    }).catch((error) => {
+      console.log('ERROR',error);
+      response.status(500).send('Sorry, something went terribly wrong')
+    });
+}
+
+//==========================Constructor Funtions==============================
+
 function Trip(){
 //info for the trip object constructor
 }
@@ -112,6 +140,15 @@ function Trip(){
 // app.get('*', (request, response) => {
 //   response.status(500).send('Sorry, something went terribly wrong');
 // });
+
+function Weather(obj){
+  this.forecast = obj.weather.description;
+  this.icon = obj.weather.icon;
+  this.high_temp = obj.high_temp;
+  this.low_temp = obj.low_temp;
+  this.precip = obj.precip;// This is expected amount of rainfall
+  this.time = new Date(obj.valid_date).toDateString();
+}
 
 //==============================Errors=================================
 
