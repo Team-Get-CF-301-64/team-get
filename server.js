@@ -35,7 +35,7 @@ client.on('client', error => {
 
 /*########################### MIDDLE WARE #############################
 
-#####################################################################*/
+######################################################################*/
 
 app.use(express.static('./public'));
 
@@ -195,14 +195,9 @@ function renderAboutUs(request, response) {
 //==========================Constructor Funtions==============================
 
 function renderMap(request, response) {
-  console.log(request.body);
-  // const arr = Object.entries(request.body);
   let arr = new Route(request.body);
-  console.log(arr);
-  response.render('../views/map.ejs', {destinations : arr});
-
-
-
+  let key = process.env.MAPQUEST_API_KEY;
+  response.render('map.ejs', {destinations : arr, MAPQUEST_API_KEY : key});
 }
 
 /*##################### Constructors ####################################

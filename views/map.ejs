@@ -15,26 +15,39 @@
 
     <script type="text/javascript">
       window.onload = function() {
-        L.mapquest.key = 'rG4CrkvfohnHOoaCGJ29POMC51kMr8ci';
+        L.mapquest.key = '<%= MAPQUEST_API_KEY %>';
 
-        var map = L.mapquest.map('map', {
+        let map = L.mapquest.map('map', {
           center: [39.8283, -98.5795],
-          layers: L.mapquest.tileLayer('map'),
+          layers: L.mapquest.tileLayer('hybrid'),
           zoom: 4
         });
 
+        let directions = L.mapquest.directions();
+        directions.setLayerOptions({
+          routeRibbon: {
+            draggable: false,
+            showTraffic: false
+          },
+          startMarker: {
+            draggable: false
+          },
+          endMarker: {
+            draggable: false
+          },
+          waypointsMarker:{
+            draggable: false
+          }
+        });
+
         let waypoints = <%- JSON.stringify(destinations.waypoints) %> 
-        L.mapquest.directions().route({
+
+        directions.route({
           start: '<%= destinations.start %>',
           end: '<%= destinations.end %>',
-          
-          // waypoints: [ '366 Columbus Ave, New York, NY 10024', '881 7th Ave, New York, NY 10019']
           waypoints: waypoints
-
-          
-          
-
         });
+
       }
     </script>
 	</head>
@@ -63,18 +76,18 @@
 					</div>
 
 					<!-- Hero Button for resulths path -->
-						<section id="hero" class="container">
-							<header>
-								<h2>Look for Activities near your Destination.</h2>
-							</header>
+					<section id="hero" class="container">
+						<header>
+							<h2>Look for Activities near your Destination.</h2>
+						</header>
 
-							<form id="activity-form" action="/results" method="post">
-								<ul class="actions">
-									<li><a href="#" class="button">Search Activities</a></li>
-								</ul>
-							</form>
+						<form id="activity-form" action="/results" method="post">
+							<ul class="actions">
+								<li><a href="#" class="button">Search Activities</a></li>
+							</ul>
+						</form>
 
-						</section>
+					</section>
 
 				</div>
 
