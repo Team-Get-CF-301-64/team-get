@@ -249,7 +249,7 @@ function renderWeather(request,response){
 }
 
 //==========================Constructor Funtions==============================
-=======
+
 
 function renderMap(request, response) {
   console.log(request.body);
@@ -329,7 +329,7 @@ function Weather(obj){
 }
 
 //==============================Errors=================================
-=======
+
 /*############################# Opening Port and Client ##################
 
 ########################################################################*/
