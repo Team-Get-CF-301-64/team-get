@@ -13,8 +13,10 @@
 
     <div class="search-results">
       <% searchResults.forEach( activity => { %>
+        <img src="<%= activity.image %>" alt="<%= activity.name %>">
         <h2> <%= activity.name %></h2>
         <p>Rating:  <%= activity.rate %></p>
+        <p><%= activity.description %></p>
         
         <form id="activity-form" action="/add" method="post">
           <button type="submit">Add to Intinerary</button>

@@ -92,9 +92,10 @@ function renderResults(request, response){
   superagent.get(url)
   .query(queryParams)
   .then(results => {
-    let activitySearchResults = results.body;
+    let activitySearchResults = results.body.results[0];
       console.log('activity',activitySearchResults);
-      const obj = activitySearchResults['features'].map(activityObj => {
+      const obj = activitySearchResults['pois'].map(activityObj => {
+        // console.log(new Activity(activityObj));
         return new Activity(activityObj);
       })
       console.log('object=================', obj);
@@ -202,15 +203,20 @@ function Route (obj) {
 // });
 
 function Activity(obj){
-  
+  this.name = obj.name;
+  this.longitude = obj.coordinates.longitude;
+  this.latitude = obj.coordinates.latitude;
+  this.rate = `${obj.score}`.slice(0,3);
+  this.image = obj.images[0] ? obj.images[0].sizes.original.url : 'https://placekitten.com/g/200/300';
+  this.description = obj.snippet;
 }
-function Activity(obj){
-  this.name = obj.properties.name;
-  this.longitude = obj.geometry.coordinates[0];
-  this.latitude = obj.geometry.coordinates[1];
-  this.kinds = obj.properties.kinds;
-  this.rate = obj.properties.rate;
-}
+// function Activity(obj){
+//   this.name = obj.properties.name;
+//   this.longitude = obj.geometry.coordinates[0];
+//   this.latitude = obj.geometry.coordinates[1];
+//   this.kinds = obj.properties.kinds;
+//   this.rate = obj.properties.rate;
+// }
 //==============================Errors=================================
 
 app.listen(PORT, () => {
