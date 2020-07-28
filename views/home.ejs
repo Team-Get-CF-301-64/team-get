@@ -1,29 +1,3 @@
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script id="input-template" type="text/x-tmpl-mustache">
-    <input type="text" name={{iteration}}>
-  </script>
-</head>
-<body>
-  <form action="/search" method="post">
-    <h2>Add 2 or more destinations</h2>
-    <input type="text" name="start" placeholder="Seattle, WA">
-    <input type="text" name="end" placeholder="New York, NY">
-    <button id="add-waypoint">Add Mid Points</button>
-    <button type="submit">Submit</button>
-  </form>
-
-  <form action="/results" method="post">
-    <button type="submit">Search Activity</button>
-  </form>
-
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>-->
-
 <!DOCTYPE HTML>
 <!--
 	Telephasic by HTML5 UP
@@ -55,14 +29,14 @@
 				
 
 						<!-- Nav -->
-							<nav id="nav">
+							<nav id="nav" style='margin-right: 0;'>
 								<ul>
 									<li>
-										<a href="#">Dropdown</a>
+										<a   href="#">Dropdown</a>
 										<ul>
 											<li><a href="/game">Travel Game</a></li>
 											<li><a href="/aboutus">About Us</a></li>
-											<li><a href="/music">music</a></li>
+											<li><a href="/music">Music</a></li>
 										</ul>
 									</li>
 								
@@ -74,21 +48,22 @@
 					<!-- Hero -->
 						<section id="hero" class="container">
 							<header>
-								<h2>TRAVEL APP
+								<h2 style='padding-top: 1.5em;'>TRAVEL APP
 								<br />
-								you one stop APP for awesome roadtrips</h2>
+								your one stop APP for awesome roadtrips</h2>
 							</header>
 						
-							<ul class="actions">
-								<li><a href="#" class="button">PLACE HOLDER FOR SEARCH</a></li>
-              </ul>
+				<br>
               
               <form action="/search" method="post">
-                <h2>Add 2 or more destinations</h2>
-                <input type="text" name="start" placeholder="Seattle, WA">
-                <input type="text" name="end" placeholder="New York, NY">
-                <button id="add-waypoint">Add Mid Points</button>
-                <button type="submit">Submit</button>
+				<h2>Add 2 or more destinations</h2>
+				<br><br>
+                <input style="width: 60%; margin: auto;" type="text" name="start" placeholder="Seattle, WA">
+                <input style="width: 60%; margin: auto;" type="text" name="end" placeholder="New York, NY">
+				<br><br>
+				<button id="add-waypoint">Add Mid Points</button>
+				<button type="submit">Submit</button>
+				<br>
               </form>
 
 
