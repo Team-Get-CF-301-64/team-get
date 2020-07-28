@@ -6,10 +6,11 @@
 -->
 <html>
 	<head>
-		<title>Telephasic by HTML5 UP</title>
+		<title>Travel App</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/game.css" />
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -18,33 +19,21 @@
 				<div id="header-wrapper">
 					<div id="header" class="container">
 
-						<!-- Logo -->
-							<h1 id="logo"><a href="index.html">Telephasic</a></h1>
 
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
 									<li>
-										<a href="#">Dropdown</a>
+										<h1 id="logo"></h1><a href="#">Travel App</a></h1>
 										<ul>
-											<li><a href="#">Lorem ipsum dolor</a></li>
-											<li><a href="#">Magna phasellus</a></li>
-											<li><a href="#">Etiam dolore nisl</a></li>
-											<li>
-												<a href="#">Phasellus consequat</a>
-												<ul>
-													<li><a href="#">Lorem ipsum dolor</a></li>
-													<li><a href="#">Phasellus consequat</a></li>
-													<li><a href="#">Magna phasellus</a></li>
-													<li><a href="#">Etiam dolore nisl</a></li>
-												</ul>
-											</li>
-											<li><a href="#">Veroeros feugiat</a></li>
+											<li><a href="/">New Search</a></li>
+											<li><a href="/aboutus">About Us</a></li>
+											<li><a href="/game">Travel Game</a></li>
+										
+											
 										</ul>
 									</li>
-									<li><a href="left-sidebar.html">Left Sidebar</a></li>
-									<li class="break"><a href="right-sidebar.html">Right Sidebar</a></li>
-									<li><a href="no-sidebar.html">No Sidebar</a></li>
+									
 								</ul>
 							</nav>
 
@@ -71,83 +60,103 @@
 				<div class="wrapper">
 					<div class="container">
 						<div class="row">
-							<section class="col-6 col-12-narrower feature">
-								<div class="image-wrapper first">
-									<a href="#" class="image featured first"><img src="images/pic01.jpg" alt="" /></a>
+							<section id="memory-game"  class="memory-game">
+      
+								<div class="memory-card" data-framework="OR">
+								  <img class="front-face" alt="Mount Calvary OR" src="images/mountcalvary.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Mount Calvary, OR</p>
 								</div>
-								<header>
-									<h2>Semper magna neque vel<br />
-									adipiscing curabitur</h2>
-								</header>
-								<p>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel
-								sem sit dolor neque semper magna. Lorem ipsum dolor sit amet consectetur et sed
-								adipiscing elit. Curabitur vel sem sit.</p>
-								<ul class="actions">
-									<li><a href="#" class="button">Elevate my awareness</a></li>
-								</ul>
-							</section>
-							<section class="col-6 col-12-narrower feature">
-								<div class="image-wrapper">
-									<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+								<div class="memory-card" data-framework="OR">
+								  <img class="front-face" alt="Mirror Lake OR" src="images/mirrorlake.jpg" />
+								  <img  class="back-face" />
+								  <p class="carddescription" >Mirror Lake, OR</p>
 								</div>
-								<header>
-									<h2>Amet lorem ipsum dolor<br />
-									sit consequat magna</h2>
-								</header>
-								<p>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur vel
-								sem sit dolor neque semper magna. Lorem ipsum dolor sit amet consectetur et sed
-								adipiscing elit. Curabitur vel sem sit.</p>
-								<ul class="actions">
-									<li><a href="#" class="button">Elevate my awareness</a></li>
-								</ul>
-							</section>
+								
+								<div class="memory-card" data-framework="vancouver">
+								  <img class="front-face" alt="Robson Square, Vancouver" src="images/robson.jpeg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Robson Square, VANC</p>
+								</div>
+								<div class="memory-card" data-framework="vancouver">
+								  <img class="front-face" alt="Sombiro Beach" src="images/sombrio.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Sombrio Beach, VANC</p>
+								</div>
+								
+								<div class="memory-card" data-framework="ID">
+								  <img class="front-face" alt="Boise Oregon Trail Memorial" src="images/boise.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Boise, ID</p>
+								</div>
+								<div class="memory-card" data-framework="ID">
+								  <img class="front-face" alt="Shoshone" src="images/shoshone.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Shoshone Falls, ID</p>
+								</div>
+						  
+								<div class="memory-card" data-framework="UT">
+								  <img class="front-face" alt="Great Temple" src="images/temple.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Great Mormon Temple, UT</p>
+								</div>
+								<div class="memory-card" data-framework="UT">
+								  <img class="front-face" alt="Capitol Reef Park" src="images/capreef.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Capitol Reef, UT</p>
+								</div>
+						  
+								<div class="memory-card" data-framework="WY">
+								  <img class="front-face" alt="Jackson WY" src="images/jackson.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Jackson, WY</p>
+								</div>
+								<div class="memory-card" data-framework="WY">
+								  <img class="front-face" alt="Yellow Stone National Park" src="images/yellows.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Yellowstone, WY</p>
+								</div>
+						  
+								<div class="memory-card" data-framework="SD">
+								  <img class="front-face" alt="Rapid Creek, South Dakota" src="images/rapidcreek.jpeg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Rapid City's Rapid Creek, SD</p>
+								</div>
+								<div class="memory-card" data-framework="SD">
+								  <img class="front-face" alt="Mount Rushmore" src="images/rush.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription">Rushmore, SD</p>
+								</div>
+						  
+								<div class="memory-card" data-framework="MT">
+								  <img class="front-face" alt="Bozeman" src="images/bozeman.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Bozeman, MT</p>
+								</div>
+								<div class="memory-card" data-framework="MT">
+								  <img class="front-face" alt="Lewis and Clark Caverns" src="images/caverns.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Lewis and Clark Caverns, MT</p>
+								</div>
+						  
+								<div class="memory-card" data-framework="NV">
+								  <img class="front-face" alt="Emerald Bay" src="images/embay.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Lake Tahoe, NV</p>
+								</div>
+								<div class="memory-card" data-framework="NV">
+								  <img class="front-face" alt="Las vegas" src="images/vegas.jpg" />
+								  <img class="back-face" />
+								  <p class="carddescription" >Las Vegas, NV</p>
+								</div>
+								
+							  </section>
+							
 						</div>
 					</div>
 				</div>
 
-			<!-- Promo -->
-				<div id="promo-wrapper">
-					<section id="promo">
-						<h2>Neque semper magna et lorem ipsum adipiscing</h2>
-						<a href="#" class="button">Breach the thresholds</a>
-					</section>
-				</div>
 
-			<!-- Features 2 -->
-				<div class="wrapper">
-					<section class="container">
-						<header class="major">
-							<h2>Sed magna consequat lorem curabitur tempus</h2>
-							<p>Elit aliquam vulputate egestas euismod nunc semper vehicula lorem blandit</p>
-						</header>
-						<div class="row features">
-							<section class="col-4 col-12-narrower feature">
-								<div class="image-wrapper first">
-									<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-								</div>
-								<p>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur
-								vel sem sit dolor neque semper magna lorem ipsum.</p>
-							</section>
-							<section class="col-4 col-12-narrower feature">
-								<div class="image-wrapper">
-									<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-								</div>
-								<p>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur
-								vel sem sit dolor neque semper magna lorem ipsum.</p>
-							</section>
-							<section class="col-4 col-12-narrower feature">
-								<div class="image-wrapper">
-									<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
-								</div>
-								<p>Lorem ipsum dolor sit amet consectetur et sed adipiscing elit. Curabitur
-								vel sem sit dolor neque semper magna lorem ipsum.</p>
-							</section>
-						</div>
-						<ul class="actions major">
-							<li><a href="#" class="button">Elevate my awareness</a></li>
-						</ul>
-					</section>
-				</div>
 
 			<!-- Footer -->
 				<div id="footer-wrapper">
@@ -205,12 +214,13 @@
 		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="assets/js/game.js"></script>
 
 	</body>
 </html>
