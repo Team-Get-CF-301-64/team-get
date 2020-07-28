@@ -35,7 +35,7 @@ client.on('client', error => {
 
 /*########################### MIDDLE WARE #############################
 
-#####################################################################*/
+######################################################################*/
 
 app.use(express.static('./public'));
 
@@ -118,7 +118,6 @@ function renderHome(request, response) {
 
 
 function renderResults(request, response){
- 
   let url = 'https://www.triposo.com/api/20200405/local_highlights.json?';
 
   let queryParams = {
@@ -133,7 +132,6 @@ function renderResults(request, response){
   .query(queryParams)
   .then(results => {
     let activitySearchResults = results.body.results[0];
-      console.log('activity',activitySearchResults);
       const obj = activitySearchResults['pois'].map(activityObj => {
         return new Activity(activityObj);
       })
@@ -145,50 +143,6 @@ function renderResults(request, response){
     response.status(500).send('Sorry, something went terribly wrong');
   })
 }
-// function renderResults(request, response) {
-
-//   // try{
-//     // let searchCity = request.body.search[0];
-//     // let searchCategory = request.body.search[1];
-//     let searchCategory = 'museums,water,nature_reserves,monuments_and_memorials';
-//     let searchParams = '';
-//     let url = 'http://api.opentripmap.com/0.1/en/places/radius';
-//     // let url = 'http://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6c6943bdedcf9db68437c8a07ae749e05&radius=6000&lat=47.608013&lon=-122.335167&kinds=museums,water,nature_reserves,monuments_and_memorials';
-
-//     // from search form to add parameters
-//     if(searchCategory === 'museums'){searchParams += ',museums'};
-//     if(searchCategory === 'water'){searchParams += ',water'};
-//     if(searchCategory === 'nature'){searchParams += ',nature_reserves'};
-//     if(searchCategory === 'monuments'){searchParams += ',monuments_and_memorials'};
-//   console.log('test am i in?');
-//     let queryParams = {
-//       apikey: process.env.apikey,
-//       // lat: request.query.latitude,
-//       lat: 47.603649,
-//       // lon: request.query.longitude,
-//       lon: -122.330193,
-//       // radius: request.query.radius,
-//       radius: 1000,
-//       kinds: searchCategory
-//     }
-//     console.log(queryParams.kinds);
-//     superagent.get(url)
-//     .query(queryParams)
-//     .then(results => {
-//       let activitySearchResults = results.body;
-//       console.log('activity',activitySearchResults);
-//       const obj = activitySearchResults['features'].map(activityObj => {
-//         return new Activity(activityObj);
-//       })
-//       console.log('object=================', obj);
-//       response.status(200).render('searches.ejs', {searchResults: obj});
-//     })
-//    .catch((error) => {
-//     console.log('ERROR', error);
-//     response.status(500).send('Sorry, something went terribly wrong');
-//    })
-// }
-
 
 
 function renderMusic(req, resp){
@@ -240,7 +194,6 @@ function renderAboutUs(request, response) {
 
 
 //==========================Constructor Funtions==============================
-
 
 function renderMap(request, response) {
   let arr = new Route(request.body);
