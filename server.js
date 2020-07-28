@@ -37,7 +37,7 @@ client.on('client', error => {
 
 #####################################################################*/
 
-app.use(express.static('./public2'));
+app.use(express.static('./public'));
 
 app.use(express.urlencoded({extended:true}));
 
@@ -249,7 +249,6 @@ function renderWeather(request,response){
 }
 
 //==========================Constructor Funtions==============================
-=======
 
 function renderMap(request, response) {
   console.log(request.body);
@@ -329,7 +328,7 @@ function Weather(obj){
 }
 
 //==============================Errors=================================
-=======
+
 /*############################# Opening Port and Client ##################
 
 ########################################################################*/
