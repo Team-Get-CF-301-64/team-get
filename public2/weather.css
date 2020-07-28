@@ -1,0 +1,14 @@
+*{
+  box-sizing: border-box;
+}
+
+#weather-container {
+  display:grid;
+  grid-template:  1fr/ repeat(7, 1fr);
+  text-align: center;
+
+}
+.weather {
+  /* float:left; */
+  width: 100%;
+}
