@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
+
 'use strict';
 
 /* ############################ GLOBAL #################################
 
 
 ######################################################################*/
-
 
 const express = require('express');
 
@@ -17,7 +17,7 @@ const superagent = require('superagent');
 
 const methodOverrive = require('method-override');
 
-const { render } = require('ejs');
+const { render, compile } = require('ejs');
 
 require('dotenv').config();
 
@@ -63,17 +63,22 @@ app.get('/aboutUs', renderAboutUs);
 
 app.post('/search', renderMap);
 
+app.get('/music', renderMusic);
+
+
 
 function renderHome(request, response) {
 
-  response.render('home.ejs');
-  // try{
 
-  //   response.status(200).send('/');
-  // } catch(error){
-  //   console.log('ERROR', error);
-  //   response.status(500).send('Sorry, something went terribly wrong');
-  // }
+  response.render('home.ejs');
+
+  try{
+
+    response.status(200).render('../views/index.ejs');
+  } catch(error){
+    console.log('ERROR', error);
+    response.status(500).send('Sorry, something went terribly wrong');
+  }
 }
 
 
@@ -89,11 +94,51 @@ function renderResults(request, response) {
   }
 }
 
+
+
+function renderMusic(req, resp){
+
+  let data = [];
+
+  let url = 'https://api.deezer.com/chart';
+
+  superagent.get(url).then(results => {
+    data = results.body.albums;
+
+    // console.log('this is the title: ', data.data[0].title);
+
+    // console.log('my params: ', data.data[0].title, data.data[0].position);
+    // let title = data.data[0].title;
+    // let position = data.data[0].position;
+    // let cover_medium = data.data[0].cover_medium;
+
+    // let a = new Album(data.data[0]);
+
+    // console.log('new obj?', a);
+
+
+    // well, now lets make obj
+
+    let albumArr = data.data;
+
+    const finalAlbum = albumArr.map(albums => {
+      return new Album(albums);
+    });
+
+    resp.render('../views/music.ejs', {searchResults: finalAlbum})
+  });
+
+}
+
+
+
+
+
 function renderGame(request, response) {
 
   try{
 
-    response.status(200).send('/renderGame');
+    response.status(200).render('../views/game.ejs');
   } catch(error){
     console.log('ERROR', error);
     response.status(500).send('Sorry, something went terribly wrong');
@@ -104,12 +149,13 @@ function renderAboutUs(request, response) {
 
   try{
 
-    response.status(200).send('/aboutUS');
+    response.status(200).render('../views/aboutus.ejs');
   } catch(error){
     console.log('ERROR', error);
     response.status(500).send('Sorry, something went terribly wrong');
   }
 }
+
 
 function renderMap(request, response) {
   console.log(request.body);
@@ -120,9 +166,16 @@ function renderMap(request, response) {
   console.log('key', key);
   response.render('map.ejs', {destinations : arr, MAPQUEST_API_KEY : key});
 }
+
+/*##################### Constructors ####################################
+
+####################################################################### */
+
+
 function Trip(){
 //info for the trip object constructor
 }
+
 
 function Route (obj) {
   this.waypoints = [];
@@ -136,11 +189,28 @@ function Route (obj) {
     }
   }
 }
+
+function Album(obj){
+  this.title = obj.title;
+  this.position = obj.position;
+  this.cover_medium = obj.cover_medium;
+  this.artist = obj.artist.name;
+}
+
+function Pokemon(obj){
+
+  this.name = obj.name;
+
+}
+
+
 // app.get('*', (request, response) => {
 //   response.status(500).send('Sorry, something went terribly wrong');
 // });
 
-//==============================Errors=================================
+/*############################# Opening Port and Client ##################
+
+########################################################################*/
 
 app.listen(PORT, () => {
   console.log(`listening on ${PORT}`);
