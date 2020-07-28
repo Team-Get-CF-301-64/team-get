@@ -116,8 +116,9 @@ function renderMap(request, response) {
   // const arr = Object.entries(request.body);
   let arr = new Route(request.body);
   console.log(arr);
-  response.render('map.ejs', {destinations : arr});
-
+  let key = process.env.MAPQUEST_API_KEY;
+  console.log('key', key);
+  response.render('map.ejs', {destinations : arr, MAPQUEST_API_KEY : key});
 }
 function Trip(){
 //info for the trip object constructor
