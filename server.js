@@ -37,7 +37,7 @@ client.on('client', error => {
 
 #####################################################################*/
 
-app.use(express.static('./newpublic'));
+app.use(express.static('./public'));
 
 app.use(express.urlencoded({extended:true}));
 
