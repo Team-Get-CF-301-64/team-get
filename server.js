@@ -160,6 +160,7 @@ function renderMusic(req, resp){
       return new Album(albums);
     });
 
+
     resp.render('../views/music.ejs', {searchResults: finalAlbum})
   });
 
