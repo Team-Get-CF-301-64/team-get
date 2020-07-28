@@ -1,0 +1,16 @@
+
+    
+    <% weatherResults.forEach(day => { %>
+      <section>
+        <p class="weather">
+          <%= day.time %><br>
+          <%= day.forecast %>
+        </p>
+        <img id="icon" src= "https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="Weather Icon">
+        <p class="weather">
+          <%= day.high_temp %>° | <%= day.low_temp %>°<br>
+          Rainfall: <%= day.precip %> inches.
+        </p>
+      </section>
+      <% }) %>
+    </div>
