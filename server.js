@@ -118,14 +118,8 @@ function renderHome(request, response) {
 
 
 function renderResults(request, response){
-  // let url = 'https://www.triposo.com/api/20200405/local_highlights.json?account=M2B0UXXF&token=ub5ewilflwgve808gif0aux9l9ov30jn&latitude=47.608013&longitude=-122.335167&tag_labels=do';
+ 
   let url = 'https://www.triposo.com/api/20200405/local_highlights.json?';
-
-
-
-function renderResults(request, response) {
-
-  try{
 
   let queryParams = {
     account: process.env.account,
@@ -135,14 +129,12 @@ function renderResults(request, response) {
     tag_labels: 'do'
   }
 
-
   superagent.get(url)
   .query(queryParams)
   .then(results => {
     let activitySearchResults = results.body.results[0];
       console.log('activity',activitySearchResults);
       const obj = activitySearchResults['pois'].map(activityObj => {
-        // console.log(new Activity(activityObj));
         return new Activity(activityObj);
       })
       console.log('object=================', obj);
