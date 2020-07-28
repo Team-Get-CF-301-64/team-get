@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+</head>
+<body>
+
+  <h1>Add an Activity</h1>
+
+  <main>
+
+    <div class="search-results">
+      <% searchResults.forEach( activity => { %>
+        <h2> <%= activity.name %></h2>
+        <p>Rating:  <%= activity.rate %></p>
+      <% }) %>
+
+      <form id="activity-form" action="/add" method="post">
+        <button type="submit">Add to Intinerary</button>
+        <fieldset>
+          <input name="name" value="<%= activity.name %>">
+        </fieldset>
+
+      </form>
+    </div>
+
+  </main>
+  
+</body>
+</html>
