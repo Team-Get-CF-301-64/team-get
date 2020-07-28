@@ -70,9 +70,9 @@
 					<!-- Hero -->
 						<section id="hero" class="container">
 							<header>
-								<h2>TRAVEL APP
-								<br />
-								you one stop APP for awesome roadtrips</h2>
+								<h2>Road Trip,
+								<br>
+								your one stop APP for planning your next getaway!</h2>
 							</header>
 						
 							<ul class="actions">
@@ -83,13 +83,49 @@
                 <h2>Add 2 or more destinations</h2>
                 <input type="text" name="start" placeholder="Seattle, WA">
                 <input type="text" name="end" placeholder="New York, NY">
-                <button id="add-waypoint">Add Mid Points</button>
+                <button id="add-waypoint">Add a Pitstop</button>
                 <button type="submit">Submit</button>
               </form>
+
+
+
               
+              </div>
+
 						</section>
 
-				</div>
+        </div>
+        
+        <div class="wrapper">
+
+
+        <div class="row features" style="margin-top: 2em; ">
+          <h2 style='margin-left: 10%;'>Weather Forecast</h2>
+        <% weatherResults.forEach(day => { %>
+
+          
+            <section class="col-12-narrower feature">
+              <p class="weather">
+                <%= day.time %><br>
+                <%= day.forecast %>
+              </p>
+              <div class="image-wrapper first">
+                <a href="#" class="image featured"><img id="icon" src="https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="" /></a>
+              </div>
+              <p class="weather">
+                <%= day.high_temp %>° | <%= day.low_temp %>°<br>
+                Rainfall: <%= day.precip %> inches.
+              </p>
+            </section>
+    
+
+          
+          <% }) %>
+        
+        </div>
+
+
+  </div>
 
 				<!-- Music 2 -->
 				<div class="wrapper">
