@@ -15,15 +15,15 @@
       <% searchResults.forEach( activity => { %>
         <h2> <%= activity.name %></h2>
         <p>Rating:  <%= activity.rate %></p>
+        
+        <form id="activity-form" action="/add" method="post">
+          <button type="submit">Add to Intinerary</button>
+        <!-- <fieldset> -->
+          <input name="name" type="hidden" value="<%= activity.name %>">
+        <!-- </fieldset> -->
+      </form>
       <% }) %>
 
-      <form id="activity-form" action="/add" method="post">
-        <button type="submit">Add to Intinerary</button>
-        <fieldset>
-          <input name="name" value="<%= activity.name %>">
-        </fieldset>
-
-      </form>
     </div>
 
   </main>

@@ -55,7 +55,7 @@ app.use(methodOverrive('_method'));
 
 app.get('/', renderHome);
 
-app.get('/results', renderResults);
+app.post('/results', renderResults);
 
 app.get('/game', renderGame);
 
@@ -77,48 +77,77 @@ function renderHome(request, response) {
 }
 
 
+function renderResults(request, response){
+  // let url = 'https://www.triposo.com/api/20200405/local_highlights.json?account=M2B0UXXF&token=ub5ewilflwgve808gif0aux9l9ov30jn&latitude=47.608013&longitude=-122.335167&tag_labels=do';
+  let url = 'https://www.triposo.com/api/20200405/local_highlights.json?';
 
-function renderResults(request, response) {
+  let queryParams = {
+    account: process.env.account,
+    token: process.env.token,
+    latitude: 47.608013,
+    longitude: -122.335167,
+    tag_labels: 'do'
+  }
 
-  try{
-    // let searchCity = request.body.search[0];
-    // let searchCategory = request.body.search[1];
-    let searchCategory = 'water';
-    let searchParams = '';
-    let url = 'http://api.opentripmap.com/0.1/en/places/radius';
-    // let url = 'http://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6c6943bdedcf9db68437c8a07ae749e05&radius=6000&lat=47.608013&lon=-122.335167&kinds=museums,water,nature_reserves,monuments_and_memorials';
-
-    // from search form to add parameters
-    if(searchCategory === 'museums'){searchParams += ',museums'};
-    if(searchCategory === 'water'){searchParams += ',water'};
-    if(searchCategory === 'nature'){searchParams += ',nature_reserves'};
-    if(searchCategory === 'monuments'){searchParams += ',monuments_and_memorials'};
-
-    let queryParams = {
-      apikey: process.env.TRAVEL_API_KEY,
-      // lat: request.query.latitude,
-      lat: 47.603649,
-      // lon: request.query.longitude,
-      lon: -122.330193,
-      // radius: request.query.radius,
-      radius: 1000,
-      kinds: searchParams
-    }
-
-    superagent.get(url)
-    .query(queryParams)
-    .then(results => {
-      let activitySearchResults = results.body;
-      let obj = activitySearchResults.features.map(activityObj => {
+  superagent.get(url)
+  .query(queryParams)
+  .then(results => {
+    let activitySearchResults = results.body;
+      console.log('activity',activitySearchResults);
+      const obj = activitySearchResults['features'].map(activityObj => {
         return new Activity(activityObj);
       })
-      response.status(200).send('views/searches.ejs', {searchResults: obj});
-    })
-  } catch(error){
+      console.log('object=================', obj);
+      response.status(200).render('searches.ejs', {searchResults: obj});
+  })
+  .catch((error) => {
     console.log('ERROR', error);
     response.status(500).send('Sorry, something went terribly wrong');
-  }
+  })
 }
+// function renderResults(request, response) {
+
+//   // try{
+//     // let searchCity = request.body.search[0];
+//     // let searchCategory = request.body.search[1];
+//     let searchCategory = 'museums,water,nature_reserves,monuments_and_memorials';
+//     let searchParams = '';
+//     let url = 'http://api.opentripmap.com/0.1/en/places/radius';
+//     // let url = 'http://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6c6943bdedcf9db68437c8a07ae749e05&radius=6000&lat=47.608013&lon=-122.335167&kinds=museums,water,nature_reserves,monuments_and_memorials';
+
+//     // from search form to add parameters
+//     if(searchCategory === 'museums'){searchParams += ',museums'};
+//     if(searchCategory === 'water'){searchParams += ',water'};
+//     if(searchCategory === 'nature'){searchParams += ',nature_reserves'};
+//     if(searchCategory === 'monuments'){searchParams += ',monuments_and_memorials'};
+//   console.log('test am i in?');
+//     let queryParams = {
+//       apikey: process.env.apikey,
+//       // lat: request.query.latitude,
+//       lat: 47.603649,
+//       // lon: request.query.longitude,
+//       lon: -122.330193,
+//       // radius: request.query.radius,
+//       radius: 1000,
+//       kinds: searchCategory
+//     }
+//     console.log(queryParams.kinds);
+//     superagent.get(url)
+//     .query(queryParams)
+//     .then(results => {
+//       let activitySearchResults = results.body;
+//       console.log('activity',activitySearchResults);
+//       const obj = activitySearchResults['features'].map(activityObj => {
+//         return new Activity(activityObj);
+//       })
+//       console.log('object=================', obj);
+//       response.status(200).render('searches.ejs', {searchResults: obj});
+//     })
+//    .catch((error) => {
+//     console.log('ERROR', error);
+//     response.status(500).send('Sorry, something went terribly wrong');
+//    })
+// }
 
 function renderGame(request, response) {
 
@@ -149,6 +178,8 @@ function renderMap(request, response) {
   console.log(arr);
   response.render('map.ejs', {destinations : arr});
 
+
+
 }
 function Trip(){
 //info for the trip object constructor
@@ -170,6 +201,9 @@ function Route (obj) {
 //   response.status(500).send('Sorry, something went terribly wrong');
 // });
 
+function Activity(obj){
+  
+}
 function Activity(obj){
   this.name = obj.properties.name;
   this.longitude = obj.geometry.coordinates[0];
