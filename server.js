@@ -69,7 +69,7 @@ function renderHome(request, response) {
 
   try{
 
-    response.status(200).render('index2');
+    response.status(200).render('index');
   } catch(error){
     console.log('ERROR', error);
     response.status(500).send('Sorry, something went terribly wrong');
@@ -144,9 +144,9 @@ function Trip(){
 function Weather(obj){
   this.forecast = obj.weather.description;
   this.icon = obj.weather.icon;
-  this.high_temp = obj.high_temp;
-  this.low_temp = obj.low_temp;
-  this.precip = obj.precip;// This is expected amount of rainfall
+  this.high_temp = Math.round(obj.high_temp);
+  this.low_temp = Math.round(obj.low_temp);
+  this.precip = (obj.precip).toFixed(2);// This is expected amount of rainfall
   this.time = new Date(obj.valid_date).toDateString();
 }
 

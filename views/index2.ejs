@@ -3,21 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Weather</title>
+  <link href="weather.css" rel="stylesheet"/>
+
 </head>
 <body>
   <h2>Testing Weather</h2>
-  <div>
+  <div id="weather-container">
     
     <% weatherResults.forEach(day => { %>
-      <p>
-        The forcast for <%= day.time %> is <%= day.forecast %> with a High of <%= day.high_temp %>, Low of <%= day.low_temp %>, and Total Percipitation of <%= day.precip %> inches.<img src= "https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="Weather Icon">
-      </p>
+      <section>
+        <p class="weather">
+          <%= day.time %><br>
+          <%= day.forecast %>
+        </p>
+        <img id="icon" src= "https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="Weather Icon">
+        <p class="weather">
+          <%= day.high_temp %>° | <%= day.low_temp %>°<br>
+          Rainfall: <%= day.precip %> inches.
+        </p>
+      </section>
       <% }) %>
     </div>
       
-  
-
-  
 </body>
 </html>
