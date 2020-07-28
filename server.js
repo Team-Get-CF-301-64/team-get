@@ -37,7 +37,7 @@ client.on('client', error => {
 
 #####################################################################*/
 
-app.use(express.static('./newpublic'));
+app.use(express.static('./public'));
 
 app.use(express.urlencoded({extended:true}));
 
@@ -158,12 +158,8 @@ function renderAboutUs(request, response) {
 
 
 function renderMap(request, response) {
-  console.log(request.body);
-  // const arr = Object.entries(request.body);
   let arr = new Route(request.body);
-  console.log(arr);
   let key = process.env.MAPQUEST_API_KEY;
-  console.log('key', key);
   response.render('map.ejs', {destinations : arr, MAPQUEST_API_KEY : key});
 }
 
