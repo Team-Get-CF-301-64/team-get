@@ -37,7 +37,7 @@ client.on('client', error => {
 
 #####################################################################*/
 
-app.use(express.static('./public2'));
+app.use(express.static('./public'));
 
 app.use(express.urlencoded({extended:true}));
 
@@ -61,9 +61,6 @@ app.get('/game', renderGame);
 
 app.get('/aboutUs', renderAboutUs);
 
-
-app.get('/weather', renderWeather)
-
 //==============================Call Back Funtions=========================
 
 app.post('/search', renderMap);
@@ -71,23 +68,54 @@ app.post('/search', renderMap);
 app.get('/music', renderMusic);
 
 
+function renderWeather(request,response){
+  let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
+  let queryParamaters = {
+    key: process.env.WEATHER_API_KEY,
+    city: 'seattle',// will probably need to change this line.
+    units: 'i',
+    days:7
+  }
+  superagent.get(url)
+    .query(queryParamaters)
+    .then(dataFromSuperAgent => {
+      let forcast = dataFromSuperAgent.body.data;
+      const forcastArray = forcast.map(day =>{
+        return new Weather(day);
+      });
+      response.render('../views/home.ejs', {weatherResults: forcastArray});//Where are we sending this?
+    }).catch((error) => {
+      console.log('ERROR',error);
+      response.status(500).send('Sorry, something went terribly wrong')
+    });
+}
+
 
 
 function renderHome(request, response) {
 
 
-  response.render('home.ejs');
-
-  try{
-
-
-    response.status(200).render('../views/index.ejs');
-
-  } catch(error){
-    console.log('ERROR', error);
-    response.status(500).send('Sorry, something went terribly wrong');
+  let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
+  let queryParamaters = {
+    key: process.env.WEATHER_API_KEY,
+    city: 'seattle',// will probably need to change this line.
+    units: 'i',
+    days:7
   }
+  superagent.get(url)
+    .query(queryParamaters)
+    .then(dataFromSuperAgent => {
+      let forcast = dataFromSuperAgent.body.data;
+      const forcastArray = forcast.map(day =>{
+        return new Weather(day);
+      });
+      response.render('../views/home.ejs', {weatherResults: forcastArray});//Where are we sending this?
+    }).catch((error) => {
+      console.log('ERROR',error);
+      response.status(500).send('Sorry, something went terribly wrong')
+    });
 }
+
 
 
 
@@ -112,20 +140,6 @@ function renderMusic(req, resp){
 
   superagent.get(url).then(results => {
     data = results.body.albums;
-
-    // console.log('this is the title: ', data.data[0].title);
-
-    // console.log('my params: ', data.data[0].title, data.data[0].position);
-    // let title = data.data[0].title;
-    // let position = data.data[0].position;
-    // let cover_medium = data.data[0].cover_medium;
-
-    // let a = new Album(data.data[0]);
-
-    // console.log('new obj?', a);
-
-
-    // well, now lets make obj
 
     let albumArr = data.data;
 
@@ -165,37 +179,15 @@ function renderAboutUs(request, response) {
 }
 
 
-function renderWeather(request,response){
-  let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
-  let queryParamaters = {
-    key: process.env.WEATHER_API_KEY,
-    city: 'seattle',// will probably need to change this line.
-    units: 'i',
-    days:7
-  }
-  superagent.get(url)
-    .query(queryParamaters)
-    .then(dataFromSuperAgent => {
-      let forcast = dataFromSuperAgent.body.data;
-      const forcastArray = forcast.map(day =>{
-        return new Weather(day);
-      });
-      response.render('index2', {weatherResults: forcastArray});//Where are we sending this?
-    }).catch((error) => {
-      console.log('ERROR',error);
-      response.status(500).send('Sorry, something went terribly wrong')
-    });
-}
-
 //==========================Constructor Funtions==============================
-=======
+
 
 function renderMap(request, response) {
   console.log(request.body);
   // const arr = Object.entries(request.body);
   let arr = new Route(request.body);
   console.log(arr);
-  response.render('map.ejs', {destinations : arr});
+  response.render('../views/map.ejs', {destinations : arr});
 
 }
 
@@ -251,7 +243,7 @@ function Weather(obj){
 }
 
 //==============================Errors=================================
-=======
+
 /*############################# Opening Port and Client ##################
 
 ########################################################################*/
