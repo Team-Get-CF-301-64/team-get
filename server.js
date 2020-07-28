@@ -26,7 +26,7 @@ require('ejs');
 app.set('view engine', 'ejs');
 
 const PORT = process.env.PORT || 3001;
-
+const MAPQUEST_API_KEY = process.env.MAPQUEST_API_KEY;
 const client = new pg.Client(process.env.DATABASE_URL);
 
 client.on('client', error => {
@@ -37,7 +37,7 @@ client.on('client', error => {
 
 #####################################################################*/
 
-app.use(express.static('./public'));
+app.use(express.static('./newpublic'));
 
 app.use(express.urlencoded({extended:true}));
 
@@ -61,11 +61,16 @@ app.get('/game', renderGame);
 
 app.get('/aboutUs', renderAboutUs);
 
+app.post('/search', renderMap);
+
 app.get('/music', renderMusic);
+
 
 
 function renderHome(request, response) {
 
+
+  response.render('home.ejs');
 
   try{
 
@@ -75,6 +80,8 @@ function renderHome(request, response) {
     response.status(500).send('Sorry, something went terribly wrong');
   }
 }
+
+
 
 function renderResults(request, response) {
 
@@ -149,12 +156,37 @@ function renderAboutUs(request, response) {
   }
 }
 
+
+function renderMap(request, response) {
+  console.log(request.body);
+  // const arr = Object.entries(request.body);
+  let arr = new Route(request.body);
+  console.log(arr);
+  response.render('map.ejs', {destinations : arr});
+
+}
+
 /*##################### Constructors ####################################
 
 ####################################################################### */
 
+
 function Trip(){
 //info for the trip object constructor
+}
+
+
+function Route (obj) {
+  this.waypoints = [];
+  for (const [key, value] of Object.entries(obj)) {
+    if(key === 'start'){
+      this.start = value;
+    } else if (key === 'end'){
+      this.end = value;
+    } else {
+      this.waypoints.push(value);
+    }
+  }
 }
 
 function Album(obj){
@@ -169,6 +201,7 @@ function Pokemon(obj){
   this.name = obj.name;
 
 }
+
 
 // app.get('*', (request, response) => {
 //   response.status(500).send('Sorry, something went terribly wrong');
