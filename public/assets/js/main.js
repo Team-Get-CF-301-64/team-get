@@ -3,6 +3,18 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
+// $('.activity-form').on('click', buttonToAdd);
+
+// function buttonToAdd(){
+// 	$.ajax({
+// 		url: '/add',
+// 		type: "POST",
+// 		data: 'your form data',
+// 		success: function(response){
+// 			alert('evaluate response and show alert');
+// 		}
+// 	}); 
+// }
 
 (function($) {
 

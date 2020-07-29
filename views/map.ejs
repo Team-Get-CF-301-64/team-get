@@ -84,10 +84,10 @@
 							<h2>Look for Activities near your Destination.</h2>
 						</header>
 
-						<form id="activity-form" action="/results" method="post">
-							<ul class="actions">
-								<li><a href="#" class="button">Search Activities</a></li>
-							</ul>
+						<form id="activity-search" action="/results" method="post">
+							<input name="lat" type="hidden" value="lat">
+							<input name="lon" type="hidden" value="lon">
+								<button type="submit">Search Activities</button>
 						</form>
 
 					</section>

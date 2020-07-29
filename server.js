@@ -57,6 +57,8 @@ app.get('/', renderHome);
 
 app.post('/results', renderResults);
 
+app.get('/results', renderResults);
+
 app.get('/game', renderGame);
 
 app.get('/aboutUs', renderAboutUs);
@@ -67,6 +69,7 @@ app.post('/search', renderMap);
 
 app.get('/music', renderMusic);
 
+app.post('/add', addItemToItinerary);
 
 function renderWeather(request,response){
   let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
@@ -135,7 +138,7 @@ function renderResults(request, response){
       const obj = activitySearchResults['pois'].map(activityObj => {
         return new Activity(activityObj);
       })
-      console.log('object=================', obj);
+      // console.log('object=================', obj);
       response.status(200).render('searches.ejs', {searchResults: obj});
   })
   .catch((error) => {
@@ -192,6 +195,25 @@ function renderAboutUs(request, response) {
     response.status(500).send('Sorry, something went terribly wrong');
   }
 }
+
+
+function addItemToItinerary(request, response){
+  let formData = request.body;
+  console.log('formdata', formData);
+  let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
+  let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
+  
+  console.log('runnning?');
+  client.query(sql, safeValues)
+    .then(results => {
+      console.log('================================',results);
+      response.redirect('/results');
+    })
+  // response.json({success: true});
+}
+
+
+
 
 function renderMap(request, response) {
   let obj = new Route(request.body);
@@ -277,7 +299,9 @@ function Weather(obj){
 /*############################# Opening Port and Client ##################
 
 ########################################################################*/
-
-app.listen(PORT, () => {
-  console.log(`listening on ${PORT}`);
-});
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`listening on ${PORT}`);
+    });
+  })
