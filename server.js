@@ -115,25 +115,23 @@ function renderWeather(request,response){
 function renderHome(request, response) {
 
 
-  let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
-  let queryParamaters = {
-    key: process.env.WEATHER_API_KEY,
-    city: 'seattle',// will probably need to change this line.
-    units: 'i',
-    days:7
-  }
-  superagent.get(url)
-    .query(queryParamaters)
-    .then(dataFromSuperAgent => {
-      let forcast = dataFromSuperAgent.body.data;
-      const forcastArray = forcast.map(day =>{
-        return new Weather(day);
-      });
-      response.render('../views/home.ejs', {weatherResults: forcastArray});//Where are we sending this?
-    }).catch((error) => {
-      console.log('ERROR',error);
-      response.status(500).send('Sorry, something went terribly wrong')
+  let data = [];
+
+  let url = 'https://api.deezer.com/chart';
+
+  superagent.get(url).then(results => {
+    data = results.body.albums;
+
+    let albumArr = data.data;
+
+    const finalAlbum = albumArr.map(albums => {
+      return new Album(albums);
     });
+
+
+    response.render('../views/home.ejs', {searchResults: finalAlbum})
+  });
+
 }
 
 

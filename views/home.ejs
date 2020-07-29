@@ -79,56 +79,65 @@
 
 						</section>
 
-        </div>
+		</div>
+		
+		<!-- Music 2 -->
+		<div class="wrapper">
+			<section class="container">
+				<header class="major">
+					<h2>Your Saved Intinerary</h2>
+					<p>View the top spots you want to visit</p>
+					<ul class="actions major">
+						<li><a href="/see-itinerary" class="button">Intinerary</a></li>
+					</ul>
+				</header>
+				
+			</section>
+		</div>
         
         <div class="wrapper">
 
-          <h2 style="color: #c7524a;   -webkit-text-stroke-width: 1px;
-                -webkit-text-stroke-color: #262425;">Road Trip is your one stop APP for awesome roadtrips</h2>
-                
-        <div class="row features" style="margin-top: 2em; ">
-          <h2 style='margin-left: 10%;'>Weather Forecast</h2>
-        <% weatherResults.forEach(day => { %>
 
-          
-            <section class="col-12-narrower feature">
-              <p class="weather">
-                <%= day.time %><br>
-                <%= day.forecast %>
-              </p>
-              <div class="image-wrapper first">
-                <a href="#" class="image featured"><img id="icon" src="https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="" /></a>
-              </div>
-              <p class="weather">
-                <%= day.high_temp %>° | <%= day.low_temp %>°<br>
-                Rainfall: <%= day.precip %> inches.
-              </p>
-            </section>
-    
+		
+				<section class="container">
+					<header class="major">
+						<h2>Get some tunes for your road-trip</h2>
+						<p>View the top ten albums thanks to Deezer</p>
+					</header>
 
-          
-          <% }) %>
-        
-        </div>
+
+					<div class="row features">
+						
+						<% searchResults.forEach( albums => { %>
+					
+							<section style="text-align: center;" class="col-5 col-12-narrower feature">
+						
+						
+								<div class="image-wrapper first">
+									<a href="#" class="image featured"><img src='<%= albums.cover_medium %>' alt="" /></a>
+								</div>
+							   <div>
+								   <p class='musicfont'><%= albums.title %></p>
+								   <p class='musicfont'><%= albums.artist %></p>
+								   <p class='musicfont'>Position: <%= albums.position %></p>
+								   <p class='musicfont'>link: <a href='<%= albums.link %>'><%= albums.link %></a></p>
+
+								</div>
+							</section>
+							<% }) %>
+							
+					   
+						
+
+					</div>
+					
+				</section>
+			
 
 
   </div>
 
-				<!-- Music 2 -->
-				<div class="wrapper">
-					<section class="container">
-						<header class="major">
-							<h2>Get some tunes for your road-trip</h2>
-							<p>View the top ten albums thanks to Deezer</p>
-						</header>
-						<div class="row features">
-
-						</div>
-						<ul class="actions major">
-							<li><a href="/music" class="button">Elevate my playlist</a></li>
-						</ul>
-					</section>
-				</div>
+				
 
 			<!-- Features game -->
 			<div class="wrapper" style='background: #f6f8fb'>
