@@ -55,26 +55,25 @@ app.use(methodOverrive('_method'));
 
 app.get('/', renderHome);
 
-app.post('/results', renderResults);
-
 app.get('/results', renderResults);
 
 app.get('/game', renderGame);
 
 app.get('/aboutUs', renderAboutUs);
 
-//==============================Call Back Funtions=========================
+app.get('/see-itinerary', checkItinerary);
+
+app.get('/music', renderMusic);
+//==============================Call Back Functions=========================
 
 app.post('/search', renderMap);
 
-app.get('/music', renderMusic);
+app.post('/results', renderResults);
 
 app.post('/add', addActivityToDatabase);
 
 app.post('/save', addMapDataToDatabase);
 
-
-app.get('/see-itinerary', checkItinerary);
 
 
 
@@ -243,46 +242,57 @@ function renderMap(request, response){
     })
   }
   url += `location=${obj.end}`;
-
-
+  
+  
   superagent.get(url)
-    .then(results => {
-      let latLong = results.body.results;
-      const latLongArray = latLong.map(value => {
-        return new LatLong(value);
-      })
-      response.render('map.ejs', {destinations : obj, MAPQUEST_API_KEY : key, latLongData : latLongArray});
+  .then(results => {
+    let latLong = results.body.results;
+    const latLongArray = latLong.map(value => {
+      return new LatLong(value);
     })
+    response.render('map.ejs', {destinations : obj, MAPQUEST_API_KEY : key, latLongData : latLongArray});
+  })
 }
 
 function addMapDataToDatabase(request, response){
   let formData = request.body;
   dropMapTable();
   createMapTable();
+  dropItineraryTable();
+  createItineraryTable();
   for(let i in formData.city){
     console.log('formdata from mapadd============================',formData);
     let sql = 'INSERT INTO map (city, state, latitude, longitude) VALUES ($1, $2, $3, $4) RETURNING id;';
     let safeValues = [formData.city[i], formData.state[i], formData.latitude[i], formData.longitude[i]];
-  
+    
     client.query(sql, safeValues)
-      // .then(() => {
+    // .then(() => {
       //   // response.status(200).send(console.log('Nice!'));
       // })
       
     }
     response.status(204).send();
-}
+  }
+  
+  function dropMapTable(){
+    let sql = 'DROP TABLE IF EXISTS map;';
+    client.query(sql);
+  }
 
-function dropMapTable(){
-  let sql = 'DROP TABLE IF EXISTS map;';
-  client.query(sql);
-}
-
-function createMapTable(){
-  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
-  client.query(sql);
-}
-
+  function createMapTable(){
+    let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
+    client.query(sql);
+  }
+  
+  function dropItineraryTable(){
+    let sql = 'DROP TABLE IF EXISTS itinerary;';
+    client.query(sql);
+  }
+  
+  function createItineraryTable(){
+    let sql = 'CREATE TABLE itinerary(id SERIAL PRIMARY KEY, name VARCHAR(255), rate NUMERIC, image VARCHAR(255), description TEXT, latitude VARCHAR(255), longitude VARCHAR(255));';
+    client.query(sql);
+  }
 
 /*##################### Constructors ####################################
 
