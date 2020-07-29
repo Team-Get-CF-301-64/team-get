@@ -67,15 +67,17 @@ app.get('/aboutUs', renderAboutUs);
 
 app.post('/search', renderMap);
 
+app.get('/search',renderWeather);
+
 app.get('/music', renderMusic);
 
 app.post('/add', addItemToItinerary);
 
-function renderWeather(request,response){
+function renderWeather(request,response) {
   let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
   let queryParamaters = {
     key: process.env.WEATHER_API_KEY,
-    city: 'seattle',// will probably need to change this line.
+    city: 'New York',//request.body.end,// will probably need to change this line.
     units: 'i',
     days:7
   }
@@ -86,22 +88,21 @@ function renderWeather(request,response){
       const forcastArray = forcast.map(day =>{
         return new Weather(day);
       });
-      response.render('../views/home.ejs', {weatherResults: forcastArray});//Where are we sending this?
+      console.log(forcastArray);
+      response.render('weather.ejs', {weatherResults: forcastArray});//Where are we sending this?
     }).catch((error) => {
       console.log('ERROR',error);
       response.status(500).send('Sorry, something went terribly wrong')
     });
+  console.log('what is my request:',request);
 }
 
-
-
 function renderHome(request, response) {
-
 
   let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
   let queryParamaters = {
     key: process.env.WEATHER_API_KEY,
-    city: 'seattle',// will probably need to change this line.
+    city: 'Seattle', //request.body.end,// will probably need to change this line.
     units: 'i',
     days:7
   }
@@ -112,7 +113,7 @@ function renderHome(request, response) {
       const forcastArray = forcast.map(day =>{
         return new Weather(day);
       });
-      response.render('../views/home.ejs', {weatherResults: forcastArray});//Where are we sending this?
+      response.render('home.ejs', {weatherResults: forcastArray});//Where are we sending this?
     }).catch((error) => {
       console.log('ERROR',error);
       response.status(500).send('Sorry, something went terribly wrong')
@@ -132,19 +133,19 @@ function renderResults(request, response){
   }
 
   superagent.get(url)
-  .query(queryParams)
-  .then(results => {
-    let activitySearchResults = results.body.results[0];
+    .query(queryParams)
+    .then(results => {
+      let activitySearchResults = results.body.results[0];
       const obj = activitySearchResults['pois'].map(activityObj => {
         return new Activity(activityObj);
       })
       // console.log('object=================', obj);
       response.status(200).render('searches.ejs', {searchResults: obj});
-  })
-  .catch((error) => {
-    console.log('ERROR', error);
-    response.status(500).send('Sorry, something went terribly wrong');
-  })
+    })
+    .catch((error) => {
+      console.log('ERROR', error);
+      response.status(500).send('Sorry, something went terribly wrong');
+    })
 }
 
 
@@ -202,7 +203,7 @@ function addItemToItinerary(request, response){
   console.log('formdata', formData);
   let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
   let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
-  
+
   console.log('runnning?');
   client.query(sql, safeValues)
     .then(results => {
@@ -227,7 +228,7 @@ function renderMap(request, response) {
     })
   }
   url += `location=${obj.end}`;
-  
+
 
   superagent.get(url)
     .then(results => {
