@@ -74,26 +74,7 @@ app.get('/music', renderMusic);
 app.post('/add', addItemToItinerary);
 
 function renderWeather(request,response) {
-  let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
-  let queryParamaters = {
-    key: process.env.WEATHER_API_KEY,
-    city: 'New York',//request.body.end,// will probably need to change this line.
-    units: 'i',
-    days:7
-  }
-  superagent.get(url)
-    .query(queryParamaters)
-    .then(dataFromSuperAgent => {
-      let forcast = dataFromSuperAgent.body.data;
-      const forcastArray = forcast.map(day =>{
-        return new Weather(day);
-      });
-      console.log(forcastArray);
-      response.render('weather.ejs', {weatherResults: forcastArray});//Where are we sending this?
-    }).catch((error) => {
-      console.log('ERROR',error);
-      response.status(500).send('Sorry, something went terribly wrong')
-    });
+
   console.log('what is my request:',request);
 }
 
@@ -140,7 +121,27 @@ function renderResults(request, response){
         return new Activity(activityObj);
       })
       // console.log('object=================', obj);
-      response.status(200).render('searches.ejs', {searchResults: obj});
+      let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
+      let queryParamaters = {
+        key: process.env.WEATHER_API_KEY,
+        city: 'New York',//request.body.end,// will probably need to change this line.
+        units: 'i',
+        days:7
+      }
+      superagent.get(url)
+        .query(queryParamaters)
+        .then(dataFromSuperAgent => {
+          let forcast = dataFromSuperAgent.body.data;
+          const forcastArray = forcast.map(day =>{
+            return new Weather(day);
+          });
+          response.status(200).render('searches.ejs', {searchResults: obj, weatherResults: forcastArray});
+
+        }).catch((error) => {
+          console.log('ERROR',error);
+          response.status(500).send('Sorry, something went terribly wrong')
+        });
+        console.log('getting this from form',request.body)
     })
     .catch((error) => {
       console.log('ERROR', error);
