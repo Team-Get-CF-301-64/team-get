@@ -118,7 +118,7 @@ function renderHome(request, response) {
 
 
 function renderResults(request, response){
- 
+
   let url = 'https://www.triposo.com/api/20200405/local_highlights.json?';
 
   let queryParams = {
@@ -130,20 +130,20 @@ function renderResults(request, response){
   }
 
   superagent.get(url)
-  .query(queryParams)
-  .then(results => {
-    let activitySearchResults = results.body.results[0];
+    .query(queryParams)
+    .then(results => {
+      let activitySearchResults = results.body.results[0];
       console.log('activity',activitySearchResults);
       const obj = activitySearchResults['pois'].map(activityObj => {
         return new Activity(activityObj);
       })
       console.log('object=================', obj);
       response.status(200).render('searches.ejs', {searchResults: obj});
-  })
-  .catch((error) => {
-    console.log('ERROR', error);
-    response.status(500).send('Sorry, something went terribly wrong');
-  })
+    })
+    .catch((error) => {
+      console.log('ERROR', error);
+      response.status(500).send('Sorry, something went terribly wrong');
+    })
 }
 // function renderResults(request, response) {
 
@@ -202,6 +202,7 @@ function renderMusic(req, resp){
 
     let albumArr = data.data;
 
+    console.log('this is from API: ', albumArr);
     const finalAlbum = albumArr.map(albums => {
       return new Album(albums);
     });
@@ -276,6 +277,7 @@ function Album(obj){
   this.position = obj.position;
   this.cover_medium = obj.cover_medium;
   this.artist = obj.artist.name;
+  this.link = obj.link;
 }
 
 function Pokemon(obj){
