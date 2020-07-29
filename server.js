@@ -88,32 +88,12 @@ function checkItinerary(request,resp){
     })
 }
 
-function renderWeather(request,response){
-  let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
-  let queryParamaters = {
-    key: process.env.WEATHER_API_KEY,
-    city: 'seattle',// will probably need to change this line.
-    units: 'i',
-    days:7
-  }
-  superagent.get(url)
-    .query(queryParamaters)
-    .then(dataFromSuperAgent => {
-      let forcast = dataFromSuperAgent.body.data;
-      const forcastArray = forcast.map(day =>{
-        return new Weather(day);
-      });
-      response.render('../views/home.ejs', {weatherResults: forcastArray});//Where are we sending this?
-    }).catch((error) => {
-      console.log('ERROR',error);
-      response.status(500).send('Sorry, something went terribly wrong')
-    });
+function renderWeather(request,response) {
+
+  console.log('what is my request:',request);
 }
 
-
-
 function renderHome(request, response) {
-
 
   let data = [];
 
@@ -131,8 +111,8 @@ function renderHome(request, response) {
 
     response.render('../views/home.ejs', {searchResults: finalAlbum})
   });
-
 }
+
 
 
 function renderResults(request, response){
@@ -141,8 +121,8 @@ function renderResults(request, response){
   let queryParams = {
     account: process.env.account,
     token: process.env.token,
-    latitude: 47.608013,
-    longitude: -122.335167,
+    latitude: request.body.lat,
+    longitude: request.body.lon,
     tag_labels: 'do'
   }
 
@@ -153,8 +133,26 @@ function renderResults(request, response){
       const obj = activitySearchResults['pois'].map(activityObj => {
         return new Activity(activityObj);
       })
-      // console.log('object=================', obj);
-      response.status(200).render('searches.ejs', {searchResults: obj});
+      let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
+      let queryParamaters = {
+        key: process.env.WEATHER_API_KEY,
+        city: request.body.city,
+        units: 'i',
+        days:7
+      }
+      superagent.get(url)
+        .query(queryParamaters)
+        .then(dataFromSuperAgent => {
+          let forcast = dataFromSuperAgent.body.data;
+          const forcastArray = forcast.map(day =>{
+            return new Weather(day);
+          });
+          response.status(200).render('searches.ejs', {searchResults: obj, weatherResults: forcastArray});
+        }).catch((error) => {
+          console.log('ERROR',error);
+          response.status(500).send('Sorry, something went terribly wrong')
+        });
+      // console.log('getting this from form',request.body)
     })
     .catch((error) => {
       console.log('ERROR', error);
@@ -242,16 +240,16 @@ function renderMap(request, response){
     })
   }
   url += `location=${obj.end}`;
-  
-  
+
+
   superagent.get(url)
-  .then(results => {
-    let latLong = results.body.results;
-    const latLongArray = latLong.map(value => {
-      return new LatLong(value);
+    .then(results => {
+      let latLong = results.body.results;
+      const latLongArray = latLong.map(value => {
+        return new LatLong(value);
+      })
+      response.render('map.ejs', {destinations : obj, MAPQUEST_API_KEY : key, latLongData : latLongArray});
     })
-    response.render('map.ejs', {destinations : obj, MAPQUEST_API_KEY : key, latLongData : latLongArray});
-  })
 }
 
 function addMapDataToDatabase(request, response){
@@ -264,35 +262,40 @@ function addMapDataToDatabase(request, response){
     console.log('formdata from mapadd============================',formData);
     let sql = 'INSERT INTO map (city, state, latitude, longitude) VALUES ($1, $2, $3, $4) RETURNING id;';
     let safeValues = [formData.city[i], formData.state[i], formData.latitude[i], formData.longitude[i]];
-    
+
     client.query(sql, safeValues)
     // .then(() => {
-      //   // response.status(200).send(console.log('Nice!'));
-      // })
-      
-    }
-    response.status(204).send();
-  }
-  
-  function dropMapTable(){
-    let sql = 'DROP TABLE IF EXISTS map;';
-    client.query(sql);
-  }
+    //   // response.status(200).send(console.log('Nice!'));
+    // })
 
-  function createMapTable(){
-    let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
-    client.query(sql);
   }
-  
-  function dropItineraryTable(){
-    let sql = 'DROP TABLE IF EXISTS itinerary;';
-    client.query(sql);
-  }
-  
-  function createItineraryTable(){
-    let sql = 'CREATE TABLE itinerary(id SERIAL PRIMARY KEY, name VARCHAR(255), rate NUMERIC, image VARCHAR(255), description TEXT, latitude VARCHAR(255), longitude VARCHAR(255));';
-    client.query(sql);
-  }
+  response.status(204).send();
+}
+
+function dropMapTable(){
+  let sql = 'DROP TABLE IF EXISTS map;';
+  client.query(sql);
+}
+
+function createMapTable(){
+  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
+  client.query(sql);
+}
+
+function createMapTable(){
+  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
+  client.query(sql);
+}
+
+function dropItineraryTable(){
+  let sql = 'DROP TABLE IF EXISTS itinerary;';
+  client.query(sql);
+}
+
+function createItineraryTable(){
+  let sql = 'CREATE TABLE itinerary(id SERIAL PRIMARY KEY, name VARCHAR(255), rate NUMERIC, image VARCHAR(255), description TEXT, latitude VARCHAR(255), longitude VARCHAR(255));';
+  client.query(sql);
+}
 
 /*##################### Constructors ####################################
 

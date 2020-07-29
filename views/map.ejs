@@ -168,6 +168,16 @@
 							<header>
 								<h2 style='color:  #6B3037'>Review your route, Save your route, Then look for some nearby activities.</h2>
 							</header>
+							
+							<form id="activity-search" action="/results" method="post">
+								<input name="lat" type="hidden" value="<%= latLongData[(latLongData.length-1)].latitude %>">
+								<input name="lon" type="hidden" value="<%= latLongData[(latLongData.length-1)].longitude %>">
+								<input name ="city" type="hidden" value="<%= latLongData[(latLongData.length-1)].city %>">
+								<% console.log(latLongData[(latLongData.length-1)]);%>
+									<button type="submit">Search Activities</button>
+							</form>
+						</section>
+
 
 							<!-- Features 1 -->
 							<form action="/save" method="post">
