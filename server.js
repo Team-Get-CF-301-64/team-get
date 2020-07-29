@@ -96,25 +96,6 @@ function renderWeather(request,response) {
 
 function renderHome(request, response) {
 
-  let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
-  let queryParamaters = {
-    key: process.env.WEATHER_API_KEY,
-    city: 'Seattle', //request.body.end,// will probably need to change this line.
-    units: 'i',
-    days:7
-  }
-  superagent.get(url)
-    .query(queryParamaters)
-    .then(dataFromSuperAgent => {
-      let forcast = dataFromSuperAgent.body.data;
-      const forcastArray = forcast.map(day =>{
-        return new Weather(day);
-      });
-      response.render('home.ejs', {weatherResults: forcastArray});//Where are we sending this?
-    }).catch((error) => {
-      console.log('ERROR',error);
-      response.status(500).send('Sorry, something went terribly wrong')
-
   let data = [];
 
   let url = 'https://api.deezer.com/chart';
@@ -131,8 +112,8 @@ function renderHome(request, response) {
 
     response.render('../views/home.ejs', {searchResults: finalAlbum})
   });
-
 }
+
 
 
 function renderResults(request, response){
@@ -156,7 +137,7 @@ function renderResults(request, response){
       let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
       let queryParamaters = {
         key: process.env.WEATHER_API_KEY,
-        city: request.body.city,// will probably need to change this line.
+        city: request.body.city,
         units: 'i',
         days:7
       }
@@ -172,7 +153,7 @@ function renderResults(request, response){
           console.log('ERROR',error);
           response.status(500).send('Sorry, something went terribly wrong')
         });
-      console.log('getting this from form',request.body)
+      // console.log('getting this from form',request.body)
     })
     .catch((error) => {
       console.log('ERROR', error);
