@@ -12,23 +12,26 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/game.css" />
     <script id="input-template" type="text/x-tmpl-mustache">
-      <input type="text" name={{iteration}} placeholder='stop number {{iteration}}'>
+      <input type="text" name={{iteration}}>
     </script>
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
 
 			<!-- Header -->
-      <div id="" style="  background: url(images/newimg.jpeg) no-repeat center center; 
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover; height: 36em;">
+
+				<div id="" style="  background: url(images/newimg.jpeg) no-repeat center center; 
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover; height: 36em;">
+
 					<div id="header" class="container">
 
 				
 
 						<!-- Nav -->
+
             <nav id="nav" style='margin-right: 0;'>
 								<ul>
 									<li>
@@ -51,17 +54,16 @@
 						<section id="hero" class="container">
 							<header>
 								<h2 style="color: #c7524a;   -webkit-text-stroke-width: 1px;
-								-webkit-text-stroke-color: #562222;">ROAD TRIP</h2>
+
+								-webkit-text-stroke-color: #562222;">TRAVEL APP</h2>
 								<br />
-								<!-- <h2 style="color: #F2F4EF;   -webkit-text-stroke-width: 1px;
-								-webkit-text-stroke-color: #562222;">your one stop APP for awesome roadtrips</h2> -->
-                
-                <!-- <ul class="actions">
-                  <li><a href="#" class="button">PLACE HOLDER FOR SEARCH</a></li>
-                </ul> -->
-              </header>
+								<h2 style="color: #F2F4EF;   -webkit-text-stroke-width: 1px;
+								-webkit-text-stroke-color: #562222;">your one stop APP for awesome roadtrips</h2>
+							</header>
+						
+				<br>
               
-              <form action="/search" method="post">
+       <form action="/search" method="post">
                 <h2 style="margin-top: 2em; color:  #F2F4EF;   -webkit-text-stroke-width: 1px;
 				-webkit-text-stroke-color: #562222;">Add a start point and a destination to get started.</h2>
                 <input style="width: 60%; margin: .5em auto;" type="text" name="start" placeholder="Seattle, WA">
@@ -250,13 +252,15 @@
 
   <script src="https://unpkg.com/mustache@latest"></script>
   <script>
+
     let templateObj = { iteration: 2 }
 			$('#add-waypoint').click(function (event) {
+
       event.preventDefault();
       let template = $('#input-template').html();
       console.log(template);
       let html = Mustache.render(template, templateObj);
-      $('input:last-of-type').before(html);
+      $('input:first-of-type').after(html);
       templateObj.iteration++;
     })
   </script>
