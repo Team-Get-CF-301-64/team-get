@@ -67,8 +67,6 @@ app.get('/aboutUs', renderAboutUs);
 
 app.post('/search', renderMap);
 
-app.get('/search',renderWeather);
-
 app.get('/music', renderMusic);
 
 app.post('/add', addItemToItinerary);
@@ -120,7 +118,6 @@ function renderResults(request, response){
       const obj = activitySearchResults['pois'].map(activityObj => {
         return new Activity(activityObj);
       })
-      // console.log('object=================', obj);
       let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
       let queryParamaters = {
         key: process.env.WEATHER_API_KEY,
@@ -141,7 +138,7 @@ function renderResults(request, response){
           console.log('ERROR',error);
           response.status(500).send('Sorry, something went terribly wrong')
         });
-        console.log('getting this from form',request.body)
+      console.log('getting this from form',request.body)
     })
     .catch((error) => {
       console.log('ERROR', error);
