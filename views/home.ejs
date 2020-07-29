@@ -42,7 +42,8 @@
 										</ul>
 									</li>
 								
-								</ul>
+                </ul>
+                
 						</nav>
 
 					</div>
@@ -69,7 +70,6 @@
                 <br><br>
                 <button id="add-waypoint">Add a Stop</button>
                 <button type="submit">Submit</button>
-
               </form>
 
 
@@ -251,7 +251,7 @@
   <script src="https://unpkg.com/mustache@latest"></script>
   <script>
     let templateObj = { iteration: 2 }
-			$('#add-waypoint').click(function (event) {
+    $('#add-waypoint').click(function (event) {
       event.preventDefault();
       let template = $('#input-template').html();
       console.log(template);
@@ -263,8 +263,3 @@
 
 	</body>
 </html>
-
-
-
-
-  

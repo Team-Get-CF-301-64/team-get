@@ -95,12 +95,12 @@
 						</section>
 
 							<!-- Features 1 -->
-							<form action="/save" method="/post">
+							<form action="/save" method="post">
 								<% latLongData.forEach((value, index) => { %>
-									<input type="hidden" name="city<%= index %>" value="<%= value.city %>">
-									<input type="hidden" name="state<%= index %>" value="<%= value.state %>">
-									<input type="hidden" name="latitude<%= index %>" value="<%= value.latitude %>">
-									<input type="hidden" name="longitude<%= index %>" value="<%= value.longitude %>">
+									<input type="hidden" name="city" value="<%= value.city %>">
+									<input type="hidden" name="state" value="<%= value.state %>">
+									<input type="hidden" name="latitude" value="<%= value.latitude %>">
+									<input type="hidden" name="longitude" value="<%= value.longitude %>">
 								<% }) %>
 								<button type="submit">Save this route</button>
 							</form>

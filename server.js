@@ -71,7 +71,7 @@ app.get('/music', renderMusic);
 
 app.post('/add', addActivityToDatabase);
 
-app.post('/matt', addMapDataToDatabase);
+app.post('/save', addMapDataToDatabase);
 
 function renderWeather(request,response){
   let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
@@ -206,11 +206,10 @@ function addActivityToDatabase(request, response){
   let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
   let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
   
-  console.log('runnning?');
   client.query(sql, safeValues)
     .then(() => {
       // console.log('================================',results);
-      response.status(200).redirect('/results');
+      response.status(204).send();
     })
   // response.json({success: true});
 }
@@ -244,15 +243,32 @@ function renderMap(request, response){
 
 function addMapDataToDatabase(request, response){
   let formData = request.body;
-
-  let sql = 'INSERT INTO map (city, state, latitude, longitude) VALUES ($1, $2, $3, $4) RETURNING id;';
-  let safeValues = [formData.city, formData.state, formData.latitude, formData.longitude];
-
-  client.query(sql, safeValues)
-    .then(() => {
-      response.status(200).send(console.log('Nice!'));
-    })
+  dropMapTable();
+  createMapTable();
+  for(let i in formData.city){
+    console.log('formdata from mapadd============================',formData);
+    let sql = 'INSERT INTO map (city, state, latitude, longitude) VALUES ($1, $2, $3, $4) RETURNING id;';
+    let safeValues = [formData.city[i], formData.state[i], formData.latitude[i], formData.longitude[i]];
+  
+    client.query(sql, safeValues)
+      // .then(() => {
+      //   // response.status(200).send(console.log('Nice!'));
+      // })
+      
+    }
+    response.status(204).send();
 }
+
+function dropMapTable(){
+  let sql = 'DROP TABLE IF EXISTS map;';
+  client.query(sql);
+}
+
+function createMapTable(){
+  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
+  client.query(sql);
+}
+
 
 /*##################### Constructors ####################################
 
