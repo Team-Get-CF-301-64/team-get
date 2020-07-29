@@ -44,13 +44,17 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<div id="header-wrapper">
+      <div id="" style="  background: url(images/newimg.jpeg) no-repeat center center; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover; height: 36em;">
 					<div id="header" class="container">
 
 				
 
 						<!-- Nav -->
-							<nav id="nav">
+            <nav id="nav" style='margin-right: 0;'>
 								<ul>
 									<li>
 										<a href="#">Dropdown</a>
@@ -69,19 +73,23 @@
 					<!-- Hero -->
 						<section id="hero" class="container">
 							<header>
-								<h2>TRAVEL APP
+								<h2 style="color: #c7524a;   -webkit-text-stroke-width: 1px;
+								-webkit-text-stroke-color: #562222;">ROAD TRIP</h2>
 								<br />
-								you one stop APP for awesome roadtrips</h2>
-							</header>
-						
-							<ul class="actions">
-								<li><a href="#" class="button">PLACE HOLDER FOR SEARCH</a></li>
-              </ul>
+								<!-- <h2 style="color: #F2F4EF;   -webkit-text-stroke-width: 1px;
+								-webkit-text-stroke-color: #562222;">your one stop APP for awesome roadtrips</h2> -->
+                
+                <!-- <ul class="actions">
+                  <li><a href="#" class="button">PLACE HOLDER FOR SEARCH</a></li>
+                </ul> -->
+              </header>
               
               <form action="/search" method="post">
-                <h2>Add 2 or more destinations</h2>
-                <input type="text" name="start" placeholder="Seattle, WA">
-                <input type="text" name="end" placeholder="New York, NY">
+                <h2 style="margin-top: 2em; color:  #F2F4EF;   -webkit-text-stroke-width: 1px;
+				-webkit-text-stroke-color: #562222;">Add a start point and a destination to get started.</h2>
+                <input style="width: 60%; margin: .5em auto;" type="text" name="start" placeholder="Seattle, WA">
+                <input style="width: 60%; margin: auto;" type="text" name="end" placeholder="New York, NY">
+                <br><br>
                 <button id="add-waypoint">Add Mid Points</button>
                 <button type="submit">Submit</button>
               </form>
@@ -97,7 +105,9 @@
         
         <div class="wrapper">
 
-
+          <h2 style="color: #c7524a;   -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: #262425;">Road Trip is your one stop APP for awesome roadtrips</h2>
+                
         <div class="row features" style="margin-top: 2em; ">
           <h2 style='margin-left: 10%;'>Weather Forecast</h2>
         <% weatherResults.forEach(day => { %>
