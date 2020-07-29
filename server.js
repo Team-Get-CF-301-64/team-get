@@ -69,7 +69,25 @@ app.post('/search', renderMap);
 
 app.get('/music', renderMusic);
 
-app.post('/add', addItemToItinerary);
+app.post('/add', addActivityToDatabase);
+
+app.post('/save', addMapDataToDatabase);
+
+
+app.get('/see-itinerary', checkItinerary);
+
+
+
+function checkItinerary(request,resp){
+  let sql = 'SELECT * FROM itinerary;';
+  client.query(sql)
+    .then(book => {
+      let abook = book.rows;
+      resp.render('../views/itinerary.ejs', {faves: abook});
+    }).catch(err => {
+      resp.status(500).render('../views/home', {error:err});
+    })
+}
 
 function renderWeather(request,response) {
 
@@ -106,8 +124,8 @@ function renderResults(request, response){
   let queryParams = {
     account: process.env.account,
     token: process.env.token,
-    latitude: 47.608013,
-    longitude: -122.335167,
+    latitude: request.body.lat,
+    longitude: request.body.lon,
     tag_labels: 'do'
   }
 
@@ -121,7 +139,7 @@ function renderResults(request, response){
       let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
       let queryParamaters = {
         key: process.env.WEATHER_API_KEY,
-        city: 'New York',//request.body.end,// will probably need to change this line.
+        city: request.body.city,// will probably need to change this line.
         units: 'i',
         days:7
       }
@@ -133,7 +151,6 @@ function renderResults(request, response){
             return new Weather(day);
           });
           response.status(200).render('searches.ejs', {searchResults: obj, weatherResults: forcastArray});
-
         }).catch((error) => {
           console.log('ERROR',error);
           response.status(500).send('Sorry, something went terribly wrong')
@@ -159,6 +176,7 @@ function renderMusic(req, resp){
 
     let albumArr = data.data;
 
+    console.log('this is from API: ', albumArr);
     const finalAlbum = albumArr.map(albums => {
       return new Album(albums);
     });
@@ -173,7 +191,7 @@ function renderMusic(req, resp){
 
 
 
-function renderGame(request, response) {
+function renderGame(request, response){
 
   try{
 
@@ -196,17 +214,16 @@ function renderAboutUs(request, response) {
 }
 
 
-function addItemToItinerary(request, response){
+function addActivityToDatabase(request, response){
   let formData = request.body;
-  console.log('formdata', formData);
+  // console.log('formdata', formData);
   let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
   let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
 
-  console.log('runnning?');
   client.query(sql, safeValues)
-    .then(results => {
-      console.log('================================',results);
-      response.redirect('/results');
+    .then(() => {
+      // console.log('================================',results);
+      response.status(204).send();
     })
   // response.json({success: true});
 }
@@ -214,7 +231,7 @@ function addItemToItinerary(request, response){
 
 
 
-function renderMap(request, response) {
+function renderMap(request, response){
   let obj = new Route(request.body);
   let key = process.env.MAPQUEST_API_KEY;
   let url = 'http://www.mapquestapi.com/geocoding/v1/batch';
@@ -237,6 +254,35 @@ function renderMap(request, response) {
       response.render('map.ejs', {destinations : obj, MAPQUEST_API_KEY : key, latLongData : latLongArray});
     })
 }
+
+function addMapDataToDatabase(request, response){
+  let formData = request.body;
+  dropMapTable();
+  createMapTable();
+  for(let i in formData.city){
+    console.log('formdata from mapadd============================',formData);
+    let sql = 'INSERT INTO map (city, state, latitude, longitude) VALUES ($1, $2, $3, $4) RETURNING id;';
+    let safeValues = [formData.city[i], formData.state[i], formData.latitude[i], formData.longitude[i]];
+
+    client.query(sql, safeValues)
+    // .then(() => {
+    //   // response.status(200).send(console.log('Nice!'));
+    // })
+
+  }
+  response.status(204).send();
+}
+
+function dropMapTable(){
+  let sql = 'DROP TABLE IF EXISTS map;';
+  client.query(sql);
+}
+
+function createMapTable(){
+  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
+  client.query(sql);
+}
+
 
 /*##################### Constructors ####################################
 
@@ -265,6 +311,7 @@ function Album(obj){
   this.position = obj.position;
   this.cover_medium = obj.cover_medium;
   this.artist = obj.artist.name;
+  this.link = obj.link;
 }
 
 function LatLong(obj) {
