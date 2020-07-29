@@ -19,28 +19,34 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
+
 				<div id="" style="  background: url(images/newimg.jpeg) no-repeat center center; 
                 -webkit-background-size: cover;
                 -moz-background-size: cover;
                 -o-background-size: cover;
                 background-size: cover; height: 36em;">
+
 					<div id="header" class="container">
 
 				
 
 						<!-- Nav -->
-							<nav id="nav" style='margin-right: 0;'>
+
+            <nav id="nav" style='margin-right: 0;'>
 								<ul>
 									<li>
-										<a   href="#">Dropdown</a>
+										<a href="#">Menu</a>
 										<ul>
+                      <li><a href="/">Home</a></li>
+                      <li><a href="/">Itinerary</a></li>
+											<li><a href="/game">Travel Game</a></li>
 											<li><a href="/aboutus">About Us</a></li>
 											<li><a href="/music">Music</a></li>
 										</ul>
 									</li>
 								
 								</ul>
-							</nav>
+						</nav>
 
 					</div>
 
@@ -48,6 +54,7 @@
 						<section id="hero" class="container">
 							<header>
 								<h2 style="color: #c7524a;   -webkit-text-stroke-width: 1px;
+
 								-webkit-text-stroke-color: #562222;">TRAVEL APP</h2>
 								<br />
 								<h2 style="color: #F2F4EF;   -webkit-text-stroke-width: 1px;
@@ -56,16 +63,15 @@
 						
 				<br>
               
-              <form action="/search" method="post">
-				<h2 style="color:  #F2F4EF;   -webkit-text-stroke-width: 1px;
-				-webkit-text-stroke-color: #562222;">Add 2 or more destinations</h2>
-				<br>
-                <input style="width: 60%; margin: auto;" type="text" name="start" placeholder="Seattle, WA">
+       <form action="/search" method="post">
+                <h2 style="margin-top: 2em; color:  #F2F4EF;   -webkit-text-stroke-width: 1px;
+				-webkit-text-stroke-color: #562222;">Add a start point and a destination to get started.</h2>
+                <input style="width: 60%; margin: .5em auto;" type="text" name="start" placeholder="Seattle, WA">
                 <input style="width: 60%; margin: auto;" type="text" name="end" placeholder="New York, NY">
-				<br><br>
-				<button id="add-waypoint">Add Mid Points</button>
-				<button type="submit">Submit</button>
-				<br>
+                <br><br>
+                <button id="add-waypoint">Add a Stop</button>
+                <button type="submit">Submit</button>
+
               </form>
 
 
@@ -79,7 +85,9 @@
         
         <div class="wrapper">
 
-
+          <h2 style="color: #c7524a;   -webkit-text-stroke-width: 1px;
+                -webkit-text-stroke-color: #262425;">Road Trip is your one stop APP for awesome roadtrips</h2>
+                
         <div class="row features" style="margin-top: 2em; ">
           <h2 style='margin-left: 10%;'>Weather Forecast</h2>
         <% weatherResults.forEach(day => { %>
@@ -244,8 +252,10 @@
 
   <script src="https://unpkg.com/mustache@latest"></script>
   <script>
-    let templateObj = { iteration: 0 }
-    $('#add-waypoint').click(function (event) {
+
+    let templateObj = { iteration: 2 }
+			$('#add-waypoint').click(function (event) {
+
       event.preventDefault();
       let template = $('#input-template').html();
       console.log(template);

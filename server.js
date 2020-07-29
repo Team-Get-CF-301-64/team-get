@@ -69,7 +69,9 @@ app.post('/search', renderMap);
 
 app.get('/music', renderMusic);
 
-app.post('/add', addItemToItinerary);
+app.post('/add', addActivityToDatabase);
+
+app.post('/matt', addMapDataToDatabase);
 
 
 app.get('/see-itinerary', checkItinerary);
@@ -191,7 +193,7 @@ function renderMusic(req, resp){
 
 
 
-function renderGame(request, response) {
+function renderGame(request, response){
 
   try{
 
@@ -214,17 +216,17 @@ function renderAboutUs(request, response) {
 }
 
 
-function addItemToItinerary(request, response){
+function addActivityToDatabase(request, response){
   let formData = request.body;
-  console.log('formdata', formData);
+  // console.log('formdata', formData);
   let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
   let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
 
   console.log('runnning?');
   client.query(sql, safeValues)
-    .then(results => {
-      console.log('================================',results);
-      response.redirect('/results');
+    .then(() => {
+      // console.log('================================',results);
+      response.status(200).redirect('/results');
     })
   // response.json({success: true});
 }
@@ -232,7 +234,7 @@ function addItemToItinerary(request, response){
 
 
 
-function renderMap(request, response) {
+function renderMap(request, response){
   let obj = new Route(request.body);
   let key = process.env.MAPQUEST_API_KEY;
   let url = 'http://www.mapquestapi.com/geocoding/v1/batch';
@@ -253,6 +255,18 @@ function renderMap(request, response) {
         return new LatLong(value);
       })
       response.render('map.ejs', {destinations : obj, MAPQUEST_API_KEY : key, latLongData : latLongArray});
+    })
+}
+
+function addMapDataToDatabase(request, response){
+  let formData = request.body;
+
+  let sql = 'INSERT INTO map (city, state, latitude, longitude) VALUES ($1, $2, $3, $4) RETURNING id;';
+  let safeValues = [formData.city, formData.state, formData.latitude, formData.longitude];
+
+  client.query(sql, safeValues)
+    .then(() => {
+      response.status(200).send(console.log('Nice!'));
     })
 }
 
