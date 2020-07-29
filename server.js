@@ -73,6 +73,22 @@ app.post('/add', addActivityToDatabase);
 
 app.post('/save', addMapDataToDatabase);
 
+
+app.get('/see-itinerary', checkItinerary);
+
+
+
+function checkItinerary(request,resp){
+  let sql = 'SELECT * FROM itinerary;';
+  client.query(sql)
+    .then(book => {
+      let abook = book.rows;
+      resp.render('../views/itinerary.ejs', {faves: abook});
+    }).catch(err => {
+      resp.status(500).render('../views/home', {error:err});
+    })
+}
+
 function renderWeather(request,response){
   let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
   let queryParamaters = {
@@ -134,9 +150,9 @@ function renderResults(request, response){
   }
 
   superagent.get(url)
-  .query(queryParams)
-  .then(results => {
-    let activitySearchResults = results.body.results[0];
+    .query(queryParams)
+    .then(results => {
+      let activitySearchResults = results.body.results[0];
       const obj = activitySearchResults['pois'].map(activityObj => {
         return new Activity(activityObj);
       })
@@ -205,7 +221,7 @@ function addActivityToDatabase(request, response){
   // console.log('formdata', formData);
   let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
   let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
-  
+
   client.query(sql, safeValues)
     .then(() => {
       // console.log('================================',results);
@@ -229,7 +245,7 @@ function renderMap(request, response){
     })
   }
   url += `location=${obj.end}`;
-  
+
 
   superagent.get(url)
     .then(results => {

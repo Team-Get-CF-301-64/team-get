@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<!--
+	Telephasic by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <title>Telephasic by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+
+  
+	
+	
+		
+	</head>
+
+
+	<body class="homepage is-preload">
+
+
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="" style="  background: url(images/appbanner.jpeg) no-repeat center center fixed; 
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover; height: 100vh">
+					<div id="header" class="container">
+
+						
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li>
+										<a href="#">Dropdown</a>
+										<ul>
+											<li><a href="/">Home</a></li>
+											<li><a href="/music">Music</a></li>
+											<li><a href="/aboutus">About Us</a></li>
+										</ul>
+									</li>
+								</ul>
+							</nav>
+
+					</div>
+
+					<!-- Hero Button for resulths path -->
+					<section id="hero" class="container">
+						<% faves.forEach( book => { %>
+
+                            <div class='books desktop-books'>
+                                <div class='book-img'>
+                                    <img src='<%= book.image_url %>'/>
+                                    <a  class='edit-button' href='../books/edit/<%= book.id %>'>EDIT</a> 
+                                </div>    
+                                 <div class='book-info larger-text' >
+                                    <h3 class='form-spacer' data-id="<%= book.id %>">Title: 
+                                        <span class='highlight'><%=  book.title %></span>
+                                         Author: <span class='highlight'><%= book.author %></span> </h3>
+                                    <p> </p>
+                                    <p><%= book.isbn %> <span style='display: none;'> <%= book.bookshelf %></span> </p>
+                                    <h6 class='form-spacer left-ally'><span style="color: transparent;">....</span><%= book.description %></h6>
+                                   
+                                 </div>
+                                 
+                        
+                                 </div>
+                                    
+                            <% }) %>
+
+					</section>
+
+							<!-- Features 1 -->
+				
+            
+				
+					
+
+				</div>
+
+		
+
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

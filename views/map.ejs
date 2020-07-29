@@ -48,9 +48,90 @@
           waypoints: waypoints
         });
       }
-    </script>
+	</script>
+	
+	<style>
+
+		.loader {
+			position: absolute;
+			z-index: 66;
+			width: 350px;
+			height: 350px;
+			border-radius: 50%;
+			background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+			animation: animate 4.2s linear 1 forwards;
+			margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+
+		}
+		
+		@keyframes animate {
+			0% {
+				transform: rotate(0deg);
+				opacity: 1;
+				z-index: 66;
+
+			}
+			100% {
+				transform: rotate(360deg);
+				opacity: 0;
+				z-index: -1;
+			}
+		}
+
+		
+		.loader span {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+		}
+		
+		.loader span:nth-child(1) {
+			filter: blur(5px);
+		}
+		
+		.loader span:nth-child(2) {
+			filter: blur(10px);
+		}
+		
+		.loader span:nth-child(3) {
+			filter: blur(25px);
+		}
+		
+		.loader span:nth-child(4) {
+			filter: blur(50px);
+		}
+		
+		.loader:after {
+			content: '';
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			right: 10px;
+			bottom: 10px;
+			background: transparent;
+			border: solid white 10px;
+			border-radius: 50%;
+		}
+		
+				</style>
+		
 	</head>
-	<body class="homepage is-preload">
+
+
+	<body class="homepage is-preload" style="overflow-x: hidden; overflow-y: hidden;">
+
+
+		<div class="loader">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -82,6 +163,7 @@
 					</div>
 
 					<!-- Hero Button for resulths path -->
+
 						<section id="hero" class="container">
 							<header>
 								<h2 style='color:  #6B3037'>Look For Attractions</h2>
@@ -93,6 +175,7 @@
 									<button type="submit">Search Activities</button>
 							</form>
 						</section>
+
 
 							<!-- Features 1 -->
 							<form action="/save" method="post">
@@ -106,8 +189,10 @@
 							</form>
 				
             
-					<div id="map" style="width: 100%; height: 530px; border-top: solid 7px #6B3037; border-bottom: 7px solid #6B3037;"></div>
-					
+
+					<div id="map" style=" z-index: 1;width: 100%; height: 530px; border-top: solid 7px #6B3037; border-bottom: 7px solid #6B3037;"></div>
+		
+
 		
 					
 
