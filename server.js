@@ -55,26 +55,25 @@ app.use(methodOverrive('_method'));
 
 app.get('/', renderHome);
 
-app.post('/results', renderResults);
-
 app.get('/results', renderResults);
 
 app.get('/game', renderGame);
 
 app.get('/aboutUs', renderAboutUs);
 
-//==============================Call Back Funtions=========================
+app.get('/see-itinerary', checkItinerary);
+
+app.get('/music', renderMusic);
+//==============================Call Back Functions=========================
 
 app.post('/search', renderMap);
 
-app.get('/music', renderMusic);
+app.post('/results', renderResults);
 
 app.post('/add', addActivityToDatabase);
 
 app.post('/save', addMapDataToDatabase);
 
-
-app.get('/see-itinerary', checkItinerary);
 
 
 
@@ -257,6 +256,8 @@ function addMapDataToDatabase(request, response){
   let formData = request.body;
   dropMapTable();
   createMapTable();
+  dropItineraryTable();
+  createItineraryTable();
   for(let i in formData.city){
     console.log('formdata from mapadd============================',formData);
     let sql = 'INSERT INTO map (city, state, latitude, longitude) VALUES ($1, $2, $3, $4) RETURNING id;';
@@ -281,6 +282,20 @@ function createMapTable(){
   client.query(sql);
 }
 
+function createMapTable(){
+  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
+  client.query(sql);
+}
+
+function dropItineraryTable(){
+  let sql = 'DROP TABLE IF EXISTS itinerary;';
+  client.query(sql);
+}
+
+function createItineraryTable(){
+  let sql = 'CREATE TABLE itinerary(id SERIAL PRIMARY KEY, name VARCHAR(255), rate NUMERIC, image VARCHAR(255), description TEXT, latitude VARCHAR(255), longitude VARCHAR(255));';
+  client.query(sql);
+}
 
 /*##################### Constructors ####################################
 
