@@ -148,6 +148,7 @@ function renderResults(request, response){
 }
 
 
+
 function renderMusic(req, resp){
 
   let data = [];
@@ -195,6 +196,7 @@ function renderAboutUs(request, response) {
   }
 }
 
+
 function addItemToItinerary(request, response){
   let formData = request.body;
   console.log('formdata', formData);
@@ -211,12 +213,30 @@ function addItemToItinerary(request, response){
 }
 
 
-//==========================Constructor Funtions==============================
+
 
 function renderMap(request, response) {
-  let arr = new Route(request.body);
+  let obj = new Route(request.body);
   let key = process.env.MAPQUEST_API_KEY;
-  response.render('map.ejs', {destinations : arr, MAPQUEST_API_KEY : key});
+  let url = 'http://www.mapquestapi.com/geocoding/v1/batch';
+  url += `?key=${key}&`;
+  url += `location=${obj.start}&`;
+  if (obj.waypoints.length > 0) {
+    obj.waypoints.forEach(value => {
+      url += `location=${value}&`;
+    })
+  }
+  url += `location=${obj.end}`;
+  
+
+  superagent.get(url)
+    .then(results => {
+      let latLong = results.body.results;
+      const latLongArray = latLong.map(value => {
+        return new LatLong(value);
+      })
+      response.render('map.ejs', {destinations : obj, MAPQUEST_API_KEY : key, latLongData : latLongArray});
+    })
 }
 
 /*##################### Constructors ####################################
@@ -227,7 +247,6 @@ function renderMap(request, response) {
 function Trip(){
 //info for the trip object constructor
 }
-
 
 function Route (obj) {
   this.waypoints = [];
@@ -249,16 +268,12 @@ function Album(obj){
   this.artist = obj.artist.name;
 }
 
-function Pokemon(obj){
-
-  this.name = obj.name;
-
+function LatLong(obj) {
+  this.latitude = obj.locations[0].latLng.lat;
+  this.longitude = obj.locations[0].latLng.lng;
+  this.city = obj.locations[0].adminArea5;
+  this.state = obj.locations[0].adminArea3;
 }
-
-
-// app.get('*', (request, response) => {
-//   response.status(500).send('Sorry, something went terribly wrong');
-// });
 
 function Activity(obj){
   this.name = obj.name;
@@ -268,13 +283,6 @@ function Activity(obj){
   this.image = obj.images[0] ? obj.images[0].sizes.original.url : 'https://placekitten.com/g/200/300';
   this.description = obj.snippet;
 }
-// function Activity(obj){
-//   this.name = obj.properties.name;
-//   this.longitude = obj.geometry.coordinates[0];
-//   this.latitude = obj.geometry.coordinates[1];
-//   this.kinds = obj.properties.kinds;
-//   this.rate = obj.properties.rate;
-// }
 
 function Weather(obj){
   this.forecast = obj.weather.description;
@@ -284,6 +292,7 @@ function Weather(obj){
   this.precip = (obj.precip).toFixed(2);// This is expected amount of rainfall
   this.time = new Date(obj.valid_date).toDateString();
 }
+
 
 //==============================Errors=================================
 
