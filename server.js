@@ -114,7 +114,24 @@ function renderHome(request, response) {
     }).catch((error) => {
       console.log('ERROR',error);
       response.status(500).send('Sorry, something went terribly wrong')
+
+  let data = [];
+
+  let url = 'https://api.deezer.com/chart';
+
+  superagent.get(url).then(results => {
+    data = results.body.albums;
+
+    let albumArr = data.data;
+
+    const finalAlbum = albumArr.map(albums => {
+      return new Album(albums);
     });
+
+
+    response.render('../views/home.ejs', {searchResults: finalAlbum})
+  });
+
 }
 
 

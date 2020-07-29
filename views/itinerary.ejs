@@ -26,14 +26,15 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<div id="" style="  background: url(images/appbanner.jpeg) no-repeat center center fixed; 
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-                background-size: cover; height: 100vh">
+            <div id="" style="  background: url(images/black.jpg) no-repeat center center; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover; height: 26em;">
 					<div id="header" class="container">
 
-						
+				
+
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
@@ -41,40 +42,61 @@
 										<a href="#">Dropdown</a>
 										<ul>
 											<li><a href="/">Home</a></li>
-											<li><a href="/music">Music</a></li>
-											<li><a href="/aboutus">About Us</a></li>
+                                            <li><a href="/aboutus">About US</a></li>
 										</ul>
 									</li>
 								</ul>
 							</nav>
+							<header class="major">
+								<h2 style="color: white; padding-top: 8em;">Look at your plans</h2>
+								<h2 style="color: white; padding-top: 12px; font-style: italic;">Costumize your plans</h2>								
+							</header>
+					</div>
 
 					</div>
 
-					<!-- Hero Button for resulths path -->
-					<section id="hero" class="container">
-						<% faves.forEach( book => { %>
+                    <!-- Hero Button for resulths path -->
+                    
 
-                            <div class='books desktop-books'>
-                                <div class='book-img'>
-                                    <img src='<%= book.image_url %>'/>
-                                    <a  class='edit-button' href='../books/edit/<%= book.id %>'>EDIT</a> 
-                                </div>    
-                                 <div class='book-info larger-text' >
-                                    <h3 class='form-spacer' data-id="<%= book.id %>">Title: 
-                                        <span class='highlight'><%=  book.title %></span>
-                                         Author: <span class='highlight'><%= book.author %></span> </h3>
-                                    <p> </p>
-                                    <p><%= book.isbn %> <span style='display: none;'> <%= book.bookshelf %></span> </p>
-                                    <h6 class='form-spacer left-ally'><span style="color: transparent;">....</span><%= book.description %></h6>
-                                   
-                                 </div>
-                                 
-                        
-                                 </div>
+                    <div class="wrapper">
+                        <section class="container">
+                                              
+    
+                            <div class="row features">
+                                
+                                <% faves.forEach( book => { %>
+                            
+                                    <section style="text-align: center;" class="col-4 col-12-narrower feature">
+                                
+                                
+                                        <div class="image-wrapper first">
+                                            <a href="#" class="image featured"><img style='max-height: 236px;' src='<%= book.image %>' alt="" /></a>
+                                        </div>
+                                       <div>
+                                           <p class='musicfont'><%= book.name %></p>
+                                           <p class='musicfont'>Rating: <%= book.rate %></p>
+                                           <p class='musicfont'><%= book.description %></p>
+                                           <a  class="button" href='../books/edit/<%= book.id %>'>EDIT</a> 
+                                        </div>
+                                    </section>
+                                    <% }) %>
                                     
-                            <% }) %>
+                               
+                                
+    
+                            </div>
+                            <ul class="actions major">
+                                <li><a href="/" class="button">Home</a></li>
+                            </ul>
+                        </section>
+                    </div>
 
-					</section>
+
+
+
+
+
+
 
 							<!-- Features 1 -->
 				
