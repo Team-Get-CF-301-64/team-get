@@ -35,7 +35,7 @@ client.on('client', error => {
 
 /*########################### MIDDLE WARE #############################
 
-#####################################################################*/
+######################################################################*/
 
 app.use(express.static('./public'));
 
@@ -57,6 +57,8 @@ app.get('/', renderHome);
 
 app.post('/results', renderResults);
 
+app.get('/results', renderResults);
+
 app.get('/game', renderGame);
 
 app.get('/aboutUs', renderAboutUs);
@@ -67,6 +69,7 @@ app.post('/search', renderMap);
 
 app.get('/music', renderMusic);
 
+app.post('/add', addItemToItinerary);
 
 function renderWeather(request,response){
   let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
@@ -118,7 +121,6 @@ function renderHome(request, response) {
 
 
 function renderResults(request, response){
-
   let url = 'https://www.triposo.com/api/20200405/local_highlights.json?';
 
   let queryParams = {
@@ -130,14 +132,13 @@ function renderResults(request, response){
   }
 
   superagent.get(url)
-    .query(queryParams)
-    .then(results => {
-      let activitySearchResults = results.body.results[0];
-      console.log('activity',activitySearchResults);
+  .query(queryParams)
+  .then(results => {
+    let activitySearchResults = results.body.results[0];
       const obj = activitySearchResults['pois'].map(activityObj => {
         return new Activity(activityObj);
       })
-      console.log('object=================', obj);
+      // console.log('object=================', obj);
       response.status(200).render('searches.ejs', {searchResults: obj});
     })
     .catch((error) => {
@@ -145,49 +146,6 @@ function renderResults(request, response){
       response.status(500).send('Sorry, something went terribly wrong');
     })
 }
-// function renderResults(request, response) {
-
-//   // try{
-//     // let searchCity = request.body.search[0];
-//     // let searchCategory = request.body.search[1];
-//     let searchCategory = 'museums,water,nature_reserves,monuments_and_memorials';
-//     let searchParams = '';
-//     let url = 'http://api.opentripmap.com/0.1/en/places/radius';
-//     // let url = 'http://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6c6943bdedcf9db68437c8a07ae749e05&radius=6000&lat=47.608013&lon=-122.335167&kinds=museums,water,nature_reserves,monuments_and_memorials';
-
-//     // from search form to add parameters
-//     if(searchCategory === 'museums'){searchParams += ',museums'};
-//     if(searchCategory === 'water'){searchParams += ',water'};
-//     if(searchCategory === 'nature'){searchParams += ',nature_reserves'};
-//     if(searchCategory === 'monuments'){searchParams += ',monuments_and_memorials'};
-//   console.log('test am i in?');
-//     let queryParams = {
-//       apikey: process.env.apikey,
-//       // lat: request.query.latitude,
-//       lat: 47.603649,
-//       // lon: request.query.longitude,
-//       lon: -122.330193,
-//       // radius: request.query.radius,
-//       radius: 1000,
-//       kinds: searchCategory
-//     }
-//     console.log(queryParams.kinds);
-//     superagent.get(url)
-//     .query(queryParams)
-//     .then(results => {
-//       let activitySearchResults = results.body;
-//       console.log('activity',activitySearchResults);
-//       const obj = activitySearchResults['features'].map(activityObj => {
-//         return new Activity(activityObj);
-//       })
-//       console.log('object=================', obj);
-//       response.status(200).render('searches.ejs', {searchResults: obj});
-//     })
-//    .catch((error) => {
-//     console.log('ERROR', error);
-//     response.status(500).send('Sorry, something went terribly wrong');
-//    })
-// }
 
 
 
@@ -240,13 +198,46 @@ function renderAboutUs(request, response) {
 }
 
 
-//==========================Constructor Funtions==============================
+function addItemToItinerary(request, response){
+  let formData = request.body;
+  console.log('formdata', formData);
+  let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
+  let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
+  
+  console.log('runnning?');
+  client.query(sql, safeValues)
+    .then(results => {
+      console.log('================================',results);
+      response.redirect('/results');
+    })
+  // response.json({success: true});
+}
+
+
 
 
 function renderMap(request, response) {
-  let arr = new Route(request.body);
+  let obj = new Route(request.body);
   let key = process.env.MAPQUEST_API_KEY;
-  response.render('map.ejs', {destinations : arr, MAPQUEST_API_KEY : key});
+  let url = 'http://www.mapquestapi.com/geocoding/v1/batch';
+  url += `?key=${key}&`;
+  url += `location=${obj.start}&`;
+  if (obj.waypoints.length > 0) {
+    obj.waypoints.forEach(value => {
+      url += `location=${value}&`;
+    })
+  }
+  url += `location=${obj.end}`;
+  
+
+  superagent.get(url)
+    .then(results => {
+      let latLong = results.body.results;
+      const latLongArray = latLong.map(value => {
+        return new LatLong(value);
+      })
+      response.render('map.ejs', {destinations : obj, MAPQUEST_API_KEY : key, latLongData : latLongArray});
+    })
 }
 
 /*##################### Constructors ####################################
@@ -257,7 +248,6 @@ function renderMap(request, response) {
 function Trip(){
 //info for the trip object constructor
 }
-
 
 function Route (obj) {
   this.waypoints = [];
@@ -280,16 +270,12 @@ function Album(obj){
   this.link = obj.link;
 }
 
-function Pokemon(obj){
-
-  this.name = obj.name;
-
+function LatLong(obj) {
+  this.latitude = obj.locations[0].latLng.lat;
+  this.longitude = obj.locations[0].latLng.lng;
+  this.city = obj.locations[0].adminArea5;
+  this.state = obj.locations[0].adminArea3;
 }
-
-
-// app.get('*', (request, response) => {
-//   response.status(500).send('Sorry, something went terribly wrong');
-// });
 
 function Activity(obj){
   this.name = obj.name;
@@ -299,13 +285,6 @@ function Activity(obj){
   this.image = obj.images[0] ? obj.images[0].sizes.original.url : 'https://placekitten.com/g/200/300';
   this.description = obj.snippet;
 }
-// function Activity(obj){
-//   this.name = obj.properties.name;
-//   this.longitude = obj.geometry.coordinates[0];
-//   this.latitude = obj.geometry.coordinates[1];
-//   this.kinds = obj.properties.kinds;
-//   this.rate = obj.properties.rate;
-// }
 
 function Weather(obj){
   this.forecast = obj.weather.description;
@@ -316,12 +295,15 @@ function Weather(obj){
   this.time = new Date(obj.valid_date).toDateString();
 }
 
+
 //==============================Errors=================================
 
 /*############################# Opening Port and Client ##################
 
 ########################################################################*/
-
-app.listen(PORT, () => {
-  console.log(`listening on ${PORT}`);
-});
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`listening on ${PORT}`);
+    });
+  })

@@ -47,7 +47,6 @@
           end: '<%= destinations.end %>',
           waypoints: waypoints
         });
-
       }
     </script>
 	</head>
@@ -80,6 +79,7 @@
 					</div>
 
 					<!-- Hero Button for resulths path -->
+<<<<<<< HEAD
 						<section id="hero" class="container">
 							<header>
 								<h2 style='color:  #6B3037'>Look For Attractions</h2>
@@ -88,6 +88,20 @@
 								<li><a href="#" class="button">API Features Button</a></li>
 							</ul>
 						</section>
+=======
+					<section id="hero" class="container">
+						<header>
+							<h2>Look for Activities near your Destination.</h2>
+						</header>
+
+						<form id="activity-search" action="/results" method="post">
+							<input name="lat" type="hidden" value="lat">
+							<input name="lon" type="hidden" value="lon">
+								<button type="submit">Search Activities</button>
+						</form>
+
+					</section>
+>>>>>>> 8168d8201d7e12c0ac2c090365cf08cf88598da8
 
 							<!-- Features 1 -->
 				

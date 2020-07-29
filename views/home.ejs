@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE HTML>
 <!--
 	Telephasic by HTML5 UP
@@ -262,3 +263,282 @@
 
 
   
+=======
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script id="input-template" type="text/x-tmpl-mustache">
+    <input type="text" name={{iteration}}>
+  </script>
+</head>
+<body>
+  <form action="/search" method="post">
+    <h2>Add 2 or more destinations</h2>
+    <input type="text" name="start" placeholder="Seattle, WA">
+    <input type="text" name="end" placeholder="New York, NY">
+    <button id="add-waypoint">Add Mid Points</button>
+    <button type="submit">Submit</button>
+  </form>
+
+  <form action="/results" method="post">
+    <button type="submit">Search Activity</button>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>-->
+
+<!DOCTYPE HTML>
+<!--
+	Telephasic by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Telephasic by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/game.css" />
+    <script id="input-template" type="text/x-tmpl-mustache">
+      <input type="text" name={{iteration}} placeholder='stop number {{iteration}}'>
+    </script>
+	</head>
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div id="header" class="container">
+
+				
+
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li>
+										<a href="#">Dropdown</a>
+										<ul>
+											<li><a href="/game">Travel Game</a></li>
+											<li><a href="/aboutus">About Us</a></li>
+											<li><a href="/music">music</a></li>
+										</ul>
+									</li>
+								
+								</ul>
+							</nav>
+
+					</div>
+
+					<!-- Hero -->
+						<section id="hero" class="container">
+							<header>
+								<h2>TRAVEL APP
+								<br />
+								you one stop APP for awesome roadtrips</h2>
+							</header>
+						
+							<ul class="actions">
+								<li><a href="#" class="button">PLACE HOLDER FOR SEARCH</a></li>
+              </ul>
+              
+              <form action="/search" method="post">
+                <h2>Add 2 or more destinations</h2>
+                <input type="text" name="start" placeholder="Seattle, WA">
+                <input type="text" name="end" placeholder="New York, NY">
+                <button id="add-waypoint">Add Mid Points</button>
+                <button type="submit">Submit</button>
+              </form>
+
+
+
+              
+              </div>
+
+						</section>
+
+        </div>
+        
+        <div class="wrapper">
+
+
+        <div class="row features" style="margin-top: 2em; ">
+          <h2 style='margin-left: 10%;'>Weather Forecast</h2>
+        <% weatherResults.forEach(day => { %>
+
+          
+            <section class="col-12-narrower feature">
+              <p class="weather">
+                <%= day.time %><br>
+                <%= day.forecast %>
+              </p>
+              <div class="image-wrapper first">
+                <a href="#" class="image featured"><img id="icon" src="https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="" /></a>
+              </div>
+              <p class="weather">
+                <%= day.high_temp %>° | <%= day.low_temp %>°<br>
+                Rainfall: <%= day.precip %> inches.
+              </p>
+            </section>
+    
+
+          
+          <% }) %>
+        
+        </div>
+
+
+  </div>
+
+				<!-- Music 2 -->
+				<div class="wrapper">
+					<section class="container">
+						<header class="major">
+							<h2>Get some tunes for your road-trip</h2>
+							<p>View the top ten albums thanks to Deezer</p>
+						</header>
+						<div class="row features">
+
+						</div>
+						<ul class="actions major">
+							<li><a href="/music" class="button">Elevate my playlist</a></li>
+						</ul>
+					</section>
+				</div>
+
+			<!-- Features game -->
+			<div class="wrapper" style='background: #f6f8fb'>
+				
+				<div class="container">
+					
+					<header style='background: #f6f8fb' class="major">
+						<h2>Need inspiration?</h2>
+						<p>Discover America: match the attraction to the city:</p>
+					</header>
+
+					<div class="row">
+						<section id="memory-game"  class="memory-game">
+  
+							<div class="memory-card" data-framework="OR">
+							  <img class="front-face" alt="Mount Calvary OR" src="images/mountcalvary.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Mount Calvary, OR</p>
+							</div>
+							<div class="memory-card" data-framework="OR">
+							  <img class="front-face" alt="Mirror Lake OR" src="images/mirrorlake.jpg" />
+							  <img  class="back-face" />
+							  <p class="carddescription" >Mirror Lake, OR</p>
+							</div>
+							
+							<div class="memory-card" data-framework="vancouver">
+							  <img class="front-face" alt="Robson Square, Vancouver" src="images/robson.jpeg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Robson Square, VANC</p>
+							</div>
+							<div class="memory-card" data-framework="vancouver">
+							  <img class="front-face" alt="Sombiro Beach" src="images/sombrio.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Sombrio Beach, VANC</p>
+							</div>
+							
+							<div class="memory-card" data-framework="ID">
+							  <img class="front-face" alt="Boise Oregon Trail Memorial" src="images/boise.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Boise, ID</p>
+							</div>
+							<div class="memory-card" data-framework="ID">
+							  <img class="front-face" alt="Shoshone" src="images/shoshone.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Shoshone Falls, ID</p>
+							</div>
+					  
+							<div class="memory-card" data-framework="UT">
+							  <img class="front-face" alt="Great Temple" src="images/temple.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Great Mormon Temple, UT</p>
+							</div>
+							<div class="memory-card" data-framework="UT">
+							  <img class="front-face" alt="Capitol Reef Park" src="images/capreef.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Capitol Reef, UT</p>
+							</div>
+					  
+							<div class="memory-card" data-framework="WY">
+							  <img class="front-face" alt="Jackson WY" src="images/jackson.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Jackson, WY</p>
+							</div>
+							<div class="memory-card" data-framework="WY">
+							  <img class="front-face" alt="Yellow Stone National Park" src="images/yellows.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Yellowstone, WY</p>
+							</div>
+					  
+							<div class="memory-card" data-framework="SD">
+							  <img class="front-face" alt="Rapid Creek, South Dakota" src="images/rapidcreek.jpeg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Rapid City's Rapid Creek, SD</p>
+							</div>
+							<div class="memory-card" data-framework="SD">
+							  <img class="front-face" alt="Mount Rushmore" src="images/rush.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription">Rushmore, SD</p>
+							</div>
+					  
+							<div class="memory-card" data-framework="MT">
+							  <img class="front-face" alt="Bozeman" src="images/bozeman.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Bozeman, MT</p>
+							</div>
+							<div class="memory-card" data-framework="MT">
+							  <img class="front-face" alt="Lewis and Clark Caverns" src="images/caverns.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Lewis and Clark Caverns, MT</p>
+							</div>
+					  
+							<div class="memory-card" data-framework="NV">
+							  <img class="front-face" alt="Emerald Bay" src="images/embay.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Lake Tahoe, NV</p>
+							</div>
+							<div class="memory-card" data-framework="NV">
+							  <img class="front-face" alt="Las vegas" src="images/vegas.jpg" />
+							  <img class="back-face" />
+							  <p class="carddescription" >Las Vegas, NV</p>
+							</div>
+							
+						  </section>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+      <script src="assets/js/game.js"></script>
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+  <script src="https://unpkg.com/mustache@latest"></script>
+  <script>
+    let templateObj = { iteration: 2 }
+    $('#add-waypoint').click(function (event) {
+      event.preventDefault();
+      let template = $('#input-template').html();
+      console.log(template);
+      let html = Mustache.render(template, templateObj);
+      $('input:last-of-type').before(html);
+      templateObj.iteration++;
+    })
+  </script>
+
+	</body>
+</html>
+>>>>>>> 8168d8201d7e12c0ac2c090365cf08cf88598da8
