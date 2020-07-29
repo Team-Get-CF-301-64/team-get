@@ -58,7 +58,7 @@
                 -webkit-background-size: cover;
                 -moz-background-size: cover;
                 -o-background-size: cover;
-                background-size: cover; height: 36em;">
+                background-size: cover; height: 100vh">
 					<div id="header" class="container">
 
 						
@@ -82,28 +82,29 @@
 					</div>
 
 					<!-- Hero Button for resulths path -->
-					<section id="hero" class="container">
-						<header>
-							<h2>Look for Activities near your Destination.</h2>
-						</header>
+						<section id="hero" class="container">
+							<header>
+								<h2 style='color:  #6B3037'>Look For Attractions</h2>
+							</header>
+							
+							<form id="activity-search" action="/results" method="post">
+								<input name="lat" type="hidden" value="lat">
+								<input name="lon" type="hidden" value="lon">
+									<button type="submit">Search Activities</button>
+							</form>
+						</section>
 
-						<form id="activity-search" action="/results" method="post">
-							<input name="lat" type="hidden" value="lat">
-							<input name="lon" type="hidden" value="lon">
-								<button type="submit">Search Activities</button>
-						</form>
-
-					</section>
-
-				</div>
-
-			<!-- Features 1 -->
-				<div class="wrapper">
+							<!-- Features 1 -->
+				
             
-            <div id="map" style="width: 100%; height: 530px;"></div>
-
+					<div id="map" style="width: 100%; height: 530px; border-top: solid 7px #6B3037; border-bottom: 7px solid #6B3037;"></div>
+		
+		
+					
 
 				</div>
+
+		
 
 
 		</div>
