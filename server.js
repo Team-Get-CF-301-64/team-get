@@ -35,7 +35,7 @@ client.on('client', error => {
 
 /*########################### MIDDLE WARE #############################
 
-#####################################################################*/
+######################################################################*/
 
 app.use(express.static('./public'));
 
@@ -118,7 +118,6 @@ function renderHome(request, response) {
 
 
 function renderResults(request, response){
- 
   let url = 'https://www.triposo.com/api/20200405/local_highlights.json?';
 
   let queryParams = {
@@ -133,7 +132,6 @@ function renderResults(request, response){
   .query(queryParams)
   .then(results => {
     let activitySearchResults = results.body.results[0];
-      console.log('activity',activitySearchResults);
       const obj = activitySearchResults['pois'].map(activityObj => {
         return new Activity(activityObj);
       })
@@ -145,7 +143,6 @@ function renderResults(request, response){
     response.status(500).send('Sorry, something went terribly wrong');
   })
 }
-
 
 
 
@@ -163,6 +160,7 @@ function renderMusic(req, resp){
     const finalAlbum = albumArr.map(albums => {
       return new Album(albums);
     });
+
 
     resp.render('../views/music.ejs', {searchResults: finalAlbum})
   });
@@ -196,9 +194,7 @@ function renderAboutUs(request, response) {
 }
 
 function renderMap(request, response) {
-
   let obj = new Route(request.body);
-
   let key = process.env.MAPQUEST_API_KEY;
   let url = 'http://www.mapquestapi.com/geocoding/v1/batch';
   url += `?key=${key}&`;
