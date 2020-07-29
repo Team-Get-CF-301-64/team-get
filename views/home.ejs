@@ -38,7 +38,7 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" href="assets/css/game.css" />
     <script id="input-template" type="text/x-tmpl-mustache">
-      <input type="text" name={{iteration}}>
+      <input type="text" name={{iteration}} placeholder='stop number {{iteration}}'>
     </script>
 	</head>
 	<body class="homepage is-preload">
@@ -263,13 +263,13 @@
 
   <script src="https://unpkg.com/mustache@latest"></script>
   <script>
-    let templateObj = { iteration: 0 }
+    let templateObj = { iteration: 2 }
     $('#add-waypoint').click(function (event) {
       event.preventDefault();
       let template = $('#input-template').html();
       console.log(template);
       let html = Mustache.render(template, templateObj);
-      $('input:first-of-type').after(html);
+      $('input:last-of-type').before(html);
       templateObj.iteration++;
     })
   </script>
