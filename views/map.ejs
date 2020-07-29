@@ -166,41 +166,43 @@
 
 						<section id="hero" class="container">
 							<header>
-								<h2 style='color:  #6B3037'>Look For Attractions</h2>
+								<h2 style='color:  #6B3037'>Review your route, Save your route, Then look for some nearby activities.</h2>
 							</header>
-							
-							<form id="activity-search" action="/results" method="post">
-								<input name="lat" type="hidden" value="lat">
-								<input name="lon" type="hidden" value="lon">
-									<button type="submit">Search Activities</button>
-							</form>
-						</section>
-
 
 							<!-- Features 1 -->
 							<form action="/save" method="post">
 								<% latLongData.forEach((value, index) => { %>
-									<input type="hidden" name="city" value="<%= value.city %>">
-									<input type="hidden" name="state" value="<%= value.state %>">
-									<input type="hidden" name="latitude" value="<%= value.latitude %>">
-									<input type="hidden" name="longitude" value="<%= value.longitude %>">
+								<input type="hidden" name="city" value="<%= value.city %>">
+								<input type="hidden" name="state" value="<%= value.state %>">
+								<input type="hidden" name="latitude" value="<%= value.latitude %>">
+								<input type="hidden" name="longitude" value="<%= value.longitude %>">
 								<% }) %>
-								<button type="submit">Save this route</button>
+								<button style="margin: .6em;" type="submit">Save Route</button>
 							</form>
-				
-            
-
-					<div id="map" style=" z-index: 1;width: 100%; height: 530px; border-top: solid 7px #6B3037; border-bottom: 7px solid #6B3037;"></div>
+							
+							<form id="activity-search" action="/results" method="post">
+								<input name="latitude" type="hidden" value="<%= latLongData[latLongData.length-1].latitude %>">
+								<input name="longitude" type="hidden" value="<%= latLongData[latLongData.length-1].longitude %>">
+								<button style="margin: .6em;" type="submit">Search Activities</button>
+							</form>
+								
+							
+						</section>
+			
+							
+						<div id="map" style=" z-index: 1;width: 75%; margin: .5em auto 3em; height: 480px; border-top: solid 7px #6B3037; border-bottom: 7px solid #6B3037;"></div>
+							
+				</div>
+		</div>
 		
 
 		
 					
 
-				</div>
 
 
 
-		</div>
+		
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
