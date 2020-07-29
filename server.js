@@ -69,7 +69,7 @@ app.post('/search', renderMap);
 
 app.get('/music', renderMusic);
 
-app.post('/add', addItemToItinerary);
+app.post('/add', addActivityToDatabase);
 
 app.post('/matt', addMapDataToDatabase);
 
@@ -200,7 +200,7 @@ function renderAboutUs(request, response) {
 }
 
 
-function addItemToItinerary(request, response){
+function addActivityToDatabase(request, response){
   let formData = request.body;
   // console.log('formdata', formData);
   let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
