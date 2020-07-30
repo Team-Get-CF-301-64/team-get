@@ -12,13 +12,43 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+		<script type="text/javascript">
+      window.onload = function() {
+        L.mapquest.key = '<%= MAPQUEST_API_KEY %>';
 
-  
-	
-	
-		
+        let map = L.mapquest.map('map', {
+          center: [39.8283, -98.5795],
+          layers: L.mapquest.tileLayer('hybrid'),
+          zoom: 4
+        });
+
+        let directions = L.mapquest.directions();
+        directions.setLayerOptions({
+          routeRibbon: {
+            draggable: false,
+            showTraffic: false
+          },
+          startMarker: {
+            draggable: false
+          },
+          endMarker: {
+            draggable: false
+          },
+          waypointsMarker:{
+            draggable: false
+          }
+        });
+
+        let waypoints = <%- JSON.stringify(cities.waypoints) %> 
+
+        directions.route({
+          start: '<%= cities.start %>',
+          end: '<%= cities.end %>',
+          waypoints: waypoints
+        });
+      }
+	</script>
 	</head>
-
 
 	<body class="homepage is-preload">
 
@@ -26,15 +56,12 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-            <div id="" style="  background: url(images/black.jpg) no-repeat center center; 
+			<div id="" style="  background: url(images/black.jpg) no-repeat center center; 
 			-webkit-background-size: cover;
 			-moz-background-size: cover;
 			-o-background-size: cover;
 			background-size: cover; height: 26em;">
 					<div id="header" class="container">
-
-				
-
 						<!-- Nav -->
 						<nav id="nav" style='margin-right: 0;'>
 							<ul>
@@ -47,26 +74,21 @@
 										<li><a href="/aboutus">About Us</a></li>
 										<li><a href="/music">Music</a></li>
 									</ul>
-								</li>
-							
-							</ul>
-							
-					</nav>
-							<header class="major">
-								<h2 style="color: white; padding-top: 8em;">Look at your plans</h2>
-								<h2 style="color: white; padding-top: 12px; font-style: italic;">Costumize your plans</h2>								
-							</header>
+								</li>							
+							</ul>							
+						</nav>
+						<header class="major">
+							<h2 style="color: white; padding-top: 8em;">Look at your plans</h2>
+							<h2 style="color: white; padding-top: 12px; font-style: italic;">Costumize your plans</h2>								
+						</header>
 					</div>
-
-					</div>
-
-                    <!-- Hero Button for resulths path -->
-                    
-
+					
+					
+				</div>
+				<div id="map" style=" z-index: 1;width: 75%; margin: .5em auto 3em; height: 480px; border-top: solid 7px #6B3037; border-bottom: 7px solid #6B3037;"></div>
+                    <!-- Hero Button for resulths path -->                   
                     <div class="wrapper">
-                        <section class="container">
-                                              
-    
+                        <section class="container">                                                
                             <div class="row features">
                                 
                                 <% activities.forEach( activity => { %>
@@ -101,37 +123,16 @@
 																				</form>
 																				
 																			</section>
-																			<% }) %>
-																				
-                                
-    
+																			<% }) %>																				                               
                             </div>
                             <ul class="actions major">
                                 <li><a href="/" class="button">Home</a></li>
                             </ul>
                         </section>
                     </div>
-
-
-
-
-
-
-
-
 							<!-- Features 1 -->
-				
-            
-				
-					
-
 				</div>
-
-		
-
-
 		</div>
-
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>

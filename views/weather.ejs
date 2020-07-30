@@ -3,13 +3,13 @@
 
     
      <% weatherResults.forEach(day => { %>
-     <section class="col-12-narrower feature">
+     <section class="col-12-narrower feature" style="height: 150px; width: 100px;">
         <p class="weather">
           <%= day.time %><br>
           <%= day.forecast %>
         </p>
         <div class="image-wrapper first">
-          <a href="#" class="image featured"><img id="icon" src="https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="" /></a>
+          <a href="#" class="image featured"><img style="width: 75px; height: 75px;" id="icon" src="https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="" /></a>
         </div>
         <p class="weather">
           <%= day.high_temp %>° | <%= day.low_temp %>°<br>

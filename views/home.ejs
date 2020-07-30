@@ -69,12 +69,6 @@
 							</header>
 						
 				<br>
-              
-       
-
-
-
-              
               </div>
 
 						</section>
@@ -277,12 +271,14 @@
     let templateObj = { iteration: 1 }
     $('#add-waypoint').click(function (event) {
 
-      event.preventDefault();
-      let template = $('#input-template').html();
-      console.log(template);
-      let html = Mustache.render(template, templateObj);
-      $('input:last-of-type').before(html);
-      templateObj.iteration++;
+			event.preventDefault();
+			if(templateObj.iteration < 20){
+				let template = $('#input-template').html();
+				console.log(template);
+				let html = Mustache.render(template, templateObj);
+				$('input:last-of-type').before(html);
+			}
+			templateObj.iteration++;
     })
   </script>
 

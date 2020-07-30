@@ -85,16 +85,19 @@ function checkItinerary(request,resp){
   client.query(sql)
     .then(items => {
       let aItems = items.rows;
-      resp.render('../views/itinerary.ejs', {activities: aItems});
+      let sql = 'SELECT * FROM map;';
+      client.query(sql)
+        .then(cities => {
+          let cityArray = new RouteForItinerary(cities.rows);
+          console.log(cityArray);
+          resp.render('../views/itinerary.ejs', {MAPQUEST_API_KEY : process.env.MAPQUEST_API_KEY, activities: aItems, cities: cityArray});
+        })
     }).catch(err => {
       resp.status(500).render('../views/home', {error:err});
     })
 }
 
-function renderWeather(request,response) {
 
-  console.log('what is my request:',request);
-}
 
 function renderHome(request, response) {
 
@@ -110,8 +113,6 @@ function renderHome(request, response) {
     const finalAlbum = albumArr.map(albums => {
       return new Album(albums);
     });
-
-
     response.render('../views/home.ejs', {searchResults: finalAlbum})
   });
 }
@@ -155,7 +156,6 @@ function renderResults(request, response){
           console.log('ERROR',error);
           response.status(500).send('Sorry, something went terribly wrong')
         });
-      // console.log('getting this from form',request.body)
     })
     .catch((error) => {
       console.log('ERROR', error);
@@ -180,8 +180,6 @@ function renderMusic(req, resp){
     const finalAlbum = albumArr.map(albums => {
       return new Album(albums);
     });
-
-
     resp.render('../views/music.ejs', {searchResults: finalAlbum})
   });
 
@@ -192,7 +190,6 @@ function renderMusic(req, resp){
 function renderGame(request, response){
 
   try{
-
     response.status(200).render('../views/game.ejs');
   } catch(error){
     console.log('ERROR', error);
@@ -243,7 +240,6 @@ function renderMap(request, response){
 
 function addActivityToDatabase(request, response){
   let formData = request.body;
-  // console.log('formdata', formData);
   let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
   let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
 
@@ -269,10 +265,6 @@ function addMapDataToDatabase(request, response){
     let safeValues = [formData.city[i], formData.state[i], formData.latitude[i], formData.longitude[i]];
 
     client.query(sql, safeValues)
-    // .then(() => {
-    //   // response.status(200).send(console.log('Nice!'));
-    // })
-
   }
   response.status(204).send();
 }
@@ -336,10 +328,6 @@ function createItineraryTable(){
 ####################################################################### */
 
 
-function Trip(){
-//info for the trip object constructor
-}
-
 function Route (obj) {
   this.waypoints = [];
   for (const [key, value] of Object.entries(obj)) {
@@ -349,6 +337,17 @@ function Route (obj) {
       this.end = value;
     } else {
       this.waypoints.push(value);
+    }
+  }
+}
+
+function RouteForItinerary (obj) {
+  this.waypoints = [];
+  this.start = `${obj[0].city}, ${obj[0].state}`;
+  this.end = `${obj[obj.length - 1].city}, ${obj[obj.length - 1].state}`;
+  if(obj.length > 2) {
+    for(let i = 1; i < obj.length - 1; i++) {
+      this.waypoints.push(`${obj[i].city}, ${obj[i].state}`);
     }
   }
 }
