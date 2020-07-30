@@ -91,12 +91,11 @@
                         <section class="container">                                                
                             <div class="row features">
 															<% function formatTime(mt) { %>
-																<% var h = mt.toString().slice(0,2) %>
-																<% var m = mt.toString().slice(3,5) %>
+																<% let h = mt.toString().slice(0,2) %>
+																<% let m = mt.toString().slice(3,5) %>
 
 																<% h = h % 12; %>
-																<% if (h === 0) h = 12; %>
-																<% var h = mt.toString().slice(0,2) %>
+																<% if (h === 00) h = 12; %>
 																<% return h + ':' + m + ' ' + ((mt.toString().slice(0,2)) < 12 ? 'am' : 'pm'); %>
 																<% } %>
                                 <% activities.forEach( activity => { %>
