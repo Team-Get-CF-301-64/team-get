@@ -16,6 +16,18 @@
 // 	}); 
 // }
 
+$('.showForm').on('click', function() {
+	$(this).siblings('form').toggle();
+	// $('#update-details').toggle();
+	// $('#delete-activity').toggle();
+  if($(this).text() === 'Cancel'){
+    $(this).text('Modify Activity');
+  }
+  else if ($(this).text() === 'Modify Activity'){
+    $(this).text('Cancel');
+  }
+});
+
 (function($) {
 
 	var	$window = $(window),

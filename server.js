@@ -74,15 +74,18 @@ app.post('/add', addActivityToDatabase);
 
 app.post('/save', addMapDataToDatabase);
 
+app.put('/edit/:id', editActivity);
+
+app.delete('/delete/:id', deleteActivity);
 
 
 
 function checkItinerary(request,resp){
   let sql = 'SELECT * FROM itinerary;';
   client.query(sql)
-    .then(book => {
-      let abook = book.rows;
-      resp.render('../views/itinerary.ejs', {faves: abook});
+    .then(items => {
+      let aItems = items.rows;
+      resp.render('../views/itinerary.ejs', {activities: aItems});
     }).catch(err => {
       resp.status(500).render('../views/home', {error:err});
     })
@@ -186,8 +189,6 @@ function renderMusic(req, resp){
 
 
 
-
-
 function renderGame(request, response){
 
   try{
@@ -199,6 +200,8 @@ function renderGame(request, response){
   }
 }
 
+
+
 function renderAboutUs(request, response) {
 
   try{
@@ -209,22 +212,6 @@ function renderAboutUs(request, response) {
     response.status(500).send('Sorry, something went terribly wrong');
   }
 }
-
-
-function addActivityToDatabase(request, response){
-  let formData = request.body;
-  // console.log('formdata', formData);
-  let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
-  let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
-
-  client.query(sql, safeValues)
-    .then(() => {
-      // console.log('================================',results);
-      response.status(204).send();
-    })
-  // response.json({success: true});
-}
-
 
 
 
@@ -252,6 +239,24 @@ function renderMap(request, response){
     })
 }
 
+
+
+function addActivityToDatabase(request, response){
+  let formData = request.body;
+  // console.log('formdata', formData);
+  let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
+  let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
+
+  client.query(sql, safeValues)
+    .then(() => {
+      // console.log('================================',results);
+      response.status(204).send();
+    })
+  // response.json({success: true});
+}
+
+
+
 function addMapDataToDatabase(request, response){
   let formData = request.body;
   dropMapTable();
@@ -271,6 +276,35 @@ function addMapDataToDatabase(request, response){
   }
   response.status(204).send();
 }
+
+
+
+
+function editActivity(request, response){
+  let id = request.params.id;
+  console.log('requesting the bodies', id);
+  let sql = 'UPDATE itinerary SET date=$1, time=$2 WHERE id=$3;';
+  let safeValues = [request.body.date, request.body.time, id];
+
+  client.query(sql, safeValues)
+  response.status(200).redirect('/see-itinerary');
+}
+
+
+
+
+function deleteActivity(request, response){
+  let id = request.params.id;
+
+  let sql = 'DELETE FROM itinerary WHERE id=$1;';
+  let safeValue = [id];
+
+  client.query(sql, safeValue)
+  response.status(200).redirect('/see-itinerary');
+}
+
+
+
 
 function dropMapTable(){
   let sql = 'DROP TABLE IF EXISTS map;';
@@ -293,7 +327,7 @@ function dropItineraryTable(){
 }
 
 function createItineraryTable(){
-  let sql = 'CREATE TABLE itinerary(id SERIAL PRIMARY KEY, name VARCHAR(255), rate NUMERIC, image VARCHAR(255), description TEXT, latitude VARCHAR(255), longitude VARCHAR(255));';
+  let sql = 'CREATE TABLE itinerary(id SERIAL PRIMARY KEY, name VARCHAR(255), rate NUMERIC, image VARCHAR(255), description TEXT, latitude VARCHAR(255), longitude VARCHAR(255), date DATE, time TIME);';
   client.query(sql);
 }
 

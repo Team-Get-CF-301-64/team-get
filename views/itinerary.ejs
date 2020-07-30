@@ -69,24 +69,40 @@
     
                             <div class="row features">
                                 
-                                <% faves.forEach( book => { %>
+                                <% activities.forEach( activity => { %>
                             
-                                    <section style="text-align: center;" class="col-4 col-12-narrower feature">
+                                    <section style="text-align: center; width: 400px;" class="col-4 col-12-narrower feature">
                                 
                                 
                                         <div class="image-wrapper first">
-                                            <a href="#" class="image featured"><img style='max-height: 180px; width: 200px;' src='<%= book.image %>' alt="" /></a>
+                                            <a href="#" class="image featured"><img style='max-height: 180px; width: 200px;' src='<%= activity.image %>' alt="" /></a>
                                         </div>
                                        <div>
-                                           <p class='musicfont'><%= book.name %></p>
-                                           <p class='musicfont'>Rating: <%= book.rate %></p>
-                                           <p class='musicfont'><%= book.description %></p>
-                                           <a  class="button" href='../books/edit/<%= book.id %>'>EDIT</a> 
+                                           <p class='musicfont'><%= activity.name %></p>
+                                           <p class='musicfont'>Rating: <%= activity.rate %></p>
+																					 <p class='musicfont'><%= activity.description %></p>
+																					 <p class="musicfont">Date: <%= activity.date %></p>
+																					 <p class="musicfont">Time: <%= activity.time %></p>
                                         </div>
-                                    </section>
-                                    <% }) %>
-                                    
-                               
+																				
+																				<button type="button" class="showForm">Modify Activity</button>
+																				
+																				<form style="display: none;" id="update-details" action="/edit/<%= activity.id %>?_method=PUT" method="post">
+																					<fieldset>
+																						<input type="date" name="date" value="<%= activity.date %>" placeholder="DATE">
+																						<input type="time" name="time" value="<%= activity.time %>" placeholder="TIME">
+																					</fieldset>
+																					<button id="update-button" type="submit">Update Book Details</button>
+																				</form>
+																				
+																				<form style="display: none;" id="delete-activity" action="/delete/<%= activity.id %>?_method=DELETE" method="post">
+																					<input type="hidden" name="id" value="<%= activity.id %>"><!--id from selected activity-->
+																					<button id="delete" type="submit">Delete</button>
+																				</form>
+																				
+																			</section>
+																			<% }) %>
+																				
                                 
     
                             </div>
