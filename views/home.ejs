@@ -39,14 +39,22 @@
 										<ul>
                       <li><a href="/">Home</a></li>
                       <li><a href="/see-itinerary">Itinerary</a></li>
-											<li><a href="/game">Travel Game</a></li>
+									
 											<li><a href="/aboutus">About Us</a></li>
-											<li><a href="/music">Music</a></li>
+											
+										
 										</ul>
 									</li>
 								
                 </ul>
-                
+                <form class='form' action="/search" method="post">
+					<h2 class='formh2'>Add a start point and a destination to get started.</h2>
+					<input  type="text" name="start" placeholder="Seattle, WA">
+					<input type="text" name="end" placeholder="New York, NY">
+					<br><br>
+					<button id="add-waypoint" class="formbutton">Add a Stop</button>
+					<button type="submit" class='formbutton'>Submit</button>
+				  </form>
 						</nav>
 
 					</div>
@@ -62,15 +70,7 @@
 						
 				<br>
               
-       <form action="/search" method="post">
-                <h2 style="margin-top: 2em; color:  #F2F4EF;   -webkit-text-stroke-width: 1px;
-				-webkit-text-stroke-color: #562222;">Add a start point and a destination to get started.</h2>
-                <input style="width: 60%; margin: .5em auto;" type="text" name="start" placeholder="Seattle, WA">
-                <input style="width: 60%; margin: auto;" type="text" name="end" placeholder="New York, NY">
-                <br><br>
-                <button id="add-waypoint">Add a Stop</button>
-                <button type="submit">Submit</button>
-              </form>
+       
 
 
 
@@ -81,8 +81,8 @@
 
 		</div>
 		
-		<!-- Music 2 -->
-		<div class="wrapper">
+		<!-- Itinerary -->
+		<div class="wrapper background3">
 			<section class="container">
 				<header class="major">
 					<h2>Your Saved Intinerary</h2>
@@ -94,12 +94,26 @@
 				
 			</section>
 		</div>
+
+				<!-- Saved Trips -->
+				<div class="wrapper">
+					<section class="container">
+						<header class="major">
+							<h2>Your Saved Trips</h2>
+							<p>View your mapped trips</p>
+							<ul class="actions major">
+								<li><a href="#" class="button">Road Trips</a></li>
+							</ul>
+						</header>
+						
+					</section>
+				</div>
         
-        <div class="wrapper">
+        <div class="wrapper background4">
 
 
 		
-				<section class="container">
+				<section class="container ">
 					<header class="major">
 						<h2>Get some tunes for your road-trip</h2>
 						<p>View the top ten albums thanks to Deezer</p>
@@ -113,7 +127,7 @@
 							<section style="text-align: center;" class="col-5 col-12-narrower feature">
 						
 						
-								<div class="image-wrapper first">
+								<div class="image-wrapper ">
 									<a href="#" class="image featured"><img src='<%= albums.cover_medium %>' alt="" /></a>
 								</div>
 							   <div>
@@ -260,14 +274,14 @@
   <script src="https://unpkg.com/mustache@latest"></script>
   <script>
 
-    let templateObj = { iteration: 2 }
+    let templateObj = { iteration: 1 }
     $('#add-waypoint').click(function (event) {
 
       event.preventDefault();
       let template = $('#input-template').html();
       console.log(template);
       let html = Mustache.render(template, templateObj);
-      $('input:first-of-type').after(html);
+      $('input:last-of-type').before(html);
       templateObj.iteration++;
     })
   </script>
