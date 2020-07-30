@@ -154,10 +154,11 @@ function renderResults(request, response){
         .query(queryParamaters)
         .then(dataFromSuperAgent => {
           let forcast = dataFromSuperAgent.body.data;
+          let endCity = dataFromSuperAgent.body.city_name;
           const forcastArray = forcast.map(day =>{
             return new Weather(day);
           });
-          response.status(200).render('searches.ejs', {searchResults: obj, weatherResults: forcastArray});
+          response.status(200).render('searches.ejs', {searchResults: obj, weatherResults: forcastArray, cityResults: endCity});
         }).catch((error) => {
           console.log('ERROR',error);
           response.status(500).send('Sorry, something went terribly wrong')
