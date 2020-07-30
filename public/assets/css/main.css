@@ -281,7 +281,10 @@ input, select, textarea {
 		}
 
 		@media screen and (max-width: 736px) {
-
+			#hidden-form{
+				background-color: #c7524a;
+				display: block;
+	}
 			.container {
 				width: 100%;
 			}
@@ -289,7 +292,10 @@ input, select, textarea {
 		}
 
 		@media screen and (max-width: 480px) {
-
+			#hidden-form{
+				background-color: #c7524a;
+				display: block;
+	}
 			.container {
 				width: 100%;
 			}
@@ -1520,7 +1526,10 @@ input, select, textarea {
 		}
 
 		@media screen and (max-width: 480px) {
-
+#hidden-form{
+			background-color: #c7524a;
+			display: block;
+}
 			.row {
 				display: flex;
 				flex-wrap: wrap;
@@ -2186,6 +2195,11 @@ color: #c7524a;
 -webkit-text-stroke-color: #562222;
 		}
 
+#hidden-form{
+	background-color: #c7524a;
+	display: none;
+}
+
 
 .form{
 	background-color: #c7524a;
@@ -2724,6 +2738,10 @@ background-color: #c7524a;
 
 	@media screen and (max-width: 736px) {
 
+		#hidden-form{
+			background-color: #c7524a;
+			display: block;
+}
 		/* Basic */
 
 			html, body {
@@ -3013,6 +3031,11 @@ background-color: #c7524a;
 	@media screen and (max-width: 480px) {
 
 		/* Basic */
+
+		#hidden-form{
+			background-color: #c7524a;
+			display: block;
+		}
 
 			body, input, textarea, select {
 				font-size: 12pt;

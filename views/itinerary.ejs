@@ -79,7 +79,7 @@
 						</nav>
 						<header class="major">
 							<h2 style="color: white; padding-top: 8em;">Look at your plans</h2>
-							<h2 style="color: white; padding-top: 12px; font-style: italic;">Costumize your plans</h2>								
+							<h2 style="color: white; padding-top: 12px; font-style: italic;">Custmize your plans</h2>								
 						</header>
 					</div>
 					
@@ -90,7 +90,14 @@
                     <div class="wrapper">
                         <section class="container">                                                
                             <div class="row features">
-                                
+															<% function formatTime(mt) { %>
+																<% let h = mt.toString().slice(0,2) %>
+																<% let m = mt.toString().slice(3,5) %>
+
+																<% h = h % 12; %>
+																<% if (h === 00) h = 12; %>
+																<% return h + ':' + m + ' ' + ((mt.toString().slice(0,2)) < 12 ? 'am' : 'pm'); %>
+																<% } %>
                                 <% activities.forEach( activity => { %>
                             
                                     <section style="text-align: center; width: 400px;" class="col-4 col-12-narrower feature">
@@ -103,18 +110,18 @@
                                            <p class='musicfont'><%= activity.name %></p>
                                            <p class='musicfont'>Rating: <%= activity.rate %></p>
 																					 <p class='musicfont'><%= activity.description %></p>
-																					 <p class="musicfont">Date: <%= activity.date %></p>
-																					 <p class="musicfont">Time: <%= activity.time %></p>
-                                        </div>
-																				
-																				<button type="button" class="showForm">Modify Activity</button>
-																				
-																				<form style="display: none;" id="update-details" action="/edit/<%= activity.id %>?_method=PUT" method="post">
-																					<fieldset>
-																						<input type="date" name="date" value="<%= activity.date %>" placeholder="DATE">
-																						<input type="time" name="time" value="<%= activity.time %>" placeholder="TIME">
-																					</fieldset>
-																					<button id="update-button" type="submit">Update Book Details</button>
+																					 <p class="musicfont">Date: <%= (activity.date ? `${activity.date.toString().slice(0,3)},${activity.date.toString().slice(3,10)},${activity.date.toString().slice(10,15)}`: activity.date) %></p>
+																					 <p class="musicfont">Time: <%= (activity.time ? formatTime(activity.time):activity.time) %></p>
+																					</div>
+																					
+																					<button type="button" class="showForm">Modify Activity</button>
+																					
+																					<form style="display: none;" id="update-details" action="/edit/<%= activity.id %>?_method=PUT" method="post">
+																						<fieldset>
+																							<input type="date" name="date" value="<%= activity.date%>" placeholder="DATE">
+																							<input type="time" name="time" value="<%= activity.time %>" placeholder="TIME">
+																						</fieldset>
+																						<button id="update-button" type="submit">Update Itinerary</button>
 																				</form>
 																				
 																				<form style="display: none;" id="delete-activity" action="/delete/<%= activity.id %>?_method=DELETE" method="post">

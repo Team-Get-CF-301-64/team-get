@@ -303,10 +303,6 @@ function dropMapTable(){
   client.query(sql);
 }
 
-function createMapTable(){
-  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
-  client.query(sql);
-}
 
 function createMapTable(){
   let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
