@@ -7,7 +7,7 @@
 <html style="background-color: #F2F4EF;">
 	<head>
     <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
-    <title>Telephasic by HTML5 UP</title>
+    <title>ROAD TRIP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -70,56 +70,699 @@
 
 		}
 		
-		@keyframes animate {
+		@import url("https://fonts.googleapis.com/css?family=Roboto:500,700");
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+@keyframes animate {
 			0% {
-				transform: rotate(0deg);
 				opacity: 1;
 				z-index: 66;
 
 			}
 			100% {
-				transform: rotate(360deg);
+			
 				opacity: 0;
 				z-index: -1;
 			}
 		}
 
-		
-		.loader span {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-			border-radius: 50%;
-			background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
-		}
-		
-		.loader span:nth-child(1) {
-			filter: blur(5px);
-		}
-		
-		.loader span:nth-child(2) {
-			filter: blur(10px);
-		}
-		
-		.loader span:nth-child(3) {
-			filter: blur(25px);
-		}
-		
-		.loader span:nth-child(4) {
-			filter: blur(50px);
-		}
-		
-		.loader:after {
-			content: '';
-			position: absolute;
-			top: 10px;
-			left: 10px;
-			right: 10px;
-			bottom: 10px;
-			background: transparent;
-			border: solid white 10px;
-			border-radius: 50%;
-		}
+.grain {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/851550/dotnoise-light-grey.png");
+  animation: static 2s steps(1) forwards;
+  animation: hider 2s steps(1) forwards;
+  opacity: 0.4;
+  z-index: 11;
+}
+
+@keyframes hider {
+	0% {
+display: inline;
+	}
+
+	100%{
+display: none;
+	}
+}
+
+@keyframes static {
+  0% {
+    background-position: 9600% 6000%;
+  }
+  1% {
+    background-position: 6200% 7600%;
+  }
+  2% {
+    background-position: 800% 1500%;
+  }
+  3% {
+    background-position: 400% 6400%;
+  }
+  4% {
+    background-position: 9100% 2300%;
+  }
+  5% {
+    background-position: 9300% 9500%;
+  }
+  6% {
+    background-position: 3100% 3900%;
+  }
+  7% {
+    background-position: 1400% 7600%;
+  }
+  8% {
+    background-position: 9200% 1900%;
+  }
+  9% {
+    background-position: 7800% 4700%;
+  }
+  10% {
+    background-position: 2100% 5200%;
+  }
+  11% {
+    background-position: 1300% 4900%;
+  }
+  12% {
+    background-position: 3800% 6700%;
+  }
+  13% {
+    background-position: 9800% 3800%;
+  }
+  14% {
+    background-position: 7300% 1900%;
+  }
+  15% {
+    background-position: 500% 6400%;
+  }
+  16% {
+    background-position: 7500% 4400%;
+  }
+  17% {
+    background-position: 8400% 5100%;
+  }
+  18% {
+    background-position: 1900% 7500%;
+  }
+  19% {
+    background-position: 5500% 7500%;
+  }
+  20% {
+    background-position: 5700% 6300%;
+  }
+  21% {
+    background-position: 100% 2400%;
+  }
+  22% {
+    background-position: 2700% 5600%;
+  }
+  23% {
+    background-position: 7800% 5600%;
+  }
+  24% {
+    background-position: 3600% 6000%;
+  }
+  25% {
+    background-position: 8400% 1300%;
+  }
+  26% {
+    background-position: 7700% 8700%;
+  }
+  27% {
+    background-position: 700% 6500%;
+  }
+  28% {
+    background-position: 900% 5500%;
+  }
+  29% {
+    background-position: 3400% 6200%;
+  }
+  30% {
+    background-position: 2300% 3800%;
+  }
+  31% {
+    background-position: 8700% 300%;
+  }
+  32% {
+    background-position: 1200% 5800%;
+  }
+  33% {
+    background-position: 1900% 2900%;
+  }
+  34% {
+    background-position: 3600% 9700%;
+  }
+  35% {
+    background-position: 5000% 9600%;
+  }
+  36% {
+    background-position: 200% 9800%;
+  }
+  37% {
+    background-position: 3500% 2400%;
+  }
+  38% {
+    background-position: 2600% 7800%;
+  }
+  39% {
+    background-position: 3400% 2900%;
+  }
+  40% {
+    background-position: 3700% 400%;
+  }
+  41% {
+    background-position: 900% 7300%;
+  }
+  42% {
+    background-position: 5800% 7100%;
+  }
+  43% {
+    background-position: 3800% 2100%;
+  }
+  44% {
+    background-position: 1300% 8900%;
+  }
+  45% {
+    background-position: 7300% 6700%;
+  }
+  46% {
+    background-position: 7400% 7800%;
+  }
+  47% {
+    background-position: 9500% 8400%;
+  }
+  48% {
+    background-position: 500% 3100%;
+  }
+  49% {
+    background-position: 1500% 1600%;
+  }
+  50% {
+    background-position: 5000% 8200%;
+  }
+  51% {
+    background-position: 8900% 9200%;
+  }
+  52% {
+    background-position: 6200% 1200%;
+  }
+  53% {
+    background-position: 5100% 3400%;
+  }
+  54% {
+    background-position: 6300% 2000%;
+  }
+  55% {
+    background-position: 9000% 1200%;
+  }
+  56% {
+    background-position: 3200% 3300%;
+  }
+  57% {
+    background-position: 1600% 3700%;
+  }
+  58% {
+    background-position: 9800% 4200%;
+  }
+  59% {
+    background-position: 7600% 4100%;
+  }
+  60% {
+    background-position: 9900% 2800%;
+  }
+  61% {
+    background-position: 9600% 3100%;
+  }
+  62% {
+    background-position: 9900% 7000%;
+  }
+  63% {
+    background-position: 9200% 9100%;
+  }
+  64% {
+    background-position: 4300% 8600%;
+  }
+  65% {
+    background-position: 1100% 2500%;
+  }
+  66% {
+    background-position: 5700% 1500%;
+  }
+  67% {
+    background-position: 6500% 7700%;
+  }
+  68% {
+    background-position: 4200% 4800%;
+  }
+  69% {
+    background-position: 7900% 2500%;
+  }
+  70% {
+    background-position: 2500% 3600%;
+  }
+  71% {
+    background-position: 4600% 9100%;
+  }
+  72% {
+    background-position: 1400% 5600%;
+  }
+  73% {
+    background-position: 9500% 4500%;
+  }
+  74% {
+    background-position: 9100% 3900%;
+  }
+  75% {
+    background-position: 4900% 2700%;
+  }
+  76% {
+    background-position: 600% 5500%;
+  }
+  77% {
+    background-position: 4100% 4000%;
+  }
+  78% {
+    background-position: 2600% 3300%;
+  }
+  79% {
+    background-position: 1800% 4600%;
+  }
+  80% {
+    background-position: 2200% 1500%;
+  }
+  81% {
+    background-position: 5300% 700%;
+  }
+  82% {
+    background-position: 5900% 700%;
+  }
+  83% {
+    background-position: 3100% 9400%;
+  }
+  84% {
+    background-position: 7900% 9400%;
+  }
+  85% {
+    background-position: 4100% 8400%;
+  }
+  86% {
+    background-position: 3900% 9800%;
+  }
+  87% {
+    background-position: 4100% 9800%;
+  }
+  88% {
+    background-position: 7600% 3800%;
+  }
+  89% {
+    background-position: 3200% 1400%;
+  }
+  90% {
+    background-position: 6600% 7700%;
+  }
+  91% {
+    background-position: 6800% 9300%;
+  }
+  92% {
+    background-position: 6400% 5400%;
+  }
+  93% {
+    background-position: 3100% 4600%;
+  }
+  94% {
+    background-position: 7200% 8500%;
+  }
+  95% {
+    background-position: 3200% 900%;
+  }
+  96% {
+    background-position: 2700% 400%;
+  }
+  97% {
+    background-position: 6300% 900%;
+  }
+  98% {
+    background-position: 8200% 5400%;
+  }
+}
+a {
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+  color: rgba(0, 0, 0, 0.3);
+  z-index: 12;
+}
+
+.cassette {
+  width: 554px;
+  height: 350px;
+  background: #4b4b56;
+  border-radius: 10px;
+  border: 4px solid #353535;
+  position: relative;
+}
+@media (max-width: 600px) {
+  .cassette {
+    width: 300px;
+    height: 190px;
+    font-size: 0.55em;
+  }
+}
+.cassette:after {
+  display: block;
+  content: '';
+  width: 104%;
+  height: 30%;
+  margin-left: -2%;
+  background: #4b4b56;
+  border-radius: 10px;
+  bottom: 7%;
+  position: absolute;
+  z-index: -1;
+  border: 4px solid #353535;
+}
+.cassette:before {
+  display: block;
+  content: '';
+  width: 89%;
+  height: 4px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  top: 3%;
+  position: relative;
+}
+.cassette .label {
+  width: 90%;
+  height: 64%;
+  position: relative;
+  margin: auto;
+  top: 7%;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 4px #353535;
+  background: linear-gradient(#e6584c 8%, #f8f8f8 8%, #f8f8f8 30%, #484848 30%, #484848 31.5%, #f8f8f8 31.5%, #f8f8f8 36%, #484848 36%, #484848 37.5%, #f8f8f8 37.5%, #f8f8f8 39%, #484848 39%, #484848 40.5%, #f8f8f8 40.5%, #f8f8f8 42%, #484848 42%, #484848 43.5%, #f8f8f8 43.5%, #f8f8f8 45%, #484848 45%, #484848 46.5%, #f8f8f8 46.5%, #f8f8f8 48%, #484848 48%, #484848 49.5%, #f8f8f8 49.5%, #f8f8f8 51%, #484848 51%, #484848 52.5%, #f8f8f8 52.5%, #f8f8f8 54%, #484848 54%, #484848 55.5%, #f8f8f8 55.5%, #f8f8f8 57%, #484848 57%, #484848 58.5%, #f8f8f8 58.5%, #f8f8f8 60%, #484848 60%, #484848 61.5%, #f8f8f8 61.5%, #f8f8f8 63%, #484848 63%, #484848 64.5%, #f8f8f8 64.5%, #f8f8f8 66%, #484848 66%, #484848 67.5%, #f8f8f8 67.5%, #f8f8f8 69%, #484848 69%, #484848 70.5%, #f8f8f8 70.5%, #f8f8f8 72%, #484848 72%, #484848 73.5%, #f8f8f8 73.5%, #f8f8f8 75%, #484848 75%, #484848 76.5%, #f8f8f8 76.5%, #f8f8f8 78%, #484848 78%, #484848 79.5%, #f8f8f8 79.5%, #f8f8f8 81%, #484848 81%, #484848 82.5%);
+}
+.cassette .label:before {
+  position: absolute;
+  display: block;
+  top: 12%;
+  left: 3%;
+  content: 'B';
+  padding: 3px;
+  text-align: center;
+  width: 1.3em;
+  height: 1.3em;
+  color: #f8f8f8;
+  font-weight: bold;
+  font-size: 1.4em;
+  background: #4b4b56;
+  border-radius: 1px;
+}
+.cassette .label:after {
+  position: absolute;
+  display: block;
+  content: 'N.R. [\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0] ☐\fe0e IN ☒\fe0e OUT';
+  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9em;
+  top: 22%;
+  right: 3%;
+  color: #4b4b56;
+}
+.cassette .label .cutout {
+  width: 70%;
+  height: 46%;
+  position: relative;
+  margin: auto;
+  top: 36%;
+  background: #4b4b56;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 4px #353535;
+}
+.cassette .label .cutout:before {
+  position: absolute;
+  display: block;
+  content: 'Normal Bias 120µ\fe0es EQ';
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85em;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  bottom: -25%;
+}
+.cassette .label .cutout:after {
+  position: absolute;
+  display: block;
+  content: 'A 60';
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.5em;
+  font-weight: bold;
+  top: 100%;
+  right: 0;
+  background: #e6584c;
+  background-image: linear-gradient(90deg, #e6584c 44%, rgba(255, 255, 255, 0.8) 44%, rgba(255, 255, 255, 0.8) 45%, #e6584c 45%);
+  height: 36%;
+  padding: 1.2% 5%;
+  box-shadow: inset 0 0 0 8px #e6584c;
+  font-family: 'Roboto', sans-serif;
+}
+.cassette .label .cutout .reel_hole {
+  position: absolute;
+  background: #adadad;
+  width: 20%;
+  top: 15%;
+  border: 3px solid #353535;
+  box-shadow: 0 0 0 3px #4b4b56, 0 0 0 5px #353535;
+  border-radius: 50%;
+  right: 5.5%;
+}
+.cassette .label .cutout .reel_hole:after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+  box-shadow: inset 0 0 0 6px #adadad;
+  background: #353535;
+  border-radius: 50%;
+}
+.cassette .label .cutout .reel_hole:before {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: #8fe2ec;
+  transform: scale(0.75);
+  z-index: 10;
+}
+.cassette .label .cutout .reel_hole:first-of-type {
+  left: 5.5%;
+}
+.cassette .label .cutout .reel_hole .gear {
+  position: absolute;
+  width: 14%;
+  height: 86%;
+  background: #8fe2ec;
+  top: 50%;
+  left: 50%;
+  margin-left: -7%;
+  margin-top: -43%;
+  box-shadow: 0 0 0 2px #353535;
+  animation: gears 3.5s linear infinite alternate;
+}
+.cassette .label .cutout .reel_hole .gear:before, .cassette .label .cutout .reel_hole .gear:after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #8fe2ec;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 0 2px #353535;
+  transform: rotate(240deg);
+}
+.cassette .label .cutout .reel_hole .gear:after {
+  transform: rotate(120deg);
+  width: 220%;
+  top: 2%;
+  left: -75%;
+  background: none;
+  box-shadow: -2px -2px 0 0 #353535;
+  background-image: linear-gradient(90deg, #8fe2ec calc(50% - 1px), #353535 calc(50% - 1px), #353535 calc(50% + 1px), #e6584c calc(50% + 2px)), linear-gradient(#8fe2ec calc(100% - 2px), #353535 calc(100% - 2px));
+  background-size: 100% 50%, 50% 100%;
+  background-repeat: no-repeat;
+}
+@keyframes gears {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(2160deg);
+  }
+}
+.cassette .label .cutout .window {
+  position: absolute;
+  background: #8fe2ec;
+  width: 40%;
+  height: 68%;
+  top: 15%;
+  left: 30%;
+  border: 3px solid #353535;
+  overflow: hidden;
+}
+.cassette .label .cutout .window:after {
+  display: block;
+  position: absolute;
+  background: linear-gradient(transparent 13%, rgba(255, 255, 255, 0.4) 13%, rgba(255, 255, 255, 0.4) 24%, transparent 24%, transparent 34%, rgba(255, 255, 255, 0.4) 34%, rgba(255, 255, 255, 0.4) 50%, transparent 50%);
+  content: '';
+  width: 100%;
+  height: 100%;
+}
+.cassette .label .cutout .window .spool {
+  position: absolute;
+  top: -22%;
+  width: 70%;
+  background: #adadad;
+  border: 3px solid #353535;
+  border-radius: 50%;
+  box-shadow: 0 0 0 10px #626262, 0 0 0 13px #353535;
+}
+.cassette .label .cutout .window .spool:after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+.cassette .label .cutout .window .spool:first-of-type {
+  left: -64%;
+  animation: spooling 3.5s linear infinite alternate;
+}
+.cassette .label .cutout .window .spool:last-of-type {
+  right: -64%;
+  animation: spooling 3.5s linear infinite alternate-reverse;
+}
+@keyframes spooling {
+  from {
+    box-shadow: 0 0 0 0.5em #626262, 0 0 0 calc(0.5em + 3px) #353535;
+  }
+  to {
+    box-shadow: 0 0 0 5em #626262, 0 0 0 calc(5em + 3px) #353535;
+  }
+}
+.cassette .head {
+  width: 60%;
+  height: 25.5%;
+  position: absolute;
+  margin-left: 20%;
+  bottom: -4%;
+}
+.cassette .head:before, .cassette .head:after {
+  display: block;
+  content: '';
+  width: 70%;
+  height: 100%;
+  position: absolute;
+  background: #4b4b56;
+  border: 4px solid #353535;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%);
+  background-repeat: no-repeat;
+  background-position: 15% 8%;
+  background-size: 100% 4px;
+}
+.cassette .head:before {
+  transform: skew(-15deg);
+  left: -8%;
+  border-right: none;
+  border-radius: 10px 0 0  10px;
+  box-shadow: inset 6px 0 0 0 #4b4b56;
+}
+.cassette .head:after {
+  transform: skew(15deg);
+  right: -8%;
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  box-shadow: inset -6px 0 0 0 #4b4b56;
+}
+.cassette .screw {
+  position: absolute;
+  text-align: right;
+  top: 7%;
+  left: 4%;
+}
+.cassette .screw:before {
+  content: '\20e0\fe0e';
+  font-size: 1.1em;
+  color: #353535;
+  font-weight: bold;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.cassette .screw.i2 {
+  right: 1%;
+}
+.cassette .screw.i2:before {
+  transform: rotate(90deg);
+}
+.cassette .screw.i3 {
+  bottom: 1%;
+}
+.cassette .screw.i3:before {
+  transform: rotate(-30deg);
+}
+.cassette .screw.i4 {
+  right: 1%;
+  bottom: 1%;
+}
+.cassette .screw.i4:before {
+  transform: rotate(-90deg);
+}
+.cassette .screw.i5 {
+  left: calc(50% + 0.5em);
+  bottom: 9%;
+}
+.cassette .screw.i5:before {
+  transform: rotate(45deg);
+}
+.cassette .hole {
+  width: 5%;
+  background: #8fe2ec;
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid #353535;
+  bottom: 0;
+  left: 50%;
+  margin-left: -2.5%;
+}
+.cassette .hole:after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+.cassette .hole.i1 {
+  bottom: 0%;
+  left: 28%;
+}
+.cassette .hole.i2 {
+  bottom: 2%;
+  left: 38%;
+}
+.cassette .hole.i3 {
+  bottom: 0%;
+  left: 72%;
+}
+.cassette .hole.i4 {
+  bottom: 2%;
+  left: 62%;
+}
+
 		
 				</style>
 		
@@ -130,10 +773,36 @@
 
 
 		<div class="loader">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
+			<div class="grain"></div>
+<div class="cassette">
+  <div class="head"></div>
+  <div class="label">
+    <div class="cutout">
+      <div class="reel_hole">
+        <div class="gear"></div>
+      </div>
+      <div class="reel_hole">
+        <div class="gear"></div>
+      </div>
+      <div class="window">
+        <div class="spool"></div>
+        <div class="spool"></div>
+      </div>
+    </div>
+  </div>
+  <div class="accents">
+    <div class="screw i1"></div>
+    <div class="screw i2"></div>
+    <div class="screw i3"></div>
+    <div class="screw i4"></div>
+    <div class="screw i5"></div>
+    <div class="hole i1"></div>
+    <div class="hole i2"></div>
+    <div class="hole i3"></div>
+    <div class="hole i4"></div>
+  </div>
+</div>
+<a href="https://dribbble.com/shots/2962257-Retro-Cassette-Tape-Animated" target="_blank">original artwork by Sailesh Gunasekaran</a>
 		</div>
 
 		<div id="page-wrapper">
