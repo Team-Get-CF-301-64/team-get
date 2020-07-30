@@ -79,7 +79,7 @@
 						</nav>
 						<header class="major">
 							<h2 style="color: white; padding-top: 8em;">Look at your plans</h2>
-							<h2 style="color: white; padding-top: 12px; font-style: italic;">Customize your plans</h2>								
+							<h2 style="color: white; padding-top: 12px; font-style: italic;">Custmize your plans</h2>								
 						</header>
 					</div>
 					
@@ -90,7 +90,15 @@
                     <div class="wrapper">
                         <section class="container">                                                
                             <div class="row features">
-                                
+															<% function formatTime(mt) { %>
+																<% var h = mt.toString().slice(0,2) %>
+																<% var m = mt.toString().slice(3,5) %>
+
+																<% h = h % 12; %>
+																<% if (h === 0) h = 12; %>
+																<% var h = mt.toString().slice(0,2) %>
+																<% return h + ':' + m + ' ' + ((mt.toString().slice(0,2)) < 12 ? 'am' : 'pm'); %>
+																<% } %>
                                 <% activities.forEach( activity => { %>
                             
                                     <section style="text-align: center; width: 400px;" class="col-4 col-12-narrower feature">
@@ -103,8 +111,8 @@
                                            <p class='musicfont'><%= activity.name %></p>
                                            <p class='musicfont'>Rating: <%= activity.rate %></p>
 																					 <p class='musicfont'><%= activity.description %></p>
-																					 <p class="musicfont">Date: <%= activity.date.toString().slice(0,15) %></p>
-																					 <p class="musicfont">Time: <%= activity.time %></p>
+																					 <p class="musicfont">Date: <%= (activity.date ? `${activity.date.toString().slice(0,3)},${activity.date.toString().slice(3,10)},${activity.date.toString().slice(10,15)}`: activity.date) %></p>
+																					 <p class="musicfont">Time: <%= (activity.time ? formatTime(activity.time):activity.time) %></p>
 																					</div>
 																					
 																					<button type="button" class="showForm">Modify Activity</button>
