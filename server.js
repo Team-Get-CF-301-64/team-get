@@ -85,7 +85,13 @@ function checkItinerary(request,resp){
   client.query(sql)
     .then(items => {
       let aItems = items.rows;
-      resp.render('../views/itinerary.ejs', {activities: aItems});
+      let sql = 'SELECT * FROM map;';
+      client.query(sql)
+        .then(cities => {
+          let cityArray = new RouteForItinerary(cities.rows);
+          console.log(cityArray);
+          resp.render('../views/itinerary.ejs', {MAPQUEST_API_KEY : process.env.MAPQUEST_API_KEY, activities: aItems, cities: cityArray});
+        })
     }).catch(err => {
       resp.status(500).render('../views/home', {error:err});
     })
@@ -331,6 +337,17 @@ function Route (obj) {
       this.end = value;
     } else {
       this.waypoints.push(value);
+    }
+  }
+}
+
+function RouteForItinerary (obj) {
+  this.waypoints = [];
+  this.start = `${obj[0].city}, ${obj[0].state}`;
+  this.end = `${obj[obj.length - 1].city}, ${obj[obj.length - 1].state}`;
+  if(obj.length > 2) {
+    for(let i = 1; i < obj.length - 1; i++) {
+      this.waypoints.push(`${obj[i].city}, ${obj[i].state}`);
     }
   }
 }
