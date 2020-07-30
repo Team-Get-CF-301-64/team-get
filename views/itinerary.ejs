@@ -81,18 +81,18 @@
                                            <p class='musicfont'><%= activity.name %></p>
                                            <p class='musicfont'>Rating: <%= activity.rate %></p>
 																					 <p class='musicfont'><%= activity.description %></p>
-																					 <p class="musicfont">Date: <%= activity.date %></p>
+																					 <p class="musicfont">Date: <%= activity.date.toString().slice(0,15) %></p>
 																					 <p class="musicfont">Time: <%= activity.time %></p>
-                                        </div>
-																				
-																				<button type="button" class="showForm">Modify Activity</button>
-																				
-																				<form style="display: none;" id="update-details" action="/edit/<%= activity.id %>?_method=PUT" method="post">
-																					<fieldset>
-																						<input type="date" name="date" value="<%= activity.date %>" placeholder="DATE">
-																						<input type="time" name="time" value="<%= activity.time %>" placeholder="TIME">
-																					</fieldset>
-																					<button id="update-button" type="submit">Update Book Details</button>
+																					</div>
+																					
+																					<button type="button" class="showForm">Modify Activity</button>
+																					
+																					<form style="display: none;" id="update-details" action="/edit/<%= activity.id %>?_method=PUT" method="post">
+																						<fieldset>
+																							<input type="date" name="date" value="<%= activity.date%>" placeholder="DATE">
+																							<input type="time" name="time" value="<%= activity.time %>" placeholder="TIME">
+																						</fieldset>
+																						<button id="update-button" type="submit">Update Itinerary</button>
 																				</form>
 																				
 																				<form style="display: none;" id="delete-activity" action="/delete/<%= activity.id %>?_method=DELETE" method="post">
