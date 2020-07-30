@@ -144,21 +144,7 @@
 
 						
 						<!-- Nav -->
-						<nav id="nav" style='margin-right: 0;'>
-							<ul>
-								<li>
-									<a href="#">Menu</a>
-									<ul>
-										<li><a href="/">Home</a></li>
-										<li><a href="/">Itinerary</a></li>
-										<li><a href="/game">Travel Game</a></li>
-										<li><a href="/aboutus">About Us</a></li>
-										<li><a href="/music">Music</a></li>
-									</ul>
-								</li>
-							
-							</ul>
-						</nav>
+
 
 					</div>
 
@@ -176,10 +162,8 @@
 								<% console.log(latLongData[(latLongData.length-1)]);%>
 									<button type="submit">Search Activities</button>
 							</form>
-						</section>
 
 
-							<!-- Features 1 -->
 							<form action="/save" method="post">
 								<% latLongData.forEach((value, index) => { %>
 								<input type="hidden" name="city" value="<%= value.city %>">
@@ -189,6 +173,11 @@
 								<% }) %>
 								<button style="margin: .6em;" type="submit">Save Route</button>
 							</form>
+							<a type="button" href='/' style="margin: .6em;" style="text-decoration: none; border-bottom: none;"><button style="margin: .6em;text-decoration: none;" >Back Home</button></a>
+						</section>
+
+
+						
 
 								
 							
