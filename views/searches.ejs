@@ -70,28 +70,31 @@
             </header>
                         
 						
-						<div class="row features">
-                            
+						<div style="text-align: center; display: flex; flex-direction: row; flex-wrap: wrap; margin: .8em auto;" class="row features">
                             
               <% searchResults.forEach( activity => { %>
-                <img src="<%= activity.image %>" alt="<%= activity.name %>" style="width: 198px; height: 142px;">
-                <h2> <%= activity.name %></h2>
-                <p>Rating:  <%= activity.rate %></p>
-                <p><%= activity.description %></p>
-                
-                <form class="activity-form" action="/add" method="post">
-                  <button type="submit">Add to Intinerary</button>
-                <!-- <fieldset> -->
-                  <input name="name" type="hidden" value="<%= activity.name %>">
-                  <input name="rate" type="hidden" value="<%= activity.rate %>">
-                  <input name="image" type="hidden" value="<%= activity.image %>">
-                  <input name="description" type="hidden" value="<%= activity.description %>">
-                  <input name="latitude" type="hidden" value="<%= activity.latitude %>">
-                  <input name="longitude" type="hidden" value="<%= activity.longitude %>">
-                <!-- </fieldset> -->
-              </form>
+                <div style="width: 400px; height: 450px; justify-content: center; align-items: center; margin: .8em auto; -webkit-box-shadow: 2px 2px 5px 3px rgba(38,36,37,1);
+                -moz-box-shadow: 2px 2px 5px 3px rgba(38,36,37,1);
+                box-shadow: 2px 2px 5px 3px rgba(38,36,37,1); background-color: #F2F4EF; padding: 15px;">
+                  <!-- <img src="<%= activity.image %>" alt="<%= activity.name %>" style="width: 198px; height: 142px;"> -->
+                  <img style='width: 198px; height: 142px;' src='<%= activity.image %>' onerror="this.onerror=null;this.src='https://placekitten.com/g/200/300';" />
+                  <h2> <%= activity.name %></h2>
+                  <p>Rating:  <%= activity.rate %></p>
+                  <p style="margin-bottom: 5px;"><%= activity.description %></p>
+                  
+                  <form class="activity-form" action="/add" method="post">
+                    <button type="submit">Add to Intinerary</button>
+                  <!-- <fieldset> -->
+                    <input name="name" type="hidden" value="<%= activity.name %>">
+                    <input name="rate" type="hidden" value="<%= activity.rate %>">
+                    <input name="image" type="hidden" value="<%= activity.image %>">
+                    <input name="description" type="hidden" value="<%= activity.description %>">
+                    <input name="latitude" type="hidden" value="<%= activity.latitude %>">
+                    <input name="longitude" type="hidden" value="<%= activity.longitude %>">
+                  <!-- </fieldset> -->
+                  </form>
+                </div>        
               <% }) %>   
-                           
                             
 
 						</div>
