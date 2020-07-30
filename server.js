@@ -127,7 +127,8 @@ function renderResults(request, response){
     token: process.env.token,
     latitude: request.body.lat,
     longitude: request.body.lon,
-    tag_labels: 'do'
+    // tag_labels: 'do',
+    max_distance: 5000
   }
 
   superagent.get(url)
@@ -368,8 +369,10 @@ function Activity(obj){
   this.longitude = obj.coordinates.longitude;
   this.latitude = obj.coordinates.latitude;
   this.rate = `${obj.score}`.slice(0,3);
-  this.image = obj.images[0] ? obj.images[0].sizes.original.url : 'https://placekitten.com/g/200/300';
+  this.image = obj.images.length ? obj.images[0].sizes.original.url : 'https://placekitten.com/g/200/300';
   this.description = obj.snippet;
+
+  // console.log('picture=======',obj.images);
 }
 
 function Weather(obj){
