@@ -1,0 +1,38 @@
+<script type="text/javascript">
+  window.onload = function() {
+    L.mapquest.key = '<%= MAPQUEST_API_KEY %>';
+
+    let map = L.mapquest.map('map', {
+      center: [39.8283, -98.5795],
+      layers: L.mapquest.tileLayer('hybrid'),
+      zoom: 4
+    });
+
+    let directions = L.mapquest.directions();
+    directions.setLayerOptions({
+      routeRibbon: {
+        draggable: false,
+        showTraffic: false
+      },
+      startMarker: {
+        draggable: false
+      },
+      endMarker: {
+        draggable: false
+      },
+      waypointsMarker:{
+        draggable: false
+      }
+    });
+
+    let waypoints = <%- JSON.stringify(cities.waypoints) %> 
+
+    directions.route({
+      start: '<%= cities.start %>',
+      end: '<%= cities.end %>',
+      waypoints: waypoints
+    });
+
+    map.addControl(L.mapquest.control());
+  }
+</script>
