@@ -7,5 +7,7 @@ CREATE TABLE itinerary(
   image VARCHAR(255),
   description TEXT,
   latitude VARCHAR(255),
-  longitude VARCHAR(255)
+  longitude VARCHAR(255),
+  date DATE,
+  time TIME
 );
