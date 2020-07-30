@@ -12,42 +12,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
-		<script type="text/javascript">
-      window.onload = function() {
-        L.mapquest.key = '<%= MAPQUEST_API_KEY %>';
-
-        let map = L.mapquest.map('map', {
-          center: [39.8283, -98.5795],
-          layers: L.mapquest.tileLayer('hybrid'),
-          zoom: 4
-        });
-
-        let directions = L.mapquest.directions();
-        directions.setLayerOptions({
-          routeRibbon: {
-            draggable: false,
-            showTraffic: false
-          },
-          startMarker: {
-            draggable: false
-          },
-          endMarker: {
-            draggable: false
-          },
-          waypointsMarker:{
-            draggable: false
-          }
-        });
-
-        let waypoints = <%- JSON.stringify(cities.waypoints) %> 
-
-        directions.route({
-          start: '<%= cities.start %>',
-          end: '<%= cities.end %>',
-          waypoints: waypoints
-        });
-      }
-	</script>
+		
+		<% if(cities) { %>
+			<%- include ('mapquestjs-partial.ejs') %>
+		<% } %>
+		
 	</head>
 
 	<body class="homepage is-preload">
@@ -79,7 +48,7 @@
 						</nav>
 						<header class="major">
 							<h2 style="color: white; padding-top: 8em;">Look at your plans</h2>
-							<h2 style="color: white; padding-top: 12px; font-style: italic;">Custmize your plans</h2>								
+							<h2 style="color: white; padding-top: 12px; font-style: italic;">Customize your plans</h2>								
 						</header>
 					</div>
 					
@@ -133,6 +102,12 @@
 																			</section>
 																			<% }) %>																				                               
                             </div>
+
+								<% if(cities) { %>
+									<%- include ('mapquestdiv-partial.ejs') %>
+								<% } else { %>
+									<p>Save a route for it to display here!</p>
+								<% } %>
                             <ul class="actions major">
                                 <li><a href="/" class="button">Home</a></li>
                             </ul>

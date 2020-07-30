@@ -88,9 +88,15 @@ function checkItinerary(request,resp){
       let sql = 'SELECT * FROM map;';
       client.query(sql)
         .then(cities => {
-          let cityArray = new RouteForItinerary(cities.rows);
-          console.log(cityArray);
-          resp.render('../views/itinerary.ejs', {MAPQUEST_API_KEY : process.env.MAPQUEST_API_KEY, activities: aItems, cities: cityArray});
+          console.log(cities.rows);
+          if(cities.rows.length > 0){
+
+            let cityArray = new RouteForItinerary(cities.rows);
+            console.log(cityArray);
+            resp.render('../views/itinerary.ejs', {MAPQUEST_API_KEY : process.env.MAPQUEST_API_KEY, activities: aItems, cities: cityArray});
+          } else {
+            resp.render('../views/itinerary.ejs', {MAPQUEST_API_KEY : process.env.MAPQUEST_API_KEY, activities: aItems, cities: null});
+          }
         })
     }).catch(err => {
       resp.status(500).render('../views/home', {error:err});
