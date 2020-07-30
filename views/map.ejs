@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 
+
+		
     <script type="text/javascript">
       window.onload = function() {
         L.mapquest.key = '<%= MAPQUEST_API_KEY %>';
@@ -46,7 +48,9 @@
           start: '<%= destinations.start %>',
           end: '<%= destinations.end %>',
           waypoints: waypoints
-        });
+				});
+				
+				map.addControl(L.mapquest.control());
       }
 	</script>
 	
@@ -189,16 +193,6 @@
 							
 				</div>
 		</div>
-		
-
-		
-					
-
-
-
-
-		
-
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
