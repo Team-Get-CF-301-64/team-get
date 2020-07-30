@@ -21,21 +21,21 @@
 
 
 						<!-- Nav -->
-							<nav id="nav">
-								<ul>
-									<li>
-										<h1 id="logo"></h1><a href="#">Travel App</a></h1>
-										<ul>
-											<li><a href="/">New Search</a></li>
-											<li><a href="/aboutus">About Us</a></li>
-											<li><a href="/game">Travel Game</a></li>
-										
-											
-										</ul>
-									</li>
-									
-								</ul>
-							</nav>
+						<nav id="nav" style='margin-right: 0;'>
+							<ul>
+								<li>
+									<a href="#">Menu</a>
+									<ul>
+										<li><a href="/">Home</a></li>
+										<li><a href="/">Itinerary</a></li>
+										<li><a href="/game">Travel Game</a></li>
+										<li><a href="/aboutus">About Us</a></li>
+										<li><a href="/music">Music</a></li>
+									</ul>
+								</li>
+							
+							</ul>
+						</nav>
 
 					</div>
 
@@ -57,6 +57,64 @@
 				</div>
 
 			<!-- Features 1 -->
+
+
+
+
+
+
+<!-- FORMSTUFFFS -->
+
+
+			<form id="activity-search" action="/results" method="post">
+				<input name="latitude" type="hidden" value="<%= latLongData[latLongData.length-1].latitude %>">
+				<input name="longitude" type="hidden" value="<%= latLongData[latLongData.length-1].longitude %>">
+				<!-- <button style="margin: .6em;" type="submit">Search Activities</button> -->
+				
+				<!-- Features 1 -->
+				<form action="/save" method="post">
+					<% latLongData.forEach((value, index) => { %>
+						<input type="hidden" name="city" value="<%= value.city %>">
+						<input type="hidden" name="state" value="<%= value.state %>">
+						<input type="hidden" name="latitude" value="<%= value.latitude %>">
+						<input type="hidden" name="longitude" value="<%= value.longitude %>">
+						<% }) %>
+						<button style="margin: .6em;" type="submit">Create New Trip</button>
+					</form>
+					
+				</form>
+
+
+
+				<!-- FORMSTUFFFS -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				<div class="wrapper">
 					<div class="container">
 						<div class="row">

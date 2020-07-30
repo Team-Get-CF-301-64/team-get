@@ -35,7 +35,7 @@ client.on('client', error => {
 
 /*########################### MIDDLE WARE #############################
 
-#####################################################################*/
+######################################################################*/
 
 app.use(express.static('./public'));
 
@@ -55,113 +55,113 @@ app.use(methodOverrive('_method'));
 
 app.get('/', renderHome);
 
-app.post('/results', renderResults);
+app.get('/results', renderResults);
 
 app.get('/game', renderGame);
 
 app.get('/aboutUs', renderAboutUs);
 
+app.get('/see-itinerary', checkItinerary);
 
-app.get('/weather', renderWeather)
-
-//==============================Call Back Funtions=========================
+app.get('/music', renderMusic);
+//==============================Call Back Functions=========================
 
 app.post('/search', renderMap);
 
-app.get('/music', renderMusic);
+app.post('/results', renderResults);
 
+app.post('/add', addActivityToDatabase);
+
+app.post('/save', addMapDataToDatabase);
+
+app.put('/edit/:id', editActivity);
+
+app.delete('/delete/:id', deleteActivity);
+
+
+
+function checkItinerary(request,resp){
+  let sql = 'SELECT * FROM itinerary;';
+  client.query(sql)
+    .then(items => {
+      let aItems = items.rows;
+      let sql = 'SELECT * FROM map;';
+      client.query(sql)
+        .then(cities => {
+          let cityArray = new RouteForItinerary(cities.rows);
+          console.log(cityArray);
+          resp.render('../views/itinerary.ejs', {MAPQUEST_API_KEY : process.env.MAPQUEST_API_KEY, activities: aItems, cities: cityArray});
+        })
+    }).catch(err => {
+      resp.status(500).render('../views/home', {error:err});
+    })
+}
 
 
 
 function renderHome(request, response) {
 
+  let data = [];
 
-  response.render('home.ejs');
+  let url = 'https://api.deezer.com/chart';
 
-  try{
+  superagent.get(url).then(results => {
+    data = results.body.albums;
 
+    let albumArr = data.data;
 
-    response.status(200).render('../views/index.ejs');
-
-  } catch(error){
-    console.log('ERROR', error);
-    response.status(500).send('Sorry, something went terribly wrong');
-  }
+    const finalAlbum = albumArr.map(albums => {
+      return new Album(albums);
+    });
+    response.render('../views/home.ejs', {searchResults: finalAlbum})
+  });
 }
 
 
+
 function renderResults(request, response){
-  // let url = 'https://www.triposo.com/api/20200405/local_highlights.json?account=M2B0UXXF&token=ub5ewilflwgve808gif0aux9l9ov30jn&latitude=47.608013&longitude=-122.335167&tag_labels=do';
   let url = 'https://www.triposo.com/api/20200405/local_highlights.json?';
 
   let queryParams = {
     account: process.env.account,
     token: process.env.token,
-    latitude: 47.608013,
-    longitude: -122.335167,
+    latitude: request.body.lat,
+    longitude: request.body.lon,
     tag_labels: 'do'
   }
 
   superagent.get(url)
-  .query(queryParams)
-  .then(results => {
-    let activitySearchResults = results.body.results[0];
-      console.log('activity',activitySearchResults);
+    .query(queryParams)
+    .then(results => {
+      let activitySearchResults = results.body.results[0];
       const obj = activitySearchResults['pois'].map(activityObj => {
-        // console.log(new Activity(activityObj));
         return new Activity(activityObj);
       })
-      console.log('object=================', obj);
-      response.status(200).render('searches.ejs', {searchResults: obj});
-  })
-  .catch((error) => {
-    console.log('ERROR', error);
-    response.status(500).send('Sorry, something went terribly wrong');
-  })
+      let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
+      let queryParamaters = {
+        key: process.env.WEATHER_API_KEY,
+        city: request.body.city,
+        units: 'i',
+        days:7
+      }
+      superagent.get(url)
+        .query(queryParamaters)
+        .then(dataFromSuperAgent => {
+          let forcast = dataFromSuperAgent.body.data;
+          const forcastArray = forcast.map(day =>{
+            return new Weather(day);
+          });
+          response.status(200).render('searches.ejs', {searchResults: obj, weatherResults: forcastArray});
+        }).catch((error) => {
+          console.log('ERROR',error);
+          response.status(500).send('Sorry, something went terribly wrong')
+        });
+    })
+    .catch((error) => {
+      console.log('ERROR', error);
+      response.status(500).send('Sorry, something went terribly wrong');
+    })
 }
-// function renderResults(request, response) {
-
-//   // try{
-//     // let searchCity = request.body.search[0];
-//     // let searchCategory = request.body.search[1];
-//     let searchCategory = 'museums,water,nature_reserves,monuments_and_memorials';
-//     let searchParams = '';
-//     let url = 'http://api.opentripmap.com/0.1/en/places/radius';
-//     // let url = 'http://api.opentripmap.com/0.1/en/places/radius?apikey=5ae2e3f221c38a28845f05b6c6943bdedcf9db68437c8a07ae749e05&radius=6000&lat=47.608013&lon=-122.335167&kinds=museums,water,nature_reserves,monuments_and_memorials';
-
-//     // from search form to add parameters
-//     if(searchCategory === 'museums'){searchParams += ',museums'};
-//     if(searchCategory === 'water'){searchParams += ',water'};
-//     if(searchCategory === 'nature'){searchParams += ',nature_reserves'};
-//     if(searchCategory === 'monuments'){searchParams += ',monuments_and_memorials'};
-//   console.log('test am i in?');
-//     let queryParams = {
-//       apikey: process.env.apikey,
-//       // lat: request.query.latitude,
-//       lat: 47.603649,
-//       // lon: request.query.longitude,
-//       lon: -122.330193,
-//       // radius: request.query.radius,
-//       radius: 1000,
-//       kinds: searchCategory
-//     }
-//     console.log(queryParams.kinds);
-//     superagent.get(url)
-//     .query(queryParams)
-//     .then(results => {
-//       let activitySearchResults = results.body;
-//       console.log('activity',activitySearchResults);
-//       const obj = activitySearchResults['features'].map(activityObj => {
-//         return new Activity(activityObj);
-//       })
-//       console.log('object=================', obj);
-//       response.status(200).render('searches.ejs', {searchResults: obj});
-//     })
-//    .catch((error) => {
-//     console.log('ERROR', error);
-//     response.status(500).send('Sorry, something went terribly wrong');
-//    })
-// }
 
 
 
@@ -174,26 +174,12 @@ function renderMusic(req, resp){
   superagent.get(url).then(results => {
     data = results.body.albums;
 
-    // console.log('this is the title: ', data.data[0].title);
-
-    // console.log('my params: ', data.data[0].title, data.data[0].position);
-    // let title = data.data[0].title;
-    // let position = data.data[0].position;
-    // let cover_medium = data.data[0].cover_medium;
-
-    // let a = new Album(data.data[0]);
-
-    // console.log('new obj?', a);
-
-
-    // well, now lets make obj
-
     let albumArr = data.data;
 
+    console.log('this is from API: ', albumArr);
     const finalAlbum = albumArr.map(albums => {
       return new Album(albums);
     });
-
     resp.render('../views/music.ejs', {searchResults: finalAlbum})
   });
 
@@ -201,18 +187,17 @@ function renderMusic(req, resp){
 
 
 
-
-
-function renderGame(request, response) {
+function renderGame(request, response){
 
   try{
-
     response.status(200).render('../views/game.ejs');
   } catch(error){
     console.log('ERROR', error);
     response.status(500).send('Sorry, something went terribly wrong');
   }
 }
+
+
 
 function renderAboutUs(request, response) {
 
@@ -226,49 +211,121 @@ function renderAboutUs(request, response) {
 }
 
 
-function renderWeather(request,response){
-  let url = `https://api.weatherbit.io/v2.0/forecast/daily`;
-  let queryParamaters = {
-    key: process.env.WEATHER_API_KEY,
-    city: 'seattle',// will probably need to change this line.
-    units: 'i',
-    days:7
+
+function renderMap(request, response){
+  let obj = new Route(request.body);
+  let key = process.env.MAPQUEST_API_KEY;
+  let url = 'http://www.mapquestapi.com/geocoding/v1/batch';
+  url += `?key=${key}&`;
+  url += `location=${obj.start}&`;
+  if (obj.waypoints.length > 0) {
+    obj.waypoints.forEach(value => {
+      url += `location=${value}&`;
+    })
   }
+  url += `location=${obj.end}`;
+
+
   superagent.get(url)
-    .query(queryParamaters)
-    .then(dataFromSuperAgent => {
-      let forcast = dataFromSuperAgent.body.data;
-      const forcastArray = forcast.map(day =>{
-        return new Weather(day);
-      });
-      response.render('index2', {weatherResults: forcastArray});//Where are we sending this?
-    }).catch((error) => {
-      console.log('ERROR',error);
-      response.status(500).send('Sorry, something went terribly wrong')
-    });
+    .then(results => {
+      let latLong = results.body.results;
+      const latLongArray = latLong.map(value => {
+        return new LatLong(value);
+      })
+      response.render('map.ejs', {destinations : obj, MAPQUEST_API_KEY : key, latLongData : latLongArray});
+    })
 }
 
-//==========================Constructor Funtions==============================
-
-function renderMap(request, response) {
-  console.log(request.body);
-  // const arr = Object.entries(request.body);
-  let arr = new Route(request.body);
-  console.log(arr);
-  response.render('map.ejs', {destinations : arr});
 
 
+function addActivityToDatabase(request, response){
+  let formData = request.body;
+  let sql = 'INSERT INTO itinerary (name, rate, image, description, latitude, longitude) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
+  let safeValues = [formData.name, formData.rate, formData.image, formData.description, formData.latitude, formData.longitude];
 
+  client.query(sql, safeValues)
+    .then(() => {
+      // console.log('================================',results);
+      response.status(204).send();
+    })
+  // response.json({success: true});
+}
+
+
+
+function addMapDataToDatabase(request, response){
+  let formData = request.body;
+  dropMapTable();
+  createMapTable();
+  dropItineraryTable();
+  createItineraryTable();
+  for(let i in formData.city){
+    console.log('formdata from mapadd============================',formData);
+    let sql = 'INSERT INTO map (city, state, latitude, longitude) VALUES ($1, $2, $3, $4) RETURNING id;';
+    let safeValues = [formData.city[i], formData.state[i], formData.latitude[i], formData.longitude[i]];
+
+    client.query(sql, safeValues)
+  }
+  response.status(204).send();
+}
+
+
+
+
+function editActivity(request, response){
+  let id = request.params.id;
+  console.log('requesting the bodies', id);
+  let sql = 'UPDATE itinerary SET date=$1, time=$2 WHERE id=$3;';
+  let safeValues = [request.body.date, request.body.time, id];
+
+  client.query(sql, safeValues)
+  response.status(200).redirect('/see-itinerary');
+}
+
+
+
+
+function deleteActivity(request, response){
+  let id = request.params.id;
+
+  let sql = 'DELETE FROM itinerary WHERE id=$1;';
+  let safeValue = [id];
+
+  client.query(sql, safeValue)
+  response.status(200).redirect('/see-itinerary');
+}
+
+
+
+
+function dropMapTable(){
+  let sql = 'DROP TABLE IF EXISTS map;';
+  client.query(sql);
+}
+
+function createMapTable(){
+  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
+  client.query(sql);
+}
+
+function createMapTable(){
+  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
+  client.query(sql);
+}
+
+function dropItineraryTable(){
+  let sql = 'DROP TABLE IF EXISTS itinerary;';
+  client.query(sql);
+}
+
+function createItineraryTable(){
+  let sql = 'CREATE TABLE itinerary(id SERIAL PRIMARY KEY, name VARCHAR(255), rate NUMERIC, image VARCHAR(255), description TEXT, latitude VARCHAR(255), longitude VARCHAR(255), date DATE, time TIME);';
+  client.query(sql);
 }
 
 /*##################### Constructors ####################################
 
 ####################################################################### */
-
-
-function Trip(){
-//info for the trip object constructor
-}
 
 
 function Route (obj) {
@@ -284,23 +341,31 @@ function Route (obj) {
   }
 }
 
+function RouteForItinerary (obj) {
+  this.waypoints = [];
+  this.start = `${obj[0].city}, ${obj[0].state}`;
+  this.end = `${obj[obj.length - 1].city}, ${obj[obj.length - 1].state}`;
+  if(obj.length > 2) {
+    for(let i = 1; i < obj.length - 1; i++) {
+      this.waypoints.push(`${obj[i].city}, ${obj[i].state}`);
+    }
+  }
+}
+
 function Album(obj){
   this.title = obj.title;
   this.position = obj.position;
   this.cover_medium = obj.cover_medium;
   this.artist = obj.artist.name;
+  this.link = obj.link;
 }
 
-function Pokemon(obj){
-
-  this.name = obj.name;
-
+function LatLong(obj) {
+  this.latitude = obj.locations[0].latLng.lat;
+  this.longitude = obj.locations[0].latLng.lng;
+  this.city = obj.locations[0].adminArea5;
+  this.state = obj.locations[0].adminArea3;
 }
-
-
-// app.get('*', (request, response) => {
-//   response.status(500).send('Sorry, something went terribly wrong');
-// });
 
 function Activity(obj){
   this.name = obj.name;
@@ -310,13 +375,6 @@ function Activity(obj){
   this.image = obj.images[0] ? obj.images[0].sizes.original.url : 'https://placekitten.com/g/200/300';
   this.description = obj.snippet;
 }
-// function Activity(obj){
-//   this.name = obj.properties.name;
-//   this.longitude = obj.geometry.coordinates[0];
-//   this.latitude = obj.geometry.coordinates[1];
-//   this.kinds = obj.properties.kinds;
-//   this.rate = obj.properties.rate;
-// }
 
 function Weather(obj){
   this.forecast = obj.weather.description;
@@ -327,12 +385,15 @@ function Weather(obj){
   this.time = new Date(obj.valid_date).toDateString();
 }
 
+
 //==============================Errors=================================
 
 /*############################# Opening Port and Client ##################
 
 ########################################################################*/
-
-app.listen(PORT, () => {
-  console.log(`listening on ${PORT}`);
-});
+client.connect()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`listening on ${PORT}`);
+    });
+  })

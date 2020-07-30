@@ -1,34 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search Results</title>
-</head>
-<body>
+<!DOCTYPE HTML>
+<!--
+	Telephasic by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+    <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <title>Telephasic by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 
-  <h1>Add an Activity</h1>
 
-  <main>
 
-    <div class="search-results">
-      <% searchResults.forEach( activity => { %>
-        <img src="<%= activity.image %>" alt="<%= activity.name %>">
-        <h2> <%= activity.name %></h2>
-        <p>Rating:  <%= activity.rate %></p>
-        <p><%= activity.description %></p>
-        
-        <form id="activity-form" action="/add" method="post">
-          <button type="submit">Add to Intinerary</button>
-        <!-- <fieldset> -->
-          <input name="name" type="hidden" value="<%= activity.name %>">
-        <!-- </fieldset> -->
-      </form>
-      <% }) %>
+	</head>
+	<body class="homepage is-preload">
 
-    </div>
 
-  </main>
-  
-</body>
+
+
+
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="" style="  background: url(images/appbanner.jpeg) no-repeat center center fixed; 
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover; height: 36em;">
+					<div id="header" class="container">
+
+						
+						<!-- Nav -->
+            <nav id="nav" style='margin-right: 0;'>
+              <ul>
+                <li>
+                  <a href="#">Menu</a>
+                  <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">Itinerary</a></li>
+                    <li><a href="/game">Travel Game</a></li>
+                    <li><a href="/aboutus">About Us</a></li>
+                    <li><a href="/music">Music</a></li>
+                  </ul>
+                </li>
+              
+              </ul>
+            </nav>
+
+					</div>
+
+					<!-- Hero Button for results path -->
+					<section id="hero" class="container">
+
+           
+
+          </section>
+          
+
+
+			<!-- Features 1 -->
+				<div class="wrapper">
+					<section class="container">
+						<header class="major">
+              <h2 style='margin-left: 10%;'>Weather Forecast for your destination:</h2>
+              <%- include ('weather.ejs') %>
+            </header>
+                        
+						
+						<div class="row features">
+                            
+                            
+              <% searchResults.forEach( activity => { %>
+                <img src="<%= activity.image %>" alt="<%= activity.name %>" style="width: 198px; height: 142px;">
+                <h2> <%= activity.name %></h2>
+                <p>Rating:  <%= activity.rate %></p>
+                <p><%= activity.description %></p>
+                
+                <form class="activity-form" action="/add" method="post">
+                  <button type="submit">Add to Intinerary</button>
+                <!-- <fieldset> -->
+                  <input name="name" type="hidden" value="<%= activity.name %>">
+                  <input name="rate" type="hidden" value="<%= activity.rate %>">
+                  <input name="image" type="hidden" value="<%= activity.image %>">
+                  <input name="description" type="hidden" value="<%= activity.description %>">
+                  <input name="latitude" type="hidden" value="<%= activity.latitude %>">
+                  <input name="longitude" type="hidden" value="<%= activity.longitude %>">
+                <!-- </fieldset> -->
+              </form>
+              <% }) %>   
+                           
+                            
+
+						</div>
+						<ul class="actions major">
+							<li><a href="/see-itinerary" class="button">View My Itinerary</a></li>
+						</ul>
+					</section>
+				</div>
+
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
 </html>

@@ -1,35 +1,211 @@
-<html>
-  <head>
+<!DOCTYPE HTML>
+<!--
+	Telephasic by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html style="background-color: #F2F4EF;">
+	<head>
     <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+    <title>Telephasic by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
     <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
 
     <script type="text/javascript">
       window.onload = function() {
-        L.mapquest.key = 'rG4CrkvfohnHOoaCGJ29POMC51kMr8ci';
+        L.mapquest.key = '<%= MAPQUEST_API_KEY %>';
 
-        var map = L.mapquest.map('map', {
-          center: [40.7128, -74.0059],
-          layers: L.mapquest.tileLayer('map'),
-          zoom: 13
+        let map = L.mapquest.map('map', {
+          center: [39.8283, -98.5795],
+          layers: L.mapquest.tileLayer('hybrid'),
+          zoom: 4
+        });
+
+        let directions = L.mapquest.directions();
+        directions.setLayerOptions({
+          routeRibbon: {
+            draggable: false,
+            showTraffic: false
+          },
+          startMarker: {
+            draggable: false
+          },
+          endMarker: {
+            draggable: false
+          },
+          waypointsMarker:{
+            draggable: false
+          }
         });
 
         let waypoints = <%- JSON.stringify(destinations.waypoints) %> 
-        L.mapquest.directions().route({
+
+        directions.route({
           start: '<%= destinations.start %>',
           end: '<%= destinations.end %>',
-          
-          // waypoints: [ '366 Columbus Ave, New York, NY 10024', '881 7th Ave, New York, NY 10019']
           waypoints: waypoints
-
-          
-          
-
         });
       }
-    </script>
-  </head>
+	</script>
+	
+	<style>
 
-  <body style="border: 0; margin: 0;">
-    <div id="map" style="width: 100%; height: 530px;"></div>
-  </body>
+		.loader {
+			position: absolute;
+			z-index: 66;
+			width: 350px;
+			height: 350px;
+			border-radius: 50%;
+			background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+			animation: animate 4.2s linear 1 forwards;
+			margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+
+		}
+		
+		@keyframes animate {
+			0% {
+				transform: rotate(0deg);
+				opacity: 1;
+				z-index: 66;
+
+			}
+			100% {
+				transform: rotate(360deg);
+				opacity: 0;
+				z-index: -1;
+			}
+		}
+
+		
+		.loader span {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
+		}
+		
+		.loader span:nth-child(1) {
+			filter: blur(5px);
+		}
+		
+		.loader span:nth-child(2) {
+			filter: blur(10px);
+		}
+		
+		.loader span:nth-child(3) {
+			filter: blur(25px);
+		}
+		
+		.loader span:nth-child(4) {
+			filter: blur(50px);
+		}
+		
+		.loader:after {
+			content: '';
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			right: 10px;
+			bottom: 10px;
+			background: transparent;
+			border: solid white 10px;
+			border-radius: 50%;
+		}
+		
+				</style>
+		
+	</head>
+
+
+	<body class="homepage is-preload" style="overflow-x: hidden;">
+
+
+		<div class="loader">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="" style="  background: url(images/appbanner.jpeg) no-repeat center center; 
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover; height: 100vh">
+					<div id="header" class="container">
+
+						
+						<!-- Nav -->
+
+
+					</div>
+
+					<!-- Hero Button for resulths path -->
+
+						<section id="hero" class="container">
+							<h2 style="color: #c7524a;   -webkit-text-stroke-width: 1px;
+
+								-webkit-text-stroke-color: #562222;">ROAD TRIP</h2>
+
+							<div id="map" style=" z-index: 1;width: 90%; margin: .5em auto 3em; height: 450px; border-top: solid 7px #6B3037; border-bottom: 7px solid #6B3037;"></div>
+
+							<header>
+								<h2 style='color: #F2F4EF; -webkit-text-stroke-width: 1px;
+
+								-webkit-text-stroke-color: #562222;'>Save your route, Then look for activities.</h2>
+							</header>
+							
+							<form id="activity-search" action="/results" method="post">
+								<input name="lat" type="hidden" value="<%= latLongData[(latLongData.length-1)].latitude %>">
+								<input name="lon" type="hidden" value="<%= latLongData[(latLongData.length-1)].longitude %>">
+								<input name ="city" type="hidden" value="<%= latLongData[(latLongData.length-1)].city %>">
+								<% console.log(latLongData[(latLongData.length-1)]);%>
+									<button style="color: #F2F4EF; background-color: #c7524a;" type="submit">Search Activities</button>
+							</form>
+
+
+							<form action="/save" method="post">
+								<% latLongData.forEach((value, index) => { %>
+								<input type="hidden" name="city" value="<%= value.city %>">
+								<input type="hidden" name="state" value="<%= value.state %>">
+								<input type="hidden" name="latitude" value="<%= value.latitude %>">
+								<input type="hidden" name="longitude" value="<%= value.longitude %>">
+								<% }) %>
+								<button style="margin: .6em; color: #F2F4EF; background-color: #c7524a;" type="submit">Save Route</button>
+							</form>
+							<a type="button" href='/' style="margin: .6em;" style="text-decoration: none; border-bottom: none;"><button style="margin: .6em;text-decoration: none; color: #F2F4EF; background-color: #6B3037;" >Back Home</button></a>
+						</section>	
+							
+					</section>
+			
+							
+				</div>
+		</div>
+		
+
+		
+					
+
+
+
+
+		
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
 </html>
