@@ -343,6 +343,15 @@ input, select, textarea {
 		width: 100% !important;
 	}
 
+	.cbdiv {
+		color:aliceblue;
+		margin: 2px;	
+	}
+	#cblink{
+		color:aliceblue;
+		margin:5px;
+	}
+
 		.row > * {
 			box-sizing: border-box;
 		}
