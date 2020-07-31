@@ -88,9 +88,15 @@ function checkItinerary(request,resp){
       let sql = 'SELECT * FROM map;';
       client.query(sql)
         .then(cities => {
-          let cityArray = new RouteForItinerary(cities.rows);
-          console.log(cityArray);
-          resp.render('../views/itinerary.ejs', {MAPQUEST_API_KEY : process.env.MAPQUEST_API_KEY, activities: aItems, cities: cityArray});
+          console.log(cities.rows);
+          if(cities.rows.length > 0){
+
+            let cityArray = new RouteForItinerary(cities.rows);
+            console.log(cityArray);
+            resp.render('../views/itinerary.ejs', {MAPQUEST_API_KEY : process.env.MAPQUEST_API_KEY, activities: aItems, cities: cityArray});
+          } else {
+            resp.render('../views/itinerary.ejs', {MAPQUEST_API_KEY : process.env.MAPQUEST_API_KEY, activities: aItems, cities: null});
+          }
         })
     }).catch(err => {
       resp.status(500).render('../views/home', {error:err});
@@ -127,7 +133,8 @@ function renderResults(request, response){
     token: process.env.token,
     latitude: request.body.lat,
     longitude: request.body.lon,
-    tag_labels: 'do'
+    // tag_labels: 'do',
+    max_distance: 5000
   }
 
   superagent.get(url)
@@ -148,10 +155,12 @@ function renderResults(request, response){
         .query(queryParamaters)
         .then(dataFromSuperAgent => {
           let forcast = dataFromSuperAgent.body.data;
+          let endCity = dataFromSuperAgent.body.city_name;
           const forcastArray = forcast.map(day =>{
             return new Weather(day);
-          });
-          response.status(200).render('searches.ejs', {searchResults: obj, weatherResults: forcastArray});
+          }); 
+        
+          response.status(200).render('searches.ejs', {searchResults: obj, weatherResults: forcastArray, cityResults: endCity});
         }).catch((error) => {
           console.log('ERROR',error);
           response.status(500).send('Sorry, something went terribly wrong')
@@ -303,10 +312,6 @@ function dropMapTable(){
   client.query(sql);
 }
 
-function createMapTable(){
-  let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
-  client.query(sql);
-}
 
 function createMapTable(){
   let sql = 'CREATE TABLE map(id SERIAL PRIMARY KEY, city VARCHAR(255), state VARCHAR(255), latitude VARCHAR(255), longitude VARCHAR(255));';
@@ -372,8 +377,10 @@ function Activity(obj){
   this.longitude = obj.coordinates.longitude;
   this.latitude = obj.coordinates.latitude;
   this.rate = `${obj.score}`.slice(0,3);
-  this.image = obj.images[0] ? obj.images[0].sizes.original.url : 'https://placekitten.com/g/200/300';
+  this.image = obj.images.length ? obj.images[0].sizes.original.url : 'https://placekitten.com/g/200/300';
   this.description = obj.snippet;
+
+  // console.log('picture=======',obj.images);
 }
 
 function Weather(obj){

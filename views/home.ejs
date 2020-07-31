@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Telephasic by HTML5 UP</title>
+		<title>ROAD TRIP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -35,7 +35,7 @@
             <nav id="nav" style='margin-right: 0;'>
 								<ul>
 									<li>
-										<a href="#">Menu</a>
+										<a href="#">ROAD TRIP</a>
 										<ul>
                       <li><a href="/">Home</a></li>
                       <li><a href="/see-itinerary">Itinerary</a></li>
@@ -76,6 +76,18 @@
 		</div>
 		
 		<!-- Itinerary -->
+		<div id='hidden-form' class="wrapper">
+			<section class="container">
+		<form action="/search" method="post">
+			<h2 class='formh2'>Add a start point and a destination to get started.</h2>
+			<input  type="text" name="start" placeholder="Seattle, WA">
+			<input type="text" name="end" placeholder="New York, NY">
+			<br><br>
+			<button type="submit" class='formbutton'>Submit</button>
+		  </form>
+		</section>
+	</div>
+
 		<div class="wrapper background3">
 			<section class="container">
 				<header class="major">
@@ -88,20 +100,6 @@
 				
 			</section>
 		</div>
-
-				<!-- Saved Trips -->
-				<div class="wrapper">
-					<section class="container">
-						<header class="major">
-							<h2>Your Saved Trips</h2>
-							<p>View your mapped trips</p>
-							<ul class="actions major">
-								<li><a href="#" class="button">Road Trips</a></li>
-							</ul>
-						</header>
-						
-					</section>
-				</div>
         
         <div class="wrapper background4">
 
@@ -145,6 +143,18 @@
 
   </div>
 
+	<div class="wrapper background3">
+		<section class="container">
+			<header class="major">
+				<h2>About the Devs</h2>
+				<p>View who was responsible for building this app.</p>
+				<ul class="actions major">
+					<li><a href="/aboutus" class="button">About Us</a></li>
+				</ul>
+			</header>
+			
+		</section>
+	</div>
 				
 
 			<!-- Features game -->

@@ -1,17 +1,17 @@
-<div class="wrapper">
-  <div class="row features" style="margin-top: 2em; ">
+<div class="wrapper" style="height: 30em;">
+  <div class="row features" style=" ">
 
     
      <% weatherResults.forEach(day => { %>
-     <section class="col-12-narrower feature" style="height: 150px; width: 100px;">
-        <p class="weather">
+     <section class="col-12-narrower feature" style="height: 150px; width: 100px; padding: -1em 15px 0; margin: 0 auto;">
+        <p style="margin: 0 auto .3em; font-size: .8em;" class="weather">
           <%= day.time %><br>
           <%= day.forecast %>
         </p>
         <div class="image-wrapper first">
-          <a href="#" class="image featured"><img style="width: 75px; height: 75px;" id="icon" src="https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="" /></a>
+          <a href="#" class="image featured"><img style="width: 75px; height: 75px;" id="icon" src="https://www.weatherbit.io/static/img/icons/<%= day.icon %>.png" alt="Weather" /></a>
         </div>
-        <p class="weather">
+        <p style="margin: 0 auto .3em; font-size: .8em;" class="weather">
           <%= day.high_temp %>° | <%= day.low_temp %>°<br>
           Rainfall: <%= day.precip %> inches.
         </p>

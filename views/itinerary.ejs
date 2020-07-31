@@ -12,42 +12,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
-		<script type="text/javascript">
-      window.onload = function() {
-        L.mapquest.key = '<%= MAPQUEST_API_KEY %>';
-
-        let map = L.mapquest.map('map', {
-          center: [39.8283, -98.5795],
-          layers: L.mapquest.tileLayer('hybrid'),
-          zoom: 4
-        });
-
-        let directions = L.mapquest.directions();
-        directions.setLayerOptions({
-          routeRibbon: {
-            draggable: false,
-            showTraffic: false
-          },
-          startMarker: {
-            draggable: false
-          },
-          endMarker: {
-            draggable: false
-          },
-          waypointsMarker:{
-            draggable: false
-          }
-        });
-
-        let waypoints = <%- JSON.stringify(cities.waypoints) %> 
-
-        directions.route({
-          start: '<%= cities.start %>',
-          end: '<%= cities.end %>',
-          waypoints: waypoints
-        });
-      }
-	</script>
+		
+		<% if(cities) { %>
+			<%- include ('mapquestjs-partial.ejs') %>
+		<% } %>
+		
 	</head>
 
 	<body class="homepage is-preload">
@@ -69,52 +38,58 @@
 									<a href="#">Menu</a>
 									<ul>
 										<li><a href="/">Home</a></li>
-										<li><a href="/itinerary">Itinerary</a></li>
-										<li><a href="/game">Travel Game</a></li>
 										<li><a href="/aboutus">About Us</a></li>
-										<li><a href="/music">Music</a></li>
+									
 									</ul>
 								</li>							
 							</ul>							
 						</nav>
 						<header class="major">
-							<h2 style="color: white; padding-top: 8em;">Look at your plans</h2>
-							<h2 style="color: white; padding-top: 12px; font-style: italic;">Costumize your plans</h2>								
+							<h2 style="color: white; padding-top: 8em;">Your Itinerary</h2><br>
+							<h2 style="color: white; padding-top: 12px; font-style: italic;">Customize your plans.</h2>								
 						</header>
 					</div>
 					
 					
 				</div>
-				<div id="map" style=" z-index: 1;width: 75%; margin: .5em auto 3em; height: 480px; border-top: solid 7px #6B3037; border-bottom: 7px solid #6B3037;"></div>
                     <!-- Hero Button for resulths path -->                   
                     <div class="wrapper">
                         <section class="container">                                                
                             <div class="row features">
-                                
+															<% function formatTime(mt) { %>
+																<% let h = mt.toString().slice(0,2) %>
+																<% let m = mt.toString().slice(3,5) %>
+
+																<% h = h % 12; %>
+																<% if (h === 00) h = 12; %>
+																<% return h + ':' + m + ' ' + ((mt.toString().slice(0,2)) < 12 ? 'am' : 'pm'); %>
+																<% } %>
                                 <% activities.forEach( activity => { %>
                             
                                     <section style="text-align: center; width: 400px;" class="col-4 col-12-narrower feature">
                                 
                                 
                                         <div class="image-wrapper first">
-                                            <a href="#" class="image featured"><img style='max-height: 180px; width: 200px;' src='<%= activity.image %>' alt="" /></a>
+
+											<a href="#" class="image featured"><img style='width: 198px; height: 142px;' src='<%= activity.image %>' onerror="this.onerror=null;this.src='https://placekitten.com/g/200/300';" alt="<%= activity.name %>" /></a>
+
                                         </div>
                                        <div>
                                            <p class='musicfont'><%= activity.name %></p>
                                            <p class='musicfont'>Rating: <%= activity.rate %></p>
 																					 <p class='musicfont'><%= activity.description %></p>
-																					 <p class="musicfont">Date: <%= activity.date %></p>
-																					 <p class="musicfont">Time: <%= activity.time %></p>
-                                        </div>
-																				
-																				<button type="button" class="showForm">Modify Activity</button>
-																				
-																				<form style="display: none;" id="update-details" action="/edit/<%= activity.id %>?_method=PUT" method="post">
-																					<fieldset>
-																						<input type="date" name="date" value="<%= activity.date %>" placeholder="DATE">
-																						<input type="time" name="time" value="<%= activity.time %>" placeholder="TIME">
-																					</fieldset>
-																					<button id="update-button" type="submit">Update Book Details</button>
+																					 <p class="musicfont">Date: <%= (activity.date ? `${activity.date.toString().slice(0,3)},${activity.date.toString().slice(3,10)},${activity.date.toString().slice(10,15)}`: activity.date) %></p>
+																					 <p class="musicfont">Time: <%= (activity.time ? formatTime(activity.time):activity.time) %></p>
+																					</div>
+																					
+																					<button type="button" class="showForm">Modify Activity</button>
+																					
+																					<form style="display: none;" id="update-details" action="/edit/<%= activity.id %>?_method=PUT" method="post">
+																						<fieldset>
+																							<input type="date" name="date" value="<%= activity.date%>" placeholder="DATE">
+																							<input type="time" name="time" value="<%= activity.time %>" placeholder="TIME">
+																						</fieldset>
+																						<button id="update-button" type="submit">Update Itinerary</button>
 																				</form>
 																				
 																				<form style="display: none;" id="delete-activity" action="/delete/<%= activity.id %>?_method=DELETE" method="post">
@@ -125,6 +100,12 @@
 																			</section>
 																			<% }) %>																				                               
                             </div>
+
+								<% if(cities) { %>
+									<%- include ('mapquestdiv-partial.ejs') %>
+								<% } else { %>
+									<p>Save a route for it to display here!</p>
+								<% } %>
                             <ul class="actions major">
                                 <li><a href="/" class="button">Home</a></li>
                             </ul>
