@@ -769,7 +769,8 @@ a {
 	</head>
 
 
-	<body class="homepage is-preload" style="overflow-x: hidden;">
+  <body class="homepage is-preload" style="overflow-x: hidden;">
+    
 
 
 		<div class="loader">
@@ -807,23 +808,22 @@ a {
 
 		<div id="page-wrapper">
 
+      
+
 			<!-- Header -->
 				<div id="" style="  background: url(images/appbanner.jpeg) no-repeat center center; 
                 -webkit-background-size: cover;
                 -moz-background-size: cover;
                 -o-background-size: cover;
                 background-size: cover; height: 100vh">
-					<div id="header" class="container">
-
 						
-						<!-- Nav -->
 
-
-					</div>
 
 					<!-- Hero Button for resulths path -->
 
 						<section id="hero" class="container">
+
+              
 							<h2 style="color: #c7524a;   -webkit-text-stroke-width: 1px;
 
 								-webkit-text-stroke-color: #562222;">ROAD TRIP</h2>
@@ -835,16 +835,7 @@ a {
 
 								-webkit-text-stroke-color: #562222;'>Save your route, Then look for activities.</h2>
 							</header>
-							
-							<form id="activity-search" action="/results" method="post">
-								<input name="lat" type="hidden" value="<%= latLongData[(latLongData.length-1)].latitude %>">
-								<input name="lon" type="hidden" value="<%= latLongData[(latLongData.length-1)].longitude %>">
-								<input name ="city" type="hidden" value="<%= latLongData[(latLongData.length-1)].city %>">
-								<% console.log(latLongData[(latLongData.length-1)]);%>
-									<button style="color: #F2F4EF; background-color: #c7524a;" type="submit">Search Activities</button>
-							</form>
-
-
+              
 							<form action="/save" method="post">
 								<% latLongData.forEach((value, index) => { %>
 								<input type="hidden" name="city" value="<%= value.city %>">
@@ -854,7 +845,17 @@ a {
 								<% }) %>
 								<button style="margin: .6em; color: #F2F4EF; background-color: #c7524a;" type="submit">Save Route</button>
 							</form>
-							<a type="button" href='/' style="margin: .6em;" style="text-decoration: none; border-bottom: none;"><button style="margin: .6em;text-decoration: none; color: #F2F4EF; background-color: #6B3037;" >Back Home</button></a>
+
+							<form id="activity-search" action="/results" method="post">
+								<input name="lat" type="hidden" value="<%= latLongData[(latLongData.length-1)].latitude %>">
+								<input name="lon" type="hidden" value="<%= latLongData[(latLongData.length-1)].longitude %>">
+								<input name ="city" type="hidden" value="<%= latLongData[(latLongData.length-1)].city %>">
+								<% console.log(latLongData[(latLongData.length-1)]);%>
+									<button style="color: #F2F4EF; background-color: #c7524a;" type="submit">Search Activities</button>
+							</form>
+
+
+
 						</section>	
 							
 					</section>
