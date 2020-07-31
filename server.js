@@ -159,6 +159,7 @@ function renderResults(request, response){
           const forcastArray = forcast.map(day =>{
             return new Weather(day);
           }); 
+        
           response.status(200).render('searches.ejs', {searchResults: obj, weatherResults: forcastArray, cityResults: endCity});
         }).catch((error) => {
           console.log('ERROR',error);
